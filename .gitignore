@@ -12,6 +12,7 @@
 
 # Don't ignore .gitignore
 !.gitignore
+!.gitattributes
 *.meta
 *.unity
 /Assets/PassthroughCameraApiSamples/CameraToWorld/Materials
