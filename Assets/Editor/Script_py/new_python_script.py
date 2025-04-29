@@ -11,7 +11,7 @@ if len(sys.argv) > 1:
     params_file = sys.argv[1]
     with open(params_file, 'r') as f:
         params = json.load(f)
-    prompt = params.get('prompt', "What's the meaning of life?")
+    prompt = params.get('prompt')
 else:
     # Default when running from Unity Editor
     prompt = "What's the meaning of life?"

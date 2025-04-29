@@ -18,7 +18,7 @@ namespace PassthroughCameraSamples.CameraToWorld
         [SerializeField] private GameObject m_centerEyeAnchor;
         [SerializeField] private GameObject m_headMarker;
         [SerializeField] private GameObject m_cameraMarker;
-        [SerializeField] private GameObject m_rayMarker;
+        //[SerializeField] private GameObject m_rayMarker;
 
         [SerializeField] private CameraToWorldCameraCanvas m_cameraCanvas;
         [SerializeField] private float m_canvasDistance = 1f;
@@ -63,10 +63,10 @@ namespace PassthroughCameraSamples.CameraToWorld
 
             ScaleCameraCanvas();
 
-            m_rayGo1 = m_rayMarker;
-            m_rayGo2 = Instantiate(m_rayMarker);
-            m_rayGo3 = Instantiate(m_rayMarker);
-            m_rayGo4 = Instantiate(m_rayMarker);
+            //m_rayGo1 = m_rayMarker;
+            //m_rayGo2 = Instantiate(m_rayMarker);
+            //m_rayGo3 = Instantiate(m_rayMarker);
+            //m_rayGo4 = Instantiate(m_rayMarker);
             UpdateRaysRendering();
             
             // Set initial camera window visibility
@@ -199,29 +199,29 @@ namespace PassthroughCameraSamples.CameraToWorld
             m_cameraCanvas.transform.rotation = cameraPose.rotation;
 
             // Position the rays pointing to 4 corners of the canvas / image
-            var rays = new[]
-            {
-                new { rayGo = m_rayGo1, u = 0, v = 0 },
-                new { rayGo = m_rayGo2, u = 0, v = CameraResolution.y },
-                new { rayGo = m_rayGo3, u = CameraResolution.x, v = CameraResolution.y },
-                new { rayGo = m_rayGo4, u = CameraResolution.x, v = 0 }
-            };
+            //var rays = new[]
+            //{
+            //    new { rayGo = m_rayGo1, u = 0, v = 0 },
+            //    new { rayGo = m_rayGo2, u = 0, v = CameraResolution.y },
+            //    new { rayGo = m_rayGo3, u = CameraResolution.x, v = CameraResolution.y },
+            //    new { rayGo = m_rayGo4, u = CameraResolution.x, v = 0 }
+            //};
 
-            foreach (var item in rays)
-            {
-                var rayInWorld = PassthroughCameraUtils.ScreenPointToRayInWorld(CameraEye, new Vector2Int(item.u, item.v));
-                item.rayGo.transform.position = rayInWorld.origin;
-                item.rayGo.transform.LookAt(rayInWorld.origin + rayInWorld.direction);
+            //foreach (var item in rays)
+            //{
+            //    var rayInWorld = PassthroughCameraUtils.ScreenPointToRayInWorld(CameraEye, new Vector2Int(item.u, item.v));
+            //    item.rayGo.transform.position = rayInWorld.origin;
+            //    item.rayGo.transform.LookAt(rayInWorld.origin + rayInWorld.direction);
 
-                var angleWithCameraForwardDegree =
-                    Vector3.Angle(item.rayGo.transform.forward, cameraPose.rotation * Vector3.forward);
-                // The original size of the ray GameObject along z axis is 0.5f. Hardcoding it here for simplicity
-                var zScale = (float)(m_canvasDistance / Math.Cos(angleWithCameraForwardDegree / 180 * Math.PI) / 0.5);
-                item.rayGo.transform.localScale = new Vector3(item.rayGo.transform.localScale.x, item.rayGo.transform.localScale.y, zScale);
+            //    var angleWithCameraForwardDegree =
+            //        Vector3.Angle(item.rayGo.transform.forward, cameraPose.rotation * Vector3.forward);
+            //    // The original size of the ray GameObject along z axis is 0.5f. Hardcoding it here for simplicity
+            //    var zScale = (float)(m_canvasDistance / Math.Cos(angleWithCameraForwardDegree / 180 * Math.PI) / 0.5);
+            //    item.rayGo.transform.localScale = new Vector3(item.rayGo.transform.localScale.x, item.rayGo.transform.localScale.y, zScale);
 
-                var label = item.rayGo.GetComponentInChildren<Text>();
-                label.text = $"({item.u:F0}, {item.v:F0})";
-            }
+            //    var label = item.rayGo.GetComponentInChildren<Text>();
+            //    label.text = $"({item.u:F0}, {item.v:F0})";
+            //}
         }
 
         private void TranslateMarkersForDebug(bool moveForward)

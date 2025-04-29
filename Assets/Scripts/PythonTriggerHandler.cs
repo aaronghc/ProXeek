@@ -33,7 +33,7 @@ namespace PythonIntegration
         private void Awake()
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(30); // Longer timeout for LLM processing
+            _httpClient.Timeout = TimeSpan.FromSeconds(300); // Longer timeout for LLM processing
 
             if (loadingIndicator != null)
                 loadingIndicator.SetActive(false);
@@ -77,7 +77,7 @@ namespace PythonIntegration
                 scriptName = "new_python_script.py",
                 parameters = new ScriptParameters
                 {
-                    prompt = "What's the meaning of life according to different philosophies?"
+                    prompt = "How are you today?"
                 }
             });
 
