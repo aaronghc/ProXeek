@@ -70,19 +70,17 @@ namespace PythonIntegration
 
             LogDebug("Sending request to server...");
 
-            // Create request data - using anonymous type with proper naming
-            string jsonData = JsonUtility.ToJson(new RequestData
-            {
-                action = "run_script",
-                scriptName = "new_python_script.py",
-                parameters = new ScriptParameters
-                {
-                    prompt = "How are you today?"
+            // Create the JSON payload manually to ensure correct structure
+            string jsonPayload = @"{
+                ""action"": ""run_script"",
+                ""script_name"": ""new_python_script.py"",
+                ""params"": {
+                    ""prompt"": ""tell me a joke""
                 }
-            });
+            }";
 
             // Use Task to handle the HTTP request asynchronously
-            Task<string> responseTask = SendRequest(jsonData);
+            Task<string> responseTask = SendRequest(jsonPayload);
 
             // Wait for the response without blocking the main thread
             while (!responseTask.IsCompleted)
@@ -93,17 +91,39 @@ namespace PythonIntegration
             // Process the response
             if (responseTask.IsFaulted)
             {
-                LogDebug("Error: " + responseTask.Exception.Message);
+                string errorMessage = "Error: Could not connect to server";
+                if (responseTask.Exception != null)
+                {
+                    errorMessage += "\n" + responseTask.Exception.Message;
+                }
+
+                LogDebug("Error: " + errorMessage);
+
                 if (responseText != null)
-                    responseText.text = "Error: Could not connect to server";
+                    responseText.text = errorMessage;
             }
             else
             {
                 string response = responseTask.Result;
                 LogDebug("Response received: " + (response.Length > 50 ? response.Substring(0, 50) + "..." : response));
 
-                if (responseText != null)
-                    responseText.text = response;
+                // Try to parse the JSON response
+                try
+                {
+                    ResponseData responseData = JsonUtility.FromJson<ResponseData>(response);
+                    string displayText = responseData.output;
+
+                    if (responseText != null)
+                        responseText.text = displayText;
+                }
+                catch (Exception ex)
+                {
+                    // If parsing fails, just display the raw response
+                    if (responseText != null)
+                        responseText.text = response;
+
+                    LogDebug("Failed to parse response: " + ex.Message);
+                }
             }
 
             if (loadingIndicator != null)
@@ -121,20 +141,28 @@ namespace PythonIntegration
             try
             {
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                // Log the request for debugging
+                LogDebug("Sending request to: " + serverUrl);
+                LogDebug("Request body: " + jsonData);
+
                 var response = await _httpClient.PostAsync(serverUrl, content);
+
+                string responseContent = await response.Content.ReadAsStringAsync();
+                LogDebug("Raw response: " + responseContent);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    return responseContent;
                 }
                 else
                 {
-                    return $"Error: {response.StatusCode}";
+                    return $"{{\"status\":\"error\",\"output\":\"HTTP Error: {response.StatusCode}\"}}";
                 }
             }
             catch (Exception ex)
             {
-                return $"Exception: {ex.Message}";
+                return $"{{\"status\":\"error\",\"output\":\"Exception: {ex.Message}\"}}";
             }
         }
 
@@ -156,16 +184,9 @@ namespace PythonIntegration
 
     // Add these serializable classes for JSON conversion
     [Serializable]
-    public class RequestData
+    public class ResponseData
     {
-        public string action;
-        public string scriptName;
-        public ScriptParameters parameters;
-    }
-
-    [Serializable]
-    public class ScriptParameters
-    {
-        public string prompt;
+        public string status;
+        public string output;
     }
 }

@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" editor-extension-mode="True">
+    <Style src="project://database/Assets/Editor/VRHapticEditor.uss?fileID=7433441132597879392&amp;guid=e670cc8ee69434c4f86524d4dd17a73c&amp;type=3#VRHapticEditor" />
+    <ui:VisualElement name="root" class="root-container">
+        <ui:VisualElement name="toolbar" class="toolbar">
+            <ui:Label text="Haptic Annotation Editor" class="header-label" />
+            <ui:VisualElement class="toolbar-spacer" />
+            <ui:Button text="Inspector" name="inspectorToggleButton" class="toolbar-button" />
+            <ui:Button text="Export" name="exportDataButton" class="toolbar-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="mainContent" style="flex-direction: row; flex-grow: 1;">
+            <ui:VisualElement name="graphViewContainer" class="graph-container" />
+            <ui:VisualElement name="inspectorContainer" class="inspector-container">
+                <!-- No header label here -->
+                <ui:VisualElement name="inspectorContent" class="inspector-content">
+                    <!-- This will be populated dynamically -->
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

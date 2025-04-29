@@ -1,0 +1,344 @@
+.root-container {
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.toolbar {
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px;
+    background-color: #383838;
+    border-bottom-width: 1px;
+    border-bottom-color: #222222;
+    height: 30px;
+}
+
+.header-label {
+    -unity-font-style: bold;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.toolbar-spacer {
+    flex-grow: 1;
+}
+
+.toolbar-button {
+    height: 22px;
+    margin-left: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    -unity-font-style: bold;
+    font-size: 11px;
+}
+
+.graph-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+.grid-background {
+    --grid-background-color: #282828;
+    --line-color: rgba(70, 70, 70, 0.1);
+    --thick-line-color: rgba(90, 90, 90, 0.1);
+    --spacing: 15;
+}
+
+.preview-controls-container {
+    flex-direction: row;
+    height: 150px;
+    width: 330px; /* width of node */
+}
+
+.preview-container {
+    width: 180px;
+    height: 150px;
+    background-color: rgb(51, 51, 51);
+}
+
+.radio-group-container {
+    width: 150px;
+    height: 150px;
+    background-color: rgb(51, 51, 51);
+    padding: 5px 5px 5px 10px;
+}
+
+.radio-group-title {
+    -unity-font-style: bold;
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: rgb(210, 210, 210);
+    margin-top: 14px;
+    margin-left: 2px;
+}
+
+.radio-button-container {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 4px 1px 2px 1px;
+}
+
+.radio-button {
+    margin-right: 5px;
+}
+
+.radio-label {
+    font-size: 11px;
+    color: rgb(200, 200, 200);
+}
+
+.inspector-container {
+    width: 250px;
+    background-color: #383838;
+    border-left-width: 1px;
+    border-left-color: #222222;
+    display: flex;
+    flex-direction: column;
+}
+
+.inspector-content ScrollView {
+    flex-grow: 1;
+}
+
+.inspector-content ScrollView Scroller {
+    width: 10px;
+}
+
+.inspector-content ScrollView Scroller Slider {
+    width: 10px;
+}
+
+.inspector-content ScrollView Scroller Slider #unity-drag-container {
+    width: 10px;
+    background-color: rgba(60, 60, 60, 0.5);
+}
+
+.inspector-content ScrollView Scroller Slider #unity-dragger {
+    width: 8px;
+    border-radius: 4px;
+    background-color: rgba(180, 180, 180, 0.5);
+    margin-left: 1px;
+}
+
+.inspector-content ScrollView Scroller Slider #unity-dragger:hover {
+    background-color: rgba(200, 200, 200, 0.7);
+}
+
+.inspector-content ScrollView Scroller Slider #unity-dragger:active {
+    background-color: rgba(220, 220, 220, 0.9);
+}
+
+.inspector-field {
+    margin-bottom: 15px;
+    white-space: normal;
+
+}
+
+.inspector-field-label {
+    margin-bottom: 5px;
+    font-size: 12px;
+    -unity-font-style: bold;
+}
+
+.inspector-section-title {
+    font-size: 12px;
+    -unity-font-style: bold;
+    margin-bottom: 1px;
+}
+
+.engagement-foldout {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.engagement-foldout > .unity-foldout__content {
+    margin-left: 0; /* Reduce default indentation */
+}
+
+.reorderable-list-container {
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-left: 15px; /* Change from margin-left to padding-left */
+    padding-right: 5px; /* Add right padding for balance */
+}
+
+.reorderable-list-item {
+    background-color: #2D2D2D;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    padding: 5px 5px 5px 8px; /* Increased left padding */
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    cursor: move;
+    min-height: 22px; /* Enforce minimum height */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.reorderable-list-item:hover {
+    background-color: #333333;
+}
+
+.equals-sign {
+    margin-right: 8px; /* Increased right margin */
+    font-size: 15px;
+    color: #888888;
+    min-width: 10px; /* Ensure minimum width */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.node-label {
+    flex-grow: 1;
+    -unity-font-style: normal;
+    font-size: 12px;
+    text-overflow: ellipsis; /* Add ellipsis for long names */
+    overflow: hidden; /* Hide overflow */
+    white-space: nowrap; /* Keep text on one line */
+}
+
+.reorderable-list-placeholder {
+    background-color: rgba(100, 100, 100, 0.2); /* placeholder background color */
+    border: 1px dashed rgba(200, 200, 200, 0.5);
+    border-radius: 3px;
+    margin-bottom: 2px;
+}
+
+.dragging {
+    position: absolute;
+    background-color: #444444;
+    opacity: 0.9;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+.scrollable-list-container {
+    max-height: 150px;
+    overflow: scroll;
+    border-radius: 3px;
+    border: 1px solid rgba(35, 35, 35, 0.2);
+    background-color: rgba(40, 40, 40, 0.3);
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    padding-right: 5px; /* Add right padding for balance */
+}
+
+/* Style the scrollbar */
+.scrollable-list-container Scroller {
+    width: 10px;
+}
+
+.scrollable-list-container Scroller Slider {
+    width: 10px;
+}
+
+.scrollable-list-container Scroller Slider #unity-drag-container {
+    width: 10px;
+    background-color: rgba(60, 60, 60, 0.5);
+}
+
+.scrollable-list-container Scroller Slider #unity-dragger {
+    width: 8px;
+    border-radius: 4px;
+    background-color: rgba(180, 180, 180, 0.5);
+    margin-left: 1px;
+}
+
+.scrollable-list-container Scroller Slider #unity-dragger:hover {
+    background-color: rgba(200, 200, 200, 0.7);
+}
+
+.scrollable-list-container Scroller Slider #unity-dragger:active {
+    background-color: rgba(220, 220, 220, 0.9);
+}
+/* Style the scrollbar */
+
+.dragging-source {
+    opacity: 0.5;
+    border: 1px dashed rgba(100, 100, 100, 0.5);
+}
+
+.drop-target-above {
+    border-top: 2px solid #3a79bb;
+}
+
+.drop-target-below {
+    border-bottom: 2px solid #3a79bb;
+}
+
+/* Add these styles to VRHapticEditor.uss */
+.haptic-property-foldout {
+    margin-bottom: 5px;
+    background-color: rgba(40, 40, 40, 0.3);
+    border-radius: 3px;
+    padding: 2px 0;
+    width: 100%;
+}
+
+.haptic-property-foldout:hover {
+    background-color: rgba(50, 50, 50, 0.3);
+}
+
+.haptic-property-foldout > .unity-foldout__toggle {
+    margin-left: 3px;
+}
+
+.haptic-property-field {
+    margin: 5px 10px 8px 20px;
+    background-color: rgba(30, 30, 30, 0.6);
+    border-radius: 3px;
+    white-space: normal;
+}
+
+.unity-foldout__content {
+    margin-left: 0;
+}
+
+.haptic-property-slider {
+    z-index: 10; /* Ensure slider is above the foldout toggle */
+}
+
+.haptic-property-slider .unity-base-slider__tracker {
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(80, 80, 80, 0.5);
+    margin-top: -7px;
+}
+
+.haptic-property-slider:hover .unity-base-slider__tracker {
+    background-color: rgba(100, 100, 100, 0.7);
+}
+
+.haptic-property-slider .unity-base-slider__dragger-border {
+    display: none;
+}
+
+/* Make sure the foldout toggle is still clickable */
+.haptic-property-foldout > .unity-foldout__toggle {
+    margin-left: 3px;
+    z-index: 5;
+}
+
+.slider-value-field {
+    font-size: 12px;
+    z-index: 11; /* Higher than the slider to ensure it's on top */
+    background-color: rgba(60, 60, 60, 0.8);
+    padding: 0;
+    margin: -5px 5px 0px 2px;
+    margin-bottom: -8px;
+}
+
+.slider-value-field .unity-base-field__input {
+    padding: 1px 2px;
+    margin: 0;
+    background-color: rgba(35, 35, 35, 0.8);
+    border-width: 1px;
+    border-color: rgba(20, 20, 20, 0.8);
+}
