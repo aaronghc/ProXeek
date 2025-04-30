@@ -16,6 +16,7 @@ namespace PythonIntegration
         [Header("Server Configuration")]
         [SerializeField] private string serverUrl = "http://172.28.194.245:5000/run_python";
         [SerializeField] private float cooldownTime = 2.0f;
+        [SerializeField] private int maxImagesToSend = 5; // Limit number of images to send
 
         [Header("UI References")]
         [SerializeField] private Text responseText;
@@ -76,7 +77,7 @@ namespace PythonIntegration
             if (responseText != null)
                 responseText.text = "Processing snapshots...";
 
-            // Get the latest snapshots
+            // Get the snapshots
             string snapshotsFolder = Path.Combine(Application.persistentDataPath, "Snapshots");
             LogDebug("Looking for snapshots in: " + snapshotsFolder);
 
@@ -91,7 +92,7 @@ namespace PythonIntegration
                 yield break;
             }
 
-            // Get the most recent snapshot files
+            // Get all snapshot files
             string[] snapshotFiles = Directory.GetFiles(snapshotsFolder, "*.png");
             if (snapshotFiles.Length == 0)
             {
@@ -107,14 +108,22 @@ namespace PythonIntegration
             // Sort by creation time (newest first)
             Array.Sort(snapshotFiles, (a, b) => File.GetCreationTime(b).CompareTo(File.GetCreationTime(a)));
 
-            // Take the most recent snapshot
-            string latestSnapshot = snapshotFiles[0];
-            LogDebug("Using latest snapshot: " + latestSnapshot);
+            // Limit the number of images to send
+            int imagesToSend = Mathf.Min(snapshotFiles.Length, maxImagesToSend);
+            LogDebug($"Found {snapshotFiles.Length} snapshots, sending {imagesToSend}");
 
-            // Convert image to base64
-            byte[] imageArray = File.ReadAllBytes(latestSnapshot);
-            string base64Image = Convert.ToBase64String(imageArray);
-            LogDebug("Converted image to base64 (length: " + base64Image.Length + ")");
+            // Convert images to base64
+            List<string> base64Images = new List<string>();
+            for (int i = 0; i < imagesToSend; i++)
+            {
+                byte[] imageArray = File.ReadAllBytes(snapshotFiles[i]);
+                string base64Image = Convert.ToBase64String(imageArray);
+                base64Images.Add(base64Image);
+                LogDebug($"Converted image {i + 1}/{imagesToSend} to base64 (length: {base64Image.Length})");
+
+                // Yield to prevent frame drops during processing
+                yield return null;
+            }
 
             // Create the JSON payload
             var payload = new SnapshotPayload
@@ -124,12 +133,12 @@ namespace PythonIntegration
                 @params = new SnapshotParams
                 {
                     hapticRequirements = hapticRequirements,
-                    imageBase64 = base64Image
+                    imageBase64List = base64Images
                 }
             };
 
             string jsonPayload = JsonUtility.ToJson(payload);
-            LogDebug("Created JSON payload");
+            LogDebug($"Created JSON payload with {base64Images.Count} images");
 
             // Send to server
             Task<string> responseTask = SendRequest(jsonPayload);
@@ -236,7 +245,7 @@ namespace PythonIntegration
     public class SnapshotParams
     {
         public string hapticRequirements;
-        public string imageBase64;
+        public List<string> imageBase64List;
     }
 
     [Serializable]

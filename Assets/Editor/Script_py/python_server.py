@@ -7,6 +7,9 @@ import traceback
 
 app = Flask(__name__)
 
+# Increase maximum content length to handle multiple images
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # Allow up to 100MB payloads
+
 # Path to your Unity project's Python scripts
 SCRIPTS_PATH = r"C:\Users\aaron\Documents\GitHub\ProXeek\Assets\Editor\Script_py"
 
@@ -14,14 +17,14 @@ SCRIPTS_PATH = r"C:\Users\aaron\Documents\GitHub\ProXeek\Assets\Editor\Script_py
 @app.route('/run_python', methods=['POST'])
 def run_python():
     try:
-        print("Received request:", request.data)
+        print("Received request of size:", len(request.data))
         data = request.json
 
         if not data:
             print("No JSON data received")
             return jsonify({'status': 'error', 'output': 'No JSON data received'}), 400
 
-        print("Parsed JSON data:", data)
+        print("Parsed JSON data keys:", data.keys())
 
         if 'action' not in data or data['action'] != 'run_script':
             print("Invalid request format - missing 'action' or not 'run_script'")
@@ -30,7 +33,9 @@ def run_python():
         script_name = data.get('script_name', 'ProXeek.py')
         params = data.get('params', {})
 
-        print(f"Script name: {script_name}, Params: {params}")
+        print(f"Script name: {script_name}")
+        if 'imageBase64List' in params:
+            print(f"Received {len(params['imageBase64List'])} images")
 
         # Full path to the script
         script_path = os.path.join(SCRIPTS_PATH, script_name)
@@ -50,7 +55,8 @@ def run_python():
         result = subprocess.run(
             [sys.executable, script_path, params_path],
             capture_output=True,
-            text=True
+            text=True,
+            timeout=300  # Increase timeout for processing multiple images
         )
 
         # Clean up the temporary file

@@ -30,23 +30,23 @@ if len(sys.argv) > 1:
 
         haptic_requirements = params.get('hapticRequirements',
                                          "Identify objects that could serve as haptic proxies in VR")
-        image_base64 = params.get('imageBase64')
+        image_base64_list = params.get('imageBase64List', [])
 
-        if not image_base64:
+        if not image_base64_list:
             log("No image data found in parameters")
             prompt = haptic_requirements
         else:
-            log(f"Found image data (length: {len(image_base64)})")
-            # We'll use the image with the prompt
+            log(f"Found {len(image_base64_list)} images")
+            # We'll use the images with the prompt
     except Exception as e:
         log(f"Error reading parameters file: {e}")
         haptic_requirements = "Identify objects that could serve as haptic proxies in VR"
-        image_base64 = None
+        image_base64_list = []
 else:
     # Default when running from Unity Editor
     log("No parameters file provided, using default prompt")
     haptic_requirements = "Identify objects that could serve as haptic proxies in VR"
-    image_base64 = None
+    image_base64_list = []
 
 # Get the project path
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -104,7 +104,7 @@ try:
 
     # Create the system prompt
     system_prompt = """
-    You are a VR haptic proxy finder. Your task is to analyze the image of a user's physical environment and identify objects that could serve as haptic proxies for virtual objects in VR.
+    You are a VR haptic proxy finder. Your task is to analyze images of a user's physical environment and identify objects that could serve as haptic proxies for virtual objects in VR.
 
     A good haptic proxy should:
     1. Have similar physical properties (shape, size, weight) to the virtual object
@@ -116,34 +116,39 @@ try:
     - Explain why it would make a good proxy for the specified virtual object
     - Note any limitations or considerations for using it
 
+    I will provide multiple images of the same environment from different angles. Consider all images when making your recommendations.
+
     Be specific and practical in your recommendations.
     """
-    prompt_system = SystemMessage(content=system_prompt)
+
+    # Create the messages
+    messages = [SystemMessage(content=system_prompt)]
 
     # Add the haptic requirements
-    user_prompt = f"Based on the following requirements for a virtual object: {haptic_requirements}\n\nIdentify potential haptic proxies in the attached image of my physical environment."
+    user_prompt = f"Based on the following requirements for a virtual object: {haptic_requirements}\n\nIdentify potential haptic proxies in the attached images of my physical environment."
 
-    # If we have an image, add it to the message
-    if image_base64:
-        log("Adding image to message")
-        prompt_human = HumanMessage(
-            content=[
-                {"type": "text", "text": user_prompt},
-                {
-                    "type": "image_url",
-                    "image_url": {
-                        "url": f"data:image/jpeg;base64,{image_base64}",
-                        "detail": "high"
-                    }
+    # If we have images, add them to the message
+    if image_base64_list:
+        log(f"Adding {len(image_base64_list)} images to message")
+
+        # Create content list with text first
+        content_list = [{"type": "text", "text": user_prompt}]
+
+        # Add each image
+        for i, image_base64 in enumerate(image_base64_list):
+            content_list.append({
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{image_base64}",
+                    "detail": "high"
                 }
-            ]
-            )
+            })
+            log(f"Added image {i + 1}/{len(image_base64_list)}")
 
+        messages.append(HumanMessage(content=content_list))
     else:
-        log("No image, using text-only prompt")
-        prompt_human = HumanMessage(content=user_prompt)
-
-    messages = [prompt_system, prompt_human]
+        log("No images, using text-only prompt")
+        messages.append(HumanMessage(content=user_prompt))
 
     # Get the response
     log("Sending request to LLM")

@@ -147,9 +147,28 @@ namespace PassthroughCameraSamples.CameraToWorld
             try
             {
                 string folderPath = Path.Combine(Application.persistentDataPath, "Snapshots");
+
+                // Create directory if it doesn't exist
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
+                }
+                else
+                {
+                    // Clear previous snapshots
+                    try
+                    {
+                        string[] existingFiles = Directory.GetFiles(folderPath, "*.png");
+                        foreach (string file in existingFiles)
+                        {
+                            File.Delete(file);
+                        }
+                        Debug.Log($"PCA: Cleared {existingFiles.Length} previous snapshots from {folderPath}");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"PCA: Error clearing previous snapshots: {e.Message}");
+                    }
                 }
 
                 string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
