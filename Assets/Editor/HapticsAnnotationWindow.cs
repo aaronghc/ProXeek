@@ -1045,10 +1045,25 @@ public class HapticsAnnotationWindow : EditorWindow
     private void OnExportClicked()
     {
         // Create the Snapshot directory if it doesn't exist
-        string snapshotDir = "Assets/Snapshot";
+        string snapshotDir = "Assets/Export";
         if (!System.IO.Directory.Exists(snapshotDir))
         {
             System.IO.Directory.CreateDirectory(snapshotDir);
+        }
+        else
+        {
+            string[] files = System.IO.Directory.GetFiles(snapshotDir);
+            foreach (string file in files)
+            {
+                System.IO.File.Delete(file);
+            }
+
+            // Also delete any subdirectories
+            string[] subdirectories = System.IO.Directory.GetDirectories(snapshotDir);
+            foreach (string subdirectory in subdirectories)
+            {
+                System.IO.Directory.Delete(subdirectory, true);
+            }
         }
 
         // Collect all annotation data from the graph
@@ -1069,7 +1084,7 @@ public class HapticsAnnotationWindow : EditorWindow
                 @"[^\w\.-]",
                 "_");
             string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string filename = $"{safeName}_{timestamp}.png";
+            string filename = $"GameObject_{safeName}_{timestamp}.png";
             string fullPath = System.IO.Path.Combine(snapshotDir, filename);
 
             // Create a preview of the GameObject
@@ -1130,7 +1145,7 @@ public class HapticsAnnotationWindow : EditorWindow
                 @"[^\w\.-]",
                 "_");
             string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string filename = $"{safeGroupName}_Arrangement_{timestamp}.png";
+            string filename = $"Arrangement_{safeGroupName}_{timestamp}.png";
             string fullPath = System.IO.Path.Combine(snapshotDir, filename);
 
             // Take a screenshot of the group arrangement

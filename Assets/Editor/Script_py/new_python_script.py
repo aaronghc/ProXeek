@@ -86,7 +86,7 @@ try:
     # Initialize the LLM
     log("Initializing ChatOpenAI")
     proxy_picker_llm = ChatOpenAI(
-        model="gpt-4",
+        model="gpt-4o-2024-11-20",
         temperature=0.1,
         base_url="https://reverse.onechats.top/v1",
         api_key=api_key
