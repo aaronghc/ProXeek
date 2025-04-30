@@ -27,7 +27,7 @@ def run_python():
             print("Invalid request format - missing 'action' or not 'run_script'")
             return jsonify({'status': 'error', 'output': 'Invalid request format'}), 400
 
-        script_name = data.get('script_name', 'new_python_script.py')
+        script_name = data.get('script_name', 'ProXeek.py')
         params = data.get('params', {})
 
         print(f"Script name: {script_name}, Params: {params}")
