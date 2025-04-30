@@ -1,9 +1,12 @@
 import os
 import sys
 import json
+import base64
+from io import BytesIO
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
+from PIL import Image
 
 
 # Set up logging to help debug
@@ -23,20 +26,27 @@ if len(sys.argv) > 1:
     try:
         with open(params_file, 'r') as f:
             params = json.load(f)
-        log(f"Loaded parameters: {params}")
-        prompt = params.get('prompt')
-        if not prompt:
-            prompt = "What's the meaning of life?"
-            log(f"No prompt found in parameters, using default: {prompt}")
+        log(f"Loaded parameters")
+
+        haptic_requirements = params.get('hapticRequirements',
+                                         "Identify objects that could serve as haptic proxies in VR")
+        image_base64 = params.get('imageBase64')
+
+        if not image_base64:
+            log("No image data found in parameters")
+            prompt = haptic_requirements
         else:
-            log(f"Using prompt from parameters: {prompt}")
+            log(f"Found image data (length: {len(image_base64)})")
+            # We'll use the image with the prompt
     except Exception as e:
         log(f"Error reading parameters file: {e}")
-        prompt = "What's the meaning of life?"
+        haptic_requirements = "Identify objects that could serve as haptic proxies in VR"
+        image_base64 = None
 else:
     # Default when running from Unity Editor
     log("No parameters file provided, using default prompt")
-    prompt = "What's the meaning of life?"
+    haptic_requirements = "Identify objects that could serve as haptic proxies in VR"
+    image_base64 = None
 
 # Get the project path
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -92,13 +102,52 @@ try:
         api_key=api_key
     )
 
-    # Create the prompt
-    log(f"Creating prompt with content: {prompt}")
-    prompt_system = SystemMessage(content=prompt)
+    # Create the system prompt
+    system_prompt = """
+    You are a VR haptic proxy finder. Your task is to analyze the image of a user's physical environment and identify objects that could serve as haptic proxies for virtual objects in VR.
+
+    A good haptic proxy should:
+    1. Have similar physical properties (shape, size, weight) to the virtual object
+    2. Be easily accessible to the user
+    3. Be safe to interact with
+
+    For each potential proxy you identify:
+    - Describe its location in the image
+    - Explain why it would make a good proxy for the specified virtual object
+    - Note any limitations or considerations for using it
+
+    Be specific and practical in your recommendations.
+    """
+    prompt_system = SystemMessage(content=system_prompt)
+
+    # Add the haptic requirements
+    user_prompt = f"Based on the following requirements for a virtual object: {haptic_requirements}\n\nIdentify potential haptic proxies in the attached image of my physical environment."
+
+    # If we have an image, add it to the message
+    if image_base64:
+        log("Adding image to message")
+        prompt_human = HumanMessage(
+            content=[
+                {"type": "text", "text": user_prompt},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_base64}",
+                        "detail": "high"
+                    }
+                }
+            ]
+            )
+
+    else:
+        log("No image, using text-only prompt")
+        prompt_human = HumanMessage(content=user_prompt)
+
+    messages = [prompt_system, prompt_human]
 
     # Get the response
     log("Sending request to LLM")
-    response = proxy_picker_llm.invoke([prompt_system])
+    response = proxy_picker_llm.invoke(messages)
 
     # Print the response (this will be captured by the server)
     log("Received response from LLM")

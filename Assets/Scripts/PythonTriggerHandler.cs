@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using PassthroughCameraSamples.CameraToWorld;
 
 namespace PythonIntegration
 {
@@ -12,11 +15,17 @@ namespace PythonIntegration
     {
         [Header("Server Configuration")]
         [SerializeField] private string serverUrl = "http://172.28.194.245:5000/run_python";
-        [SerializeField] private float cooldownTime = 2.0f; // Prevent rapid firing
+        [SerializeField] private float cooldownTime = 2.0f;
 
         [Header("UI References")]
-        [SerializeField] private Text responseText; // Text component to display results
-        [SerializeField] private GameObject loadingIndicator; // Optional loading spinner
+        [SerializeField] private Text responseText;
+        [SerializeField] private GameObject loadingIndicator;
+
+        [Header("Snapshot References")]
+        [SerializeField] private SnapshotManager snapshotManager;
+
+        [Header("Haptic Requirements")]
+        [SerializeField, TextArea(3, 5)] private string hapticRequirements = "Find objects that could serve as haptic proxies for a virtual pistol. The pistol has a grip, trigger, and barrel.";
 
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
@@ -25,39 +34,38 @@ namespace PythonIntegration
         private bool _isCoolingDown = false;
         private HttpClient _httpClient;
         private bool _isProcessing = false;
-
-        // Threshold for trigger press
         private const float TRIGGER_THRESHOLD = 0.7f;
         private bool _wasRightTriggerPressed = false;
 
         private void Awake()
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(300); // Longer timeout for LLM processing
+            _httpClient.Timeout = TimeSpan.FromSeconds(300);
 
             if (loadingIndicator != null)
                 loadingIndicator.SetActive(false);
+
+            if (snapshotManager == null)
+                snapshotManager = FindObjectOfType<SnapshotManager>();
 
             LogDebug("Python Trigger Handler initialized");
         }
 
         private void Update()
         {
-            // Check for right hand trigger press
             float rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
             bool isRightTriggerPressed = rightTriggerValue > TRIGGER_THRESHOLD;
 
-            // Detect trigger press (not hold)
             if (isRightTriggerPressed && !_wasRightTriggerPressed && !_isCoolingDown && !_isProcessing)
             {
                 LogDebug("Trigger pressed: " + rightTriggerValue);
-                StartCoroutine(TriggerPythonExecution());
+                StartCoroutine(ProcessSnapshots());
             }
 
             _wasRightTriggerPressed = isRightTriggerPressed;
         }
 
-        private IEnumerator TriggerPythonExecution()
+        private IEnumerator ProcessSnapshots()
         {
             _isCoolingDown = true;
             _isProcessing = true;
@@ -66,29 +74,71 @@ namespace PythonIntegration
                 loadingIndicator.SetActive(true);
 
             if (responseText != null)
-                responseText.text = "Processing request...";
+                responseText.text = "Processing snapshots...";
 
-            LogDebug("Sending request to server...");
+            // Get the latest snapshots
+            string snapshotsFolder = Path.Combine(Application.persistentDataPath, "Snapshots");
+            LogDebug("Looking for snapshots in: " + snapshotsFolder);
 
-            // Create the JSON payload manually to ensure correct structure
-            string jsonPayload = @"{
-                ""action"": ""run_script"",
-                ""script_name"": ""new_python_script.py"",
-                ""params"": {
-                    ""prompt"": ""tell me a joke""
+            if (!Directory.Exists(snapshotsFolder))
+            {
+                if (responseText != null)
+                    responseText.text = "No snapshots folder found. Take some snapshots first.";
+
+                _isProcessing = false;
+                yield return new WaitForSeconds(cooldownTime);
+                _isCoolingDown = false;
+                yield break;
+            }
+
+            // Get the most recent snapshot files
+            string[] snapshotFiles = Directory.GetFiles(snapshotsFolder, "*.png");
+            if (snapshotFiles.Length == 0)
+            {
+                if (responseText != null)
+                    responseText.text = "No snapshots found. Take some snapshots first.";
+
+                _isProcessing = false;
+                yield return new WaitForSeconds(cooldownTime);
+                _isCoolingDown = false;
+                yield break;
+            }
+
+            // Sort by creation time (newest first)
+            Array.Sort(snapshotFiles, (a, b) => File.GetCreationTime(b).CompareTo(File.GetCreationTime(a)));
+
+            // Take the most recent snapshot
+            string latestSnapshot = snapshotFiles[0];
+            LogDebug("Using latest snapshot: " + latestSnapshot);
+
+            // Convert image to base64
+            byte[] imageArray = File.ReadAllBytes(latestSnapshot);
+            string base64Image = Convert.ToBase64String(imageArray);
+            LogDebug("Converted image to base64 (length: " + base64Image.Length + ")");
+
+            // Create the JSON payload
+            var payload = new SnapshotPayload
+            {
+                action = "run_script",
+                script_name = "ProXeek.py",
+                @params = new SnapshotParams
+                {
+                    hapticRequirements = hapticRequirements,
+                    imageBase64 = base64Image
                 }
-            }";
+            };
 
-            // Use Task to handle the HTTP request asynchronously
+            string jsonPayload = JsonUtility.ToJson(payload);
+            LogDebug("Created JSON payload");
+
+            // Send to server
             Task<string> responseTask = SendRequest(jsonPayload);
 
-            // Wait for the response without blocking the main thread
             while (!responseTask.IsCompleted)
             {
                 yield return null;
             }
 
-            // Process the response
             if (responseTask.IsFaulted)
             {
                 string errorMessage = "Error: Could not connect to server";
@@ -107,7 +157,6 @@ namespace PythonIntegration
                 string response = responseTask.Result;
                 LogDebug("Response received: " + (response.Length > 50 ? response.Substring(0, 50) + "..." : response));
 
-                // Try to parse the JSON response
                 try
                 {
                     ResponseData responseData = JsonUtility.FromJson<ResponseData>(response);
@@ -118,7 +167,6 @@ namespace PythonIntegration
                 }
                 catch (Exception ex)
                 {
-                    // If parsing fails, just display the raw response
                     if (responseText != null)
                         responseText.text = response;
 
@@ -130,8 +178,6 @@ namespace PythonIntegration
                 loadingIndicator.SetActive(false);
 
             _isProcessing = false;
-
-            // Start cooldown timer
             yield return new WaitForSeconds(cooldownTime);
             _isCoolingDown = false;
         }
@@ -141,15 +187,11 @@ namespace PythonIntegration
             try
             {
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                // Log the request for debugging
                 LogDebug("Sending request to: " + serverUrl);
-                LogDebug("Request body: " + jsonData);
+                LogDebug("Request body length: " + jsonData.Length);
 
                 var response = await _httpClient.PostAsync(serverUrl, content);
-
                 string responseContent = await response.Content.ReadAsStringAsync();
-                LogDebug("Raw response: " + responseContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -182,7 +224,21 @@ namespace PythonIntegration
         }
     }
 
-    // Add these serializable classes for JSON conversion
+    [Serializable]
+    public class SnapshotPayload
+    {
+        public string action;
+        public string script_name;
+        public SnapshotParams @params;
+    }
+
+    [Serializable]
+    public class SnapshotParams
+    {
+        public string hapticRequirements;
+        public string imageBase64;
+    }
+
     [Serializable]
     public class ResponseData
     {
