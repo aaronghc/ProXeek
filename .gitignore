@@ -17,3 +17,4 @@
 *.unity
 /Assets/PassthroughCameraApiSamples/CameraToWorld/Materials
 /Assets/PassthroughCameraApiSamples/CameraToWorld/Prefabs
+Assets/Editor/Script_py/temp_params.json
