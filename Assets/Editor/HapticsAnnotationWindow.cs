@@ -1115,7 +1115,7 @@ public class HapticsAnnotationWindow : EditorWindow
                     {
                         if (nodeAnnotation.objectName == node.AssociatedObject.name)
                         {
-                            nodeAnnotation.snapshotPath = $"Snapshot/{filename}";
+                            nodeAnnotation.snapshotPath = $"Export/{filename}";
                             break;
                         }
                     }
@@ -1157,7 +1157,7 @@ public class HapticsAnnotationWindow : EditorWindow
                 if (groupRecord.title == scope.title)
                 {
                     // Add the main snapshot path to the group record
-                    groupRecord.arrangementSnapshotPath = $"Snapshot/{filename}";
+                    groupRecord.arrangementSnapshotPath = $"Export/{filename}";
 
                     // Add additional angle paths if they exist
                     groupRecord.additionalViewAngles = new List<string>();
@@ -1173,7 +1173,7 @@ public class HapticsAnnotationWindow : EditorWindow
                         string angleFilePath = $"{baseFilePath}_angle{angle}{extension}";
                         if (System.IO.File.Exists(angleFilePath))
                         {
-                            string relativeAnglePath = $"Snapshot/{System.IO.Path.GetFileName(angleFilePath)}";
+                            string relativeAnglePath = $"Export/{System.IO.Path.GetFileName(angleFilePath)}";
                             groupRecord.additionalViewAngles.Add(relativeAnglePath);
                         }
                     }

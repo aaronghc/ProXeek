@@ -104,28 +104,72 @@ try:
 
     # Create the system prompt
     system_prompt = """
-    You are a VR haptic proxy finder. Your task is to analyze images of a user's physical environment and identify objects that could serve as haptic proxies for virtual objects in VR.
+    You are a haptic proxy picker. Your primary goal is to select suitable physical proxies from the images of the real-world surroundings of a VR user so that the user experiences the intended haptic feedback when interacting with target virtual objects.
 
-    A good haptic proxy should:
-    1. Have similar physical properties (shape, size, weight) to the virtual object
-    2. Be easily accessible to the user
-    3. Be safe to interact with
+    Annotation of Input JSON File:
+    -summary: Overall description about the current VR scene.
+    
+    -nodeAnnotations.objectName: The target virtual object in the VR scene for which you should propose a haptic proxy from surroundings.
+    -nodeAnnotations.isDirectContacted: Whether this virtual object would be directly contacted or not.
+    -nodeAnnotations.description: Overall description about the usage of this virtual object in the current VR scene.
+    -nodeAnnotations.engagementLevel: 0: low engagement, 1: medium engagement, 2: high engagement. It basically reflects how often the VR users will interact with this virtual object.
+    -nodeAnnotations.snapshotPath: The path where the snapshot of this target virtual object is stored.
+    -nodeAnnotations.inertia: Highly expected haptic feedback, if any, regarding the target virtual object's mass and gravity center.
+    -nodeAnnotations.interactivity: Highly expected haptic feedback, if any, regarding the target virtual object's interactable features.
+    -nodeAnnotations.outline: Highly expected haptic feedback, if any, regarding the target virtual object's shape and size.
+    -nodeAnnotations.texture: Highly expected haptic feedback, if any, regarding the target virtual object's surface texture.
+    -nodeAnnotations.hardness: Highly expected haptic feedback, if any, regarding the target virtual object's hardness of contact or flexible parts.
+    -nodeAnnotations.temperature: Highly expected haptic feedback, if any, regarding the perceived temperature of the contact points on the target virtual object.
+    -nodeAnnotations.inertiaValue: From 0 to 1, how important the inertia property is.
+    -nodeAnnotations.interactivity: From 0 to 1, how important the interactivity property is.
+    -nodeAnnotations.outline: From 0 to 1, how important the outline property is.
+    -nodeAnnotations.texture: From 0 to 1, how important the texture property is.
+    -nodeAnnotations.hardness: From 0 to 1, how important the hardness property is.
+    -nodeAnnotations.temperature: From 0 to 1, how important the temperature property is.
+    
+    -relationshipAnnotations.contactObject: The virtual object which a VR user direct contact with.
+    -relationshipAnnotations.substrateObject: The virtual object which a direct contacted virtual object will interact or collide with.
+    -relationshipAnnotations.annotationText: Anticipated haptic feedback transmitted through the contactObject when it comes into contact with the substrateObject.
+    
+    -groups.title: The name of grouped target virtual objects
+    -groups.objectNames: The names of target virtual objects
+    -groups.objectVectors.objectA: The name of objectA
+    -groups.objectVectors.objectB: The name of objectB
+    -groups.objectVectors.vector: The coordinate of the vector pointing from objectA to objectB.
+    -groups.objectVectors.distance: The distance between objectA and objectB with meters as unit.
+    -groups.objectVectors.additionalViewAngles: Different angles of snapshots of the grouped virtual objects in VR scene.
 
-    For each potential proxy you identify:
-    - Describe its location in the image
-    - Explain why it would make a good proxy for the specified virtual object
-    - Note any limitations or considerations for using it
-
-    I will provide multiple images of the same environment from different angles. Consider all images when making your recommendations.
-
-    Be specific and practical in your recommendations.
+    Proxy Picking Instructions:
+    1. Base Your Decisions on the Provided Data
+        *Construct the interaction scenario and anticipate the expected haptic feedback by reviewing the provided images, text descriptions, and usage instructions.
+        *Then, think in reverse: envision which physical proxies from the environment can supply the needed haptic sensations.
+    2. Think Differently by Contact Type
+        *Direct Contact Objects
+            -These are virtual objects the user's body directly contacts (e.g., tennis racket, shovel, chair)
+            -Strive for close matching across key haptic dimensions (shape, weight, texture, hardness), because contact is immediate.
+            -If “highly expected haptic feedback” is specified, prioritize simulating those properties.
+        *Tool-Mediated Objects
+            -These objects interact with the user indirectly via another tool (e.g., a golf ball being struck by a club).
+            -Be more flexible and creative when picking a proxy, as long as the user perceives the correct collisions, vibrations or force through the direct contact tool (e.g., a christmas tree could be a haptic proxy of a ping pang ball since the bat normally end up colliding with the tree with every swing; the scissors placed in a pen holder can serve as the haptic proxy for the lock when simulating the feedback of prying the lock open with a crowbar).
+    3. Choose with Focus
+        *"Highly expected haptic feedback" indicates which properties are especially prioritized by the VR developer. Although you should consider every property that might matter for immersion, prioritize these highlighted properties first if there is a trade-off.
+        *A "no further expectation" means there is no specific emphasis from the developer--however, you must still propose a proxy for that virtual object.
+    4. Consider Multi-Object Interactions
+        *Deduce the mentioned interaction pairs and how they might physically collide, transfer, interact with and so on.
+        *Think carefully about any haptic feedback that arises from these interactions.
+    
+    Final Output Requirements: 
+    1. Assign the most suitable physical object to each target virtual object (one proxy per virtual item).
+    2. Specify the location of each chosen haptic proxy (i.e., where it is found in the provided images)
+    3. Justify your proxy selection for each virtual object.
+    4. Describe how to hold or manipulate the chosen proxies so it simulate the expected haptic feedback.
     """
 
     # Create the messages
     messages = [SystemMessage(content=system_prompt)]
 
     # Add the haptic requirements
-    user_prompt = f"Based on the following requirements for a virtual object: {haptic_requirements}\n\nIdentify potential haptic proxies in the attached images of my physical environment."
+    user_prompt = f"Images of VR user's surroundings:"
 
     # If we have images, add them to the message
     if image_base64_list:

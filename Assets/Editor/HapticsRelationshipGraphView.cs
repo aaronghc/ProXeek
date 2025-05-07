@@ -306,8 +306,8 @@ public class HapticsRelationshipGraphView : GraphView
             {
                 data.relationshipAnnotations.Add(new HapticConnectionRecord
                 {
-                    directContactObject = kvp.Key,
-                    toolMediatedObject = hNode.AssociatedObject.name,
+                    contactObject = kvp.Key,
+                    substrateObject = hNode.AssociatedObject.name,
                     annotationText = kvp.Value
                 });
             }
@@ -324,8 +324,8 @@ public class HapticsRelationshipGraphView : GraphView
             {
                 // Check if this relationship is already in the list
                 bool alreadyExists = data.relationshipAnnotations.Any(r =>
-                    r.directContactObject == outputNode.AssociatedObject.name &&
-                    r.toolMediatedObject == inputNode.AssociatedObject.name);
+                    r.contactObject == outputNode.AssociatedObject.name &&
+                    r.substrateObject == inputNode.AssociatedObject.name);
 
                 if (!alreadyExists)
                 {
@@ -335,8 +335,8 @@ public class HapticsRelationshipGraphView : GraphView
                     // Add the relationship
                     data.relationshipAnnotations.Add(new HapticConnectionRecord
                     {
-                        directContactObject = outputNode.AssociatedObject.name,
-                        toolMediatedObject = inputNode.AssociatedObject.name,
+                        contactObject = outputNode.AssociatedObject.name,
+                        substrateObject = inputNode.AssociatedObject.name,
                         annotationText = annotationText
                     });
                 }
@@ -659,8 +659,8 @@ public class HapticObjectRecord
 [System.Serializable]
 public class HapticConnectionRecord
 {
-    public string directContactObject;
-    public string toolMediatedObject;
+    public string contactObject;
+    public string substrateObject;
     public string annotationText;
 }
 
@@ -990,7 +990,7 @@ public class HapticNode : Node
     {
         // Create a new direct port
         var newOutputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(bool));
-        newOutputPort.portName = "Direct →";
+        newOutputPort.portName = "Contact →";
 
         // Add to containers
         outputContainer.Add(newOutputPort);
@@ -1012,7 +1012,7 @@ public class HapticNode : Node
 
         // Create the port
         var inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
-        inputPort.portName = "→ Mediated";
+        inputPort.portName = "→ Substrate";
 
         // Create the text field (disabled by default) without a label
         var textField = new TextField();
@@ -1024,7 +1024,7 @@ public class HapticNode : Node
         // Expand the width to use available space
         textField.style.width = 150;
         textField.style.height = 18;
-        textField.style.marginLeft = 2;
+        textField.style.marginLeft = 0;
         textField.style.marginRight = 5;
 
         // Add tooltip for better UX
