@@ -637,7 +637,7 @@ public class HapticObjectRecord
     public bool isDirectContacted;
     public string description;
     public int engagementLevel;
-    public string snapshotPath;
+    //public string snapshotPath;
 
     public string inertia;
     public string interactivity;
@@ -670,7 +670,7 @@ public class GroupRecord
     public string title;
     public List<string> objectNames;
     public List<ObjectVectorRecord> objectVectors;
-    public string arrangementSnapshotPath; // Path to the main group arrangement snapshot
+    //public string arrangementSnapshotPath; // Path to the main group arrangement snapshot
     public List<string> additionalViewAngles; // Paths to additional view angles
 }
 

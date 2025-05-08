@@ -1116,15 +1116,15 @@ public class HapticsAnnotationWindow : EditorWindow
                     // Add to exported files list
                     exportedFiles.Add(filename);
 
-                    // Update the snapshot path in the export data
-                    foreach (var nodeAnnotation in exportData.nodeAnnotations)
-                    {
-                        if (nodeAnnotation.objectName == node.AssociatedObject.name)
-                        {
-                            nodeAnnotation.snapshotPath = $"StreamingAssets/Export/{filename}";
-                            break;
-                        }
-                    }
+                    //// Update the snapshot path in the export data
+                    //foreach (var nodeAnnotation in exportData.nodeAnnotations)
+                    //{
+                    //    if (nodeAnnotation.objectName == node.AssociatedObject.name)
+                    //    {
+                    //        nodeAnnotation.snapshotPath = $"StreamingAssets/Export/{filename}";
+                    //        break;
+                    //    }
+                    //}
                 }
 
                 // Clean up
@@ -1168,8 +1168,8 @@ public class HapticsAnnotationWindow : EditorWindow
             {
                 if (groupRecord.title == scope.title)
                 {
-                    // Add the main snapshot path to the group record
-                    groupRecord.arrangementSnapshotPath = $"StreamingAssets/Export/{filename}";
+                    //// Add the main snapshot path to the group record
+                    //groupRecord.arrangementSnapshotPath = $"StreamingAssets/Export/{filename}";
 
                     // Add additional angle paths if they exist
                     groupRecord.additionalViewAngles = new List<string>();

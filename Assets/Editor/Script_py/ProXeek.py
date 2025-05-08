@@ -272,10 +272,10 @@ try:
             log(f"Added arrangement {i + 1}/{len(arrangement_snapshots)}: {arrangement['arrangementName']} with {len(arrangement['imageBase64List'])} images")
 
     # Add final instruction
-    human_message_content.append({
-        "type": "text",
-        "text": "\nBased on the haptic annotation data, virtual object images, and environment images, please identify the most suitable physical objects to serve as haptic proxies for each virtual object."
-    })
+    # human_message_content.append({
+    #     "type": "text",
+    #     "text": "\nBased on the haptic annotation data, virtual object images, and environment images, please identify the most suitable physical objects to serve as haptic proxies for each virtual object."
+    # })
 
     # Create the human message with all content
     messages.append(HumanMessage(content=human_message_content))

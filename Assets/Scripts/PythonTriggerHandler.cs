@@ -307,7 +307,24 @@ namespace PythonIntegration
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
                     // Extract object name from filename (format: GameObject_ObjectName_Date...)
                     string[] parts = fileName.Split('_');
-                    string objectName = parts.Length > 1 ? parts[1] : "Unknown";
+                    // Skip the first part ("GameObject") and extract all parts until we hit a part that looks like a date
+                    // Assuming date format contains numbers and is at least 8 characters long
+                    List<string> objectNameParts = new List<string>();
+                    for (int i = 1; i < parts.Length; i++)
+                    {
+                        // Check if this part looks like it might be the start of a timestamp
+                        // (contains digits and is long enough to be a date)
+                        if (parts[i].Length >= 8 && parts[i].Any(char.IsDigit))
+                        {
+                            break;
+                        }
+                        objectNameParts.Add(parts[i]);
+                    }
+
+                    // Join the object name parts back together with underscores
+                    string objectName = objectNameParts.Count > 0
+                        ? string.Join("_", objectNameParts)
+                        : "Unknown";
 
                     byte[] imageArray = File.ReadAllBytes(filePath);
                     string base64Image = Convert.ToBase64String(imageArray);
@@ -506,7 +523,24 @@ namespace PythonIntegration
 
                     string fileName = Path.GetFileNameWithoutExtension(gameObjectFile);
                     string[] parts = fileName.Split('_');
-                    string objectName = parts.Length > 1 ? parts[1] : "Unknown";
+                    // Skip the first part ("GameObject") and extract all parts until we hit a part that looks like a date
+                    // Assuming date format contains numbers and is at least 8 characters long
+                    List<string> objectNameParts = new List<string>();
+                    for (int i = 1; i < parts.Length; i++)
+                    {
+                        // Check if this part looks like it might be the start of a timestamp
+                        // (contains digits and is long enough to be a date)
+                        if (parts[i].Length >= 8 && parts[i].Any(char.IsDigit))
+                        {
+                            break;
+                        }
+                        objectNameParts.Add(parts[i]);
+                    }
+
+                    // Join the object name parts back together with underscores
+                    string objectName = objectNameParts.Count > 0
+                        ? string.Join("_", objectNameParts)
+                        : "Unknown";
 
                     virtualObjectSnapshots.Add(new VirtualObjectSnapshot
                     {
