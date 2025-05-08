@@ -98,12 +98,12 @@ if langchain_api_key:
     os.environ["LANGCHAIN_API_KEY"] = langchain_api_key
 
 try:
-    # Initialize the LLM
+    # Initialize the LLM     base_url="https://reverse.onechats.top/v1",
     log("Initializing ChatOpenAI")
     proxy_picker_llm = ChatOpenAI(
-        model="gpt-4o-2024-11-20",
+        model="o3-2025-04-16",
         temperature=0.1,
-        base_url="https://reverse.onechats.top/v1",
+        base_url="https://api.nuwaapi.com/v1",
         api_key=api_key
     )
 
@@ -146,28 +146,23 @@ try:
 
     Proxy Picking Instructions:
     1. Base Your Decisions on the Provided Data
-        *Construct the interaction scenario and anticipate the expected haptic feedback by reviewing the provided images, text descriptions, and usage instructions.
+        *Construct the interaction scenario and anticipate the expected haptic feedback by reviewing the haptic annotation and provided images.
         *Then, think in reverse: envision which physical proxies from the environment can supply the needed haptic sensations.
     2. Think Differently by Contact Type
-        *Direct Contact Objects
+        *Contact Objects
             -These are virtual objects the user's body directly contacts (e.g., tennis racket, shovel, chair)
-            -Strive for close matching across key haptic dimensions (shape, weight, texture, hardness), because contact is immediate.
-            -If "highly expected haptic feedback" is specified, prioritize simulating those properties.
-        *Tool-Mediated Objects
-            -These objects interact with the user indirectly via another tool (e.g., a golf ball being struck by a club).
+            -Strive for close matching across highlighted properties (inertia, interactivity, outline, texture, hardness, temperature) for contact parts.
+        *Substrate Objects
+            -These objects interact with the user indirectly via another tool (e.g., a golf ball being struck by a club, a bucket of water being stirred by a stick).
             -Be more flexible and creative when picking a proxy, as long as the user perceives the correct collisions, vibrations or force through the direct contact tool (e.g., a christmas tree could be a haptic proxy of a ping pang ball since the bat normally end up colliding with the tree with every swing; the scissors placed in a pen holder can serve as the haptic proxy for the lock when simulating the feedback of prying the lock open with a crowbar).
     3. Choose with Focus
-        *"Highly expected haptic feedback" indicates which properties are especially prioritized by the VR developer. Although you should consider every property that might matter for immersion, prioritize these highlighted properties first if there is a trade-off.
-        *A "no further expectation" means there is no specific emphasis from the developer--however, you must still propose a proxy for that virtual object.
-    4. Consider Multi-Object Interactions
-        *Deduce the mentioned interaction pairs and how they might physically collide, transfer, interact with and so on.
-        *Think carefully about any haptic feedback that arises from these interactions.
+        *Annotated physical properties and description from the haptic annotation json file indicate which properties are especially significant in terms of rendering a anticipated haptic feedback. Although you should consider every property that might matter for immersion, prioritize these highlighted annotation first if there is a trade-off.
 
     Final Output Requirements: 
-    1. Assign the most suitable physical object to each target virtual object (one proxy per virtual item).
+    1. Assign the most suitable physical object to each target virtual object (a single physical object cannot serve as the haptic proxy for multiple virtual objects).
     2. Specify the location of each chosen haptic proxy (i.e., where it is found in the provided images)
     3. Justify your proxy selection for each virtual object.
-    4. Describe how to hold or manipulate the chosen proxies so it simulate the expected haptic feedback.
+    4. Describe how to hold or manipulate the chosen haptic proxy so it could simulate the expected haptic feedback.
     """
 
     # Create the messages
