@@ -34,8 +34,12 @@ def run_python():
         params = data.get('params', {})
 
         print(f"Script name: {script_name}")
-        if 'imageBase64List' in params:
-            print(f"Received {len(params['imageBase64List'])} images")
+        if 'environmentImageBase64List' in params:
+            print(f"Received {len(params['environmentImageBase64List'])} environment images")
+        if 'virtualObjectSnapshots' in params:
+            print(f"Received {len(params['virtualObjectSnapshots'])} virtual object snapshots")
+        if 'arrangementSnapshots' in params:
+            print(f"Received {len(params['arrangementSnapshots'])} arrangement snapshots")
 
         # Full path to the script
         script_path = os.path.join(SCRIPTS_PATH, script_name)

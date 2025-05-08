@@ -1045,7 +1045,7 @@ public class HapticsAnnotationWindow : EditorWindow
     private void OnExportClicked()
     {
         // Create the Snapshot directory if it doesn't exist
-        string snapshotDir = "Assets/Export";
+        string snapshotDir = "Assets/StreamingAssets/Export";
         if (!System.IO.Directory.Exists(snapshotDir))
         {
             System.IO.Directory.CreateDirectory(snapshotDir);
@@ -1065,6 +1065,9 @@ public class HapticsAnnotationWindow : EditorWindow
                 System.IO.Directory.Delete(subdirectory, true);
             }
         }
+
+        // Create a list to track all exported files for the manifest
+        List<string> exportedFiles = new List<string>();
 
         // Collect all annotation data from the graph
         var exportData = _graphView.CollectAnnotationData();
@@ -1110,12 +1113,15 @@ public class HapticsAnnotationWindow : EditorWindow
                     byte[] pngData = previewTexture.EncodeToPNG();
                     System.IO.File.WriteAllBytes(fullPath, pngData);
 
+                    // Add to exported files list
+                    exportedFiles.Add(filename);
+
                     // Update the snapshot path in the export data
                     foreach (var nodeAnnotation in exportData.nodeAnnotations)
                     {
                         if (nodeAnnotation.objectName == node.AssociatedObject.name)
                         {
-                            nodeAnnotation.snapshotPath = $"Export/{filename}";
+                            nodeAnnotation.snapshotPath = $"StreamingAssets/Export/{filename}";
                             break;
                         }
                     }
@@ -1151,13 +1157,19 @@ public class HapticsAnnotationWindow : EditorWindow
             // Take a screenshot of the group arrangement
             CaptureGroupArrangement(scope, fullPath);
 
+            // Add to exported files list if the file was created
+            if (System.IO.File.Exists(fullPath))
+            {
+                exportedFiles.Add(filename);
+            }
+
             // Find the corresponding group in the export data
             foreach (var groupRecord in exportData.groups)
             {
                 if (groupRecord.title == scope.title)
                 {
                     // Add the main snapshot path to the group record
-                    groupRecord.arrangementSnapshotPath = $"Export/{filename}";
+                    groupRecord.arrangementSnapshotPath = $"StreamingAssets/Export/{filename}";
 
                     // Add additional angle paths if they exist
                     groupRecord.additionalViewAngles = new List<string>();
@@ -1170,11 +1182,16 @@ public class HapticsAnnotationWindow : EditorWindow
 
                     for (int angle = 0; angle < 3; angle++) // Check for 3 angles
                     {
-                        string angleFilePath = $"{baseFilePath}_angle{angle}{extension}";
+                        string angleFileName = $"{System.IO.Path.GetFileNameWithoutExtension(fullPath)}_angle{angle}{extension}";
+                        string angleFilePath = System.IO.Path.Combine(snapshotDir, angleFileName);
+
                         if (System.IO.File.Exists(angleFilePath))
                         {
-                            string relativeAnglePath = $"Export/{System.IO.Path.GetFileName(angleFilePath)}";
+                            string relativeAnglePath = $"StreamingAssets/Export/{angleFileName}";
                             groupRecord.additionalViewAngles.Add(relativeAnglePath);
+
+                            // Add to exported files list
+                            exportedFiles.Add(angleFileName);
                         }
                     }
 
@@ -1183,20 +1200,43 @@ public class HapticsAnnotationWindow : EditorWindow
             }
         }
 
-        // Serialize to JSON
+        // Serialize annotation data to JSON
+        string jsonFileName = $"haptic_annotation_{System.DateTime.Now.ToString("yyyyMMdd_HHmmss")}.json";
+        string jsonPath = System.IO.Path.Combine(snapshotDir, jsonFileName);
         string jsonResult = JsonUtility.ToJson(exportData, true);
-        string jsonPath = System.IO.Path.Combine(snapshotDir, $"haptic_annotation_{System.DateTime.Now.ToString("yyyyMMdd_HHmmss")}.json");
         System.IO.File.WriteAllText(jsonPath, jsonResult);
 
+        // Add to exported files list
+        exportedFiles.Add(jsonFileName);
+
         Debug.Log($"Exported Haptic Annotation Data to {jsonPath}");
+
+        // Create and save the manifest.json file
+        ManifestData manifest = new ManifestData
+        {
+            files = exportedFiles
+        };
+
+        string manifestJson = JsonUtility.ToJson(manifest, true);
+        string manifestPath = System.IO.Path.Combine(snapshotDir, "manifest.json");
+        System.IO.File.WriteAllText(manifestPath, manifestJson);
+
+        Debug.Log($"Created manifest.json with {exportedFiles.Count} files");
 
         // Refresh the asset database to show the new files
         AssetDatabase.Refresh();
 
         // Show a success message
         EditorUtility.DisplayDialog("Export Complete",
-            $"Successfully exported {nodes.Count} node snapshots, {scopes.Count} group arrangements, and annotation data to {snapshotDir} folder.",
+            $"Successfully exported {nodes.Count} node snapshots, {scopes.Count} group arrangements, annotation data, and manifest.json to {snapshotDir} folder.",
             "OK");
+    }
+
+    // Add this class to your script
+    [Serializable]
+    public class ManifestData
+    {
+        public List<string> files;
     }
 
     // Method to capture screenshots of a group arrangement from multiple angles

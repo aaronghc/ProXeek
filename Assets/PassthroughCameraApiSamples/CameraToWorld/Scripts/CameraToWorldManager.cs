@@ -96,7 +96,7 @@ namespace PassthroughCameraSamples.CameraToWorld
             m_wasRightTriggerPressed = isRightTriggerPressed;
 
             // Button A: Take a snapshot (OVRInput.Button.One)
-            if (OVRInput.GetDown(OVRInput.Button.SecondaryThumbstickLeft))
+            if (OVRInput.GetDown(OVRInput.Button.One))
             {
                 Debug.Log("PCA: Button A pressed");
 

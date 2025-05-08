@@ -28,25 +28,30 @@ if len(sys.argv) > 1:
             params = json.load(f)
         log(f"Loaded parameters")
 
-        haptic_requirements = params.get('hapticRequirements',
-                                         "Identify objects that could serve as haptic proxies in VR")
-        image_base64_list = params.get('imageBase64List', [])
+        # Extract data from parameters
+        haptic_annotation_json = params.get('hapticAnnotationJson', '')
+        environment_image_base64_list = params.get('environmentImageBase64List', [])
+        virtual_object_snapshots = params.get('virtualObjectSnapshots', [])
+        arrangement_snapshots = params.get('arrangementSnapshots', [])
 
-        if not image_base64_list:
-            log("No image data found in parameters")
-            prompt = haptic_requirements
-        else:
-            log(f"Found {len(image_base64_list)} images")
-            # We'll use the images with the prompt
+        log(f"Found {len(environment_image_base64_list)} environment images")
+        log(f"Found {len(virtual_object_snapshots)} virtual object snapshots")
+        log(f"Found {len(arrangement_snapshots)} arrangement snapshots")
+        log(f"Haptic annotation JSON present: {'Yes' if haptic_annotation_json else 'No'}")
+
     except Exception as e:
         log(f"Error reading parameters file: {e}")
-        haptic_requirements = "Identify objects that could serve as haptic proxies in VR"
-        image_base64_list = []
+        haptic_annotation_json = ''
+        environment_image_base64_list = []
+        virtual_object_snapshots = []
+        arrangement_snapshots = []
 else:
     # Default when running from Unity Editor
-    log("No parameters file provided, using default prompt")
-    haptic_requirements = "Identify objects that could serve as haptic proxies in VR"
-    image_base64_list = []
+    log("No parameters file provided, using defaults")
+    haptic_annotation_json = ''
+    environment_image_base64_list = []
+    virtual_object_snapshots = []
+    arrangement_snapshots = []
 
 # Get the project path
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -108,7 +113,7 @@ try:
 
     Annotation of Input JSON File:
     -summary: Overall description about the current VR scene.
-    
+
     -nodeAnnotations.objectName: The target virtual object in the VR scene for which you should propose a haptic proxy from surroundings.
     -nodeAnnotations.isDirectContacted: Whether this virtual object would be directly contacted or not.
     -nodeAnnotations.description: Overall description about the usage of this virtual object in the current VR scene.
@@ -126,11 +131,11 @@ try:
     -nodeAnnotations.texture: From 0 to 1, how important the texture property is.
     -nodeAnnotations.hardness: From 0 to 1, how important the hardness property is.
     -nodeAnnotations.temperature: From 0 to 1, how important the temperature property is.
-    
+
     -relationshipAnnotations.contactObject: The virtual object which a VR user direct contact with.
     -relationshipAnnotations.substrateObject: The virtual object which a direct contacted virtual object will interact or collide with.
     -relationshipAnnotations.annotationText: Anticipated haptic feedback transmitted through the contactObject when it comes into contact with the substrateObject.
-    
+
     -groups.title: The name of grouped target virtual objects
     -groups.objectNames: The names of target virtual objects
     -groups.objectVectors.objectA: The name of objectA
@@ -147,7 +152,7 @@ try:
         *Direct Contact Objects
             -These are virtual objects the user's body directly contacts (e.g., tennis racket, shovel, chair)
             -Strive for close matching across key haptic dimensions (shape, weight, texture, hardness), because contact is immediate.
-            -If “highly expected haptic feedback” is specified, prioritize simulating those properties.
+            -If "highly expected haptic feedback" is specified, prioritize simulating those properties.
         *Tool-Mediated Objects
             -These objects interact with the user indirectly via another tool (e.g., a golf ball being struck by a club).
             -Be more flexible and creative when picking a proxy, as long as the user perceives the correct collisions, vibrations or force through the direct contact tool (e.g., a christmas tree could be a haptic proxy of a ping pang ball since the bat normally end up colliding with the tree with every swing; the scissors placed in a pen holder can serve as the haptic proxy for the lock when simulating the feedback of prying the lock open with a crowbar).
@@ -157,7 +162,7 @@ try:
     4. Consider Multi-Object Interactions
         *Deduce the mentioned interaction pairs and how they might physically collide, transfer, interact with and so on.
         *Think carefully about any haptic feedback that arises from these interactions.
-    
+
     Final Output Requirements: 
     1. Assign the most suitable physical object to each target virtual object (one proxy per virtual item).
     2. Specify the location of each chosen haptic proxy (i.e., where it is found in the provided images)
@@ -168,31 +173,112 @@ try:
     # Create the messages
     messages = [SystemMessage(content=system_prompt)]
 
-    # Add the haptic requirements
-    user_prompt = f"Images of VR user's surroundings:"
+    # Prepare the human message content
+    human_message_content = []
 
-    # If we have images, add them to the message
-    if image_base64_list:
-        log(f"Adding {len(image_base64_list)} images to message")
+    # 1. Add text description first
+    text_content = "I need to find haptic proxies for virtual objects in VR. Here's the data:"
 
-        # Create content list with text first
-        content_list = [{"type": "text", "text": user_prompt}]
+    # Add haptic annotation JSON if available
+    if haptic_annotation_json:
+        try:
+            # Parse JSON to make it more readable
+            haptic_data = json.loads(haptic_annotation_json)
+            formatted_json = json.dumps(haptic_data, indent=2)
+            text_content += f"\n\nHaptic Annotation Data:\n```json\n{formatted_json}\n```"
+        except Exception as e:
+            log(f"Error parsing haptic annotation JSON: {e}")
+            text_content += f"\n\nHaptic Annotation Data:\n{haptic_annotation_json}"
 
-        # Add each image
-        for i, image_base64 in enumerate(image_base64_list):
-            content_list.append({
+    human_message_content.append({"type": "text", "text": text_content})
+
+    # 2. Add environment images
+    if environment_image_base64_list:
+        log(f"Adding {len(environment_image_base64_list)} environment images")
+
+        # Add a separator text
+        human_message_content.append({
+            "type": "text",
+            "text": "\nImages of the physical environment (potential haptic proxies):"
+        })
+
+        # Add each environment image
+        for i, image_base64 in enumerate(environment_image_base64_list):
+            human_message_content.append({
                 "type": "image_url",
                 "image_url": {
                     "url": f"data:image/jpeg;base64,{image_base64}",
                     "detail": "high"
                 }
             })
-            log(f"Added image {i + 1}/{len(image_base64_list)}")
+            log(f"Added environment image {i + 1}/{len(environment_image_base64_list)}")
 
-        messages.append(HumanMessage(content=content_list))
-    else:
-        log("No images, using text-only prompt")
-        messages.append(HumanMessage(content=user_prompt))
+    # 3. Add virtual object snapshots
+    if virtual_object_snapshots:
+        log(f"Adding {len(virtual_object_snapshots)} virtual object snapshots")
+
+        # Add a separator text
+        human_message_content.append({
+            "type": "text",
+            "text": "\nImages of individual virtual objects:"
+        })
+
+        # Add each virtual object image with its name
+        for i, obj_snapshot in enumerate(virtual_object_snapshots):
+            # Add object name before its image
+            human_message_content.append({
+                "type": "text",
+                "text": f"\nVirtual Object: {obj_snapshot['objectName']}"
+            })
+
+            # Add the image
+            human_message_content.append({
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{obj_snapshot['imageBase64']}",
+                    "detail": "high"
+                }
+            })
+            log(f"Added virtual object image {i + 1}/{len(virtual_object_snapshots)}: {obj_snapshot['objectName']}")
+
+    # 4. Add arrangement snapshots
+    if arrangement_snapshots:
+        log(f"Adding {len(arrangement_snapshots)} arrangement groups")
+
+        # Add a separator text
+        human_message_content.append({
+            "type": "text",
+            "text": "\nImages of virtual object arrangements:"
+        })
+
+        # Add each arrangement group
+        for i, arrangement in enumerate(arrangement_snapshots):
+            # Add arrangement name
+            human_message_content.append({
+                "type": "text",
+                "text": f"\nArrangement: {arrangement['arrangementName']}"
+            })
+
+            # Add all images for this arrangement
+            for j, image_base64 in enumerate(arrangement['imageBase64List']):
+                human_message_content.append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_base64}",
+                        "detail": "high"
+                    }
+                })
+
+            log(f"Added arrangement {i + 1}/{len(arrangement_snapshots)}: {arrangement['arrangementName']} with {len(arrangement['imageBase64List'])} images")
+
+    # Add final instruction
+    human_message_content.append({
+        "type": "text",
+        "text": "\nBased on the haptic annotation data, virtual object images, and environment images, please identify the most suitable physical objects to serve as haptic proxies for each virtual object."
+    })
+
+    # Create the human message with all content
+    messages.append(HumanMessage(content=human_message_content))
 
     # Get the response
     log("Sending request to LLM")
