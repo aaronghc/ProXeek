@@ -113,6 +113,10 @@ try:
 
     Annotation of Input JSON File:
     -summary: Overall description about the current VR scene.
+    
+    -highEngagementOrder: The user almost always interacts with the following target virtual objects.
+    -mediumEngagementOrder: The user frequently interacts with the following target virtual objects.
+    -lowEngagementOrder: The user occasionally interacts with the following target virtual objects.
 
     -nodeAnnotations.objectName: The target virtual object in the VR scene for which you should propose a haptic proxy from surroundings.
     -nodeAnnotations.isDirectContacted: Whether this virtual object would be directly contacted or not.
@@ -144,7 +148,7 @@ try:
     -groups.objectVectors.distance: The distance between objectA and objectB with meters as unit.
     -groups.objectVectors.additionalViewAngles: Different angles of snapshots of the grouped virtual objects in VR scene.
 
-    Proxy Picking Instructions:
+    Proxy Seeking Instructions:
     1. Base Your Decisions on the Provided Data
         *Construct the interaction scenario and anticipate the expected haptic feedback by reviewing the haptic annotation and provided images.
         *Then, think in reverse: envision which physical proxies from the environment can supply the needed haptic sensations.
@@ -157,9 +161,11 @@ try:
             -Be more flexible and creative when picking a proxy, as long as the user perceives the correct collisions, vibrations or force through the direct contact tool (e.g., a christmas tree could be a haptic proxy of a ping pang ball since the bat normally end up colliding with the tree with every swing; the scissors placed in a pen holder can serve as the haptic proxy for the lock when simulating the feedback of prying the lock open with a crowbar).
     3. Choose with Focus
         *Annotated physical properties and description from the haptic annotation json file indicate which properties are especially significant in terms of rendering a anticipated haptic feedback. Although you should consider every property that might matter for immersion, prioritize these highlighted annotation first if there is a trade-off.
+    4. Assign with Priority
+        *A single physical object cannot serve as the haptic proxy for multiple virtual objects simultaneously. When there is a conflict between two virtual objects over their haptic proxies, prioritize assigning the proxy to the virtual object with the higher *engagement order*.
 
     Final Output Requirements: 
-    1. Assign the most suitable physical object to each target virtual object (a single physical object cannot serve as the haptic proxy for multiple virtual objects).
+    1. Assign the most suitable physical object to each target virtual object.
     2. Specify the location of each chosen haptic proxy (i.e., where it is found in the provided images)
     3. Justify your proxy selection for each virtual object.
     4. Describe how to hold or manipulate the chosen haptic proxy so it could simulate the expected haptic feedback.

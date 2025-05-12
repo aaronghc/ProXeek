@@ -1075,6 +1075,31 @@ public class HapticsAnnotationWindow : EditorWindow
         // Add summary to the export data
         exportData.summary = _graphSummary;
 
+        // Add ordered engagement level lists to the export data
+        foreach (var node in _orderedHighEngagementNodes)
+        {
+            if (node.AssociatedObject != null)
+            {
+                exportData.highEngagementOrder.Add(node.AssociatedObject.name);
+            }
+        }
+
+        foreach (var node in _orderedMediumEngagementNodes)
+        {
+            if (node.AssociatedObject != null)
+            {
+                exportData.mediumEngagementOrder.Add(node.AssociatedObject.name);
+            }
+        }
+
+        foreach (var node in _orderedLowEngagementNodes)
+        {
+            if (node.AssociatedObject != null)
+            {
+                exportData.lowEngagementOrder.Add(node.AssociatedObject.name);
+            }
+        }
+
         // Get all nodes from the graph
         var nodes = _graphView.GetNodes();
 

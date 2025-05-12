@@ -274,7 +274,12 @@ public class HapticsRelationshipGraphView : GraphView
         var data = new HapticAnnotationData();
         data.nodeAnnotations = new List<HapticObjectRecord>();
         data.relationshipAnnotations = new List<HapticConnectionRecord>();
-        data.groups = new List<GroupRecord>(); 
+        data.groups = new List<GroupRecord>();
+
+        // Add ordered engagement level lists
+        data.highEngagementOrder = new List<string>();
+        data.mediumEngagementOrder = new List<string>();
+        data.lowEngagementOrder = new List<string>();
 
         foreach (var hNode in _nodes)
         {
@@ -625,6 +630,9 @@ public class HapticsRelationshipGraphView : GraphView
 public class HapticAnnotationData
 {
     public string summary;
+    public List<string> highEngagementOrder;
+    public List<string> mediumEngagementOrder;
+    public List<string> lowEngagementOrder;
     public List<HapticObjectRecord> nodeAnnotations;
     public List<HapticConnectionRecord> relationshipAnnotations;
     public List<GroupRecord> groups;
