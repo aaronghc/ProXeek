@@ -1103,7 +1103,7 @@ public class HapticsAnnotationWindow : EditorWindow
         // Get all nodes from the graph
         var nodes = _graphView.GetNodes();
 
-        // Export snapshots for each node
+        // Update the node snapshot capture part in OnExportClicked method
         foreach (var node in nodes)
         {
             // Generate a unique filename based on the object name
@@ -1115,22 +1115,11 @@ public class HapticsAnnotationWindow : EditorWindow
             string filename = $"GameObject_{safeName}_{timestamp}.png";
             string fullPath = System.IO.Path.Combine(snapshotDir, filename);
 
-            // Create a preview of the GameObject
+            // Create a preview of the GameObject using the current interactive preview state
             if (node.AssociatedObject != null)
             {
-                // Create a temporary editor for the GameObject
-                Editor tempEditor = Editor.CreateEditor(node.AssociatedObject);
-
-                // Create a render texture for the preview
-                RenderTexture rt = new RenderTexture(512, 512, 24);
-                RenderTexture.active = rt;
-
-                // Clear the render texture
-                GL.Clear(true, true, Color.gray);
-
-                // Get the preview texture from the editor
-                Texture2D previewTexture = tempEditor.RenderStaticPreview(
-                    fullPath, null, 512, 512);
+                // Capture the current preview state (with user-defined angle)
+                Texture2D previewTexture = node.CapturePreviewSnapshot();
 
                 if (previewTexture != null)
                 {
@@ -1138,23 +1127,12 @@ public class HapticsAnnotationWindow : EditorWindow
                     byte[] pngData = previewTexture.EncodeToPNG();
                     System.IO.File.WriteAllBytes(fullPath, pngData);
 
+                    // Clean up
+                    UnityEngine.Object.DestroyImmediate(previewTexture);
+
                     // Add to exported files list
                     exportedFiles.Add(filename);
-
-                    //// Update the snapshot path in the export data
-                    //foreach (var nodeAnnotation in exportData.nodeAnnotations)
-                    //{
-                    //    if (nodeAnnotation.objectName == node.AssociatedObject.name)
-                    //    {
-                    //        nodeAnnotation.snapshotPath = $"StreamingAssets/Export/{filename}";
-                    //        break;
-                    //    }
-                    //}
                 }
-
-                // Clean up
-                RenderTexture.active = null;
-                UnityEngine.Object.DestroyImmediate(tempEditor);
             }
         }
 

@@ -786,6 +786,100 @@ public class HapticNode : Node
         return snapshot;
     }
 
+    // Alternative method to capture preview
+    public Texture2D CapturePreviewSnapshot()
+    {
+        Debug.Log($"[{AssociatedObject.name}] Starting alternative preview capture");
+
+        if (AssociatedObject == null)
+        {
+            Debug.LogError($"Associated object is null");
+            return CreateDefaultTexture(512, 512);
+        }
+
+        // Create a temporary editor if needed
+        Editor tempEditor = _gameObjectEditor;
+        bool createdTempEditor = false;
+
+        if (tempEditor == null)
+        {
+            Debug.Log($"[{AssociatedObject.name}] Creating temporary editor");
+            tempEditor = Editor.CreateEditor(AssociatedObject);
+            createdTempEditor = true;
+        }
+
+        try
+        {
+            // Get the preview texture directly
+            Debug.Log($"[{AssociatedObject.name}] Calling RenderStaticPreview");
+            Texture2D previewTexture = tempEditor.RenderStaticPreview(
+                "temp.png", null, 512, 512);
+
+            if (previewTexture != null)
+            {
+                Debug.Log($"[{AssociatedObject.name}] Successfully rendered preview texture: {previewTexture.width}x{previewTexture.height}");
+
+                // Create a copy of the texture since the original might be destroyed
+                Texture2D textureCopy = new Texture2D(previewTexture.width, previewTexture.height, TextureFormat.RGBA32, false);
+                textureCopy.SetPixels(previewTexture.GetPixels());
+                textureCopy.Apply();
+
+                // Check if the texture has valid data
+                Color testPixel = textureCopy.GetPixel(textureCopy.width / 2, textureCopy.height / 2);
+                Debug.Log($"[{AssociatedObject.name}] Center pixel color: R={testPixel.r}, G={testPixel.g}, B={testPixel.b}, A={testPixel.a}");
+
+                return textureCopy;
+            }
+            else
+            {
+                Debug.LogWarning($"[{AssociatedObject.name}] RenderStaticPreview returned null");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[{AssociatedObject.name}] Error in RenderStaticPreview: {e.Message}\n{e.StackTrace}");
+        }
+        finally
+        {
+            // Clean up the temporary editor if we created one
+            if (createdTempEditor && tempEditor != null)
+            {
+                Debug.Log($"[{AssociatedObject.name}] Destroying temporary editor");
+                UnityEngine.Object.DestroyImmediate(tempEditor);
+            }
+        }
+
+        // If we get here, something went wrong, return a default texture
+        Debug.Log($"[{AssociatedObject.name}] Falling back to default texture");
+        return CreateDefaultTexture(512, 512);
+    }
+
+    // Helper method to create a default texture
+    private Texture2D CreateDefaultTexture(int width, int height)
+    {
+        Texture2D defaultTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        Color[] pixels = new Color[width * height];
+
+        // Create a checkerboard pattern to make it obvious this is a fallback
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                bool isEvenRow = (y / 32) % 2 == 0;
+                bool isEvenCol = (x / 32) % 2 == 0;
+
+                if (isEvenRow == isEvenCol)
+                    pixels[y * width + x] = new Color(0.3f, 0.3f, 0.3f, 1.0f);
+                else
+                    pixels[y * width + x] = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+            }
+        }
+
+        defaultTexture.SetPixels(pixels);
+        defaultTexture.Apply();
+        return defaultTexture;
+    }
+
     public GameObject AssociatedObject { get; private set; }
 
     private List<Port> _outputPorts = new List<Port>();
