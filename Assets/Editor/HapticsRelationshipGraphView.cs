@@ -989,6 +989,23 @@ public class HapticNode : Node
                 orthoField.SetValue(_gameObjectEditor, savedPreviewState.ortho);
                 Debug.Log($"[{AssociatedObject.name}] Restored ortho mode: {savedPreviewState.ortho}");
             }
+
+            // Force the preview to update by calling a method that triggers a redraw
+            MethodInfo onPreviewGUIMethod = editorType.GetMethod("OnPreviewGUI",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (onPreviewGUIMethod != null)
+            {
+                // Create a dummy rect and style to pass to the method
+                Rect dummyRect = new Rect(0, 0, 1, 1);
+                GUIStyle dummyStyle = GUIStyle.none;
+
+                // Call the method to force an update
+                onPreviewGUIMethod.Invoke(_gameObjectEditor, new object[] { dummyRect, dummyStyle });
+                Debug.Log($"[{AssociatedObject.name}] Forced preview update");
+            }
+
+            // Force a repaint of the preview container
+            _previewContainer.MarkDirtyRepaint();
         }
         catch (Exception e)
         {
@@ -1018,6 +1035,25 @@ public class HapticNode : Node
     {
         // Save the current preview state
         SaveEditorPreviewState();
+    }
+
+    public void ForcePreviewUpdate()
+    {
+        if (_gameObjectEditor == null || AssociatedObject == null)
+            return;
+
+        // Force the preview to update
+        _needsEditorUpdate = true;
+        _previewContainer.MarkDirtyRepaint();
+
+        // Schedule another update after a short delay to ensure the rotation is applied
+        EditorApplication.delayCall += () => {
+            if (_gameObjectEditor != null)
+            {
+                RestoreEditorPreviewState();
+                _previewContainer.MarkDirtyRepaint();
+            }
+        };
     }
 
     public GameObject AssociatedObject { get; private set; }
@@ -1056,9 +1092,9 @@ public class HapticNode : Node
         var previewAndControlsContainer = new VisualElement();
         previewAndControlsContainer.AddToClassList("preview-controls-container");
 
-
         // Create a preview container using IMGUI
-        _previewContainer = new IMGUIContainer(() => {
+        _previewContainer = new IMGUIContainer(() =>
+        {
             // Check if we need to update the editor
             if (_needsEditorUpdate || _gameObjectEditor == null)
             {
@@ -1070,6 +1106,14 @@ public class HapticNode : Node
                 if (AssociatedObject != null)
                 {
                     _gameObjectEditor = Editor.CreateEditor(AssociatedObject);
+
+                    // If we have a saved preview state, restore it immediately after creating the editor
+                    if (savedPreviewState != null &&
+                        (savedPreviewState.previewDir != new Vector2(0, -1) ||
+                         savedPreviewState.zoomFactor != 1.0f))
+                    {
+                        RestoreEditorPreviewState();
+                    }
                 }
 
                 _needsEditorUpdate = false;
@@ -1134,12 +1178,12 @@ public class HapticNode : Node
 
         // Try to restore the preview state from serialized data
         // This will be called when the node is created from a saved graph
-        EditorApplication.delayCall += () => {
-            if (_gameObjectEditor != null && savedPreviewState != null)
-            {
-                RestoreEditorPreviewState();
-            }
-        };
+        //EditorApplication.delayCall += () => {
+        //    if (_gameObjectEditor != null && savedPreviewState != null)
+        //    {
+        //        RestoreEditorPreviewState();
+        //    }
+        //};
     }
 
     private string TruncateNodeTitle(string originalName)

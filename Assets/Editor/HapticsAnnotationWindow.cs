@@ -1894,6 +1894,18 @@ public class HapticsAnnotationWindow : EditorWindow
                 }
             }
 
+            // Force all nodes to update their previews
+            foreach (var node in _graphView.GetNodes())
+            {
+                // Schedule the update with a slight delay to ensure the UI is fully initialized
+                EditorApplication.delayCall += () => {
+                    if (node != null)
+                    {
+                        node.ForcePreviewUpdate();
+                    }
+                };
+            }
+
             // Restore high engagement nodes order
             foreach (var nodeId in graphData.orderedHighEngagementNodeIds)
             {
