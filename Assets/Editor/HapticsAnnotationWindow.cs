@@ -1619,6 +1619,9 @@ public class HapticsAnnotationWindow : EditorWindow
 
         foreach (var node in nodes)
         {
+            // Save the preview state before serialization
+            node.PrepareForSerialization();
+
             // Generate a unique ID for the node
             string nodeId = node.GetHashCode().ToString();
             nodeIdMap[node] = nodeId;
@@ -1651,7 +1654,19 @@ public class HapticsAnnotationWindow : EditorWindow
                 hardness = node.Hardness,
                 hardnessValue = node.HardnessValue,
                 temperature = node.Temperature,
-                temperatureValue = node.TemperatureValue
+                temperatureValue = node.TemperatureValue,
+
+                // Add preview state
+                previewState = new SerializablePreviewState
+                {
+                    previewDirX = node.savedPreviewState.previewDir.x,
+                    previewDirY = node.savedPreviewState.previewDir.y,
+                    zoomFactor = node.savedPreviewState.zoomFactor,
+                    pivotPointX = node.savedPreviewState.pivotPoint.x,
+                    pivotPointY = node.savedPreviewState.pivotPoint.y,
+                    pivotPointZ = node.savedPreviewState.pivotPoint.z,
+                    ortho = node.savedPreviewState.ortho
+                }
             };
 
             graphData.nodes.Add(nodeData);
@@ -1792,6 +1807,24 @@ public class HapticsAnnotationWindow : EditorWindow
                         node.HardnessValue = nodeData.hardnessValue;
                         node.Temperature = nodeData.temperature;
                         node.TemperatureValue = nodeData.temperatureValue;
+
+                        // Restore preview state if available
+                        if (nodeData.previewState != null)
+                        {
+                            node.savedPreviewState.previewDir = new Vector2(
+                                nodeData.previewState.previewDirX,
+                                nodeData.previewState.previewDirY
+                            );
+                            node.savedPreviewState.zoomFactor = nodeData.previewState.zoomFactor;
+                            node.savedPreviewState.pivotPoint = new Vector3(
+                                nodeData.previewState.pivotPointX,
+                                nodeData.previewState.pivotPointY,
+                                nodeData.previewState.pivotPointZ
+                            );
+                            node.savedPreviewState.ortho = nodeData.previewState.ortho;
+
+                            Debug.Log($"Restored preview state for {node.title}: Dir={node.savedPreviewState.previewDir}, Zoom={node.savedPreviewState.zoomFactor}");
+                        }
 
                         // Ensure the node has the correct number of ports
                         // Add additional output ports if needed
@@ -2129,6 +2162,9 @@ public class HapticsAnnotationWindow : EditorWindow
         // Add fields to track port counts
         public int outputPortCount = 1; // Number of Direct ports
         public int inputPortCount = 1;  // Number of Mediated ports
+
+        // Add preview state
+        public SerializablePreviewState previewState;
     }
 
     [Serializable]
@@ -2167,5 +2203,17 @@ public class HapticsAnnotationWindow : EditorWindow
         public float g = 0.3f;
         public float b = 0.4f;
         public float a = 0.3f;
+    }
+
+    [Serializable]
+    private class SerializablePreviewState
+    {
+        public float previewDirX;
+        public float previewDirY;
+        public float zoomFactor;
+        public float pivotPointX;
+        public float pivotPointY;
+        public float pivotPointZ;
+        public bool ortho;
     }
 }

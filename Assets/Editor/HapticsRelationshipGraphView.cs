@@ -4,6 +4,8 @@ using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using System;
+using System.Reflection;
 
 public class HapticsRelationshipGraphView : GraphView
 {
@@ -702,6 +704,19 @@ public class SerializableVector3
 // Example node class: represents one VR object in the graph
 public class HapticNode : Node
 {
+    // Add this class to HapticNode
+    [Serializable]
+    public class PreviewState
+    {
+        public Vector2 previewDir = new Vector2(0, -1); // Default looking from top
+        public float zoomFactor = 1.0f;
+        public Vector3 pivotPoint = Vector3.zero;
+        public bool ortho = false;
+    }
+
+    // Add this field to HapticNode
+    public PreviewState savedPreviewState = new PreviewState();
+
     // Add a delegate and event for engagement level changes
     public delegate void EngagementLevelChangedEventHandler(HapticNode node, int newLevel);
     public static event EngagementLevelChangedEventHandler OnEngagementLevelChanged;
@@ -880,6 +895,131 @@ public class HapticNode : Node
         return defaultTexture;
     }
 
+    // Add these methods to HapticNode
+    private void SaveEditorPreviewState()
+    {
+        if (_gameObjectEditor == null)
+            return;
+
+        try
+        {
+            // Get the type of the Editor class
+            Type editorType = _gameObjectEditor.GetType();
+
+            // Try to find the m_PreviewDir field (this stores the rotation)
+            FieldInfo previewDirField = GetFieldRecursive(editorType, "m_PreviewDir");
+            if (previewDirField != null)
+            {
+                Vector2 previewDir = (Vector2)previewDirField.GetValue(_gameObjectEditor);
+                savedPreviewState.previewDir = previewDir;
+                Debug.Log($"[{AssociatedObject.name}] Saved preview direction: {previewDir}");
+            }
+
+            // Try to find the m_ZoomFactor field
+            FieldInfo zoomFactorField = GetFieldRecursive(editorType, "m_ZoomFactor");
+            if (zoomFactorField != null)
+            {
+                float zoomFactor = (float)zoomFactorField.GetValue(_gameObjectEditor);
+                savedPreviewState.zoomFactor = zoomFactor;
+                Debug.Log($"[{AssociatedObject.name}] Saved zoom factor: {zoomFactor}");
+            }
+
+            // Try to find the m_PivotPoint field
+            FieldInfo pivotPointField = GetFieldRecursive(editorType, "m_PivotPoint");
+            if (pivotPointField != null)
+            {
+                Vector3 pivotPoint = (Vector3)pivotPointField.GetValue(_gameObjectEditor);
+                savedPreviewState.pivotPoint = pivotPoint;
+                Debug.Log($"[{AssociatedObject.name}] Saved pivot point: {pivotPoint}");
+            }
+
+            // Try to find the m_Ortho field
+            FieldInfo orthoField = GetFieldRecursive(editorType, "m_Ortho");
+            if (orthoField != null)
+            {
+                bool ortho = (bool)orthoField.GetValue(_gameObjectEditor);
+                savedPreviewState.ortho = ortho;
+                Debug.Log($"[{AssociatedObject.name}] Saved ortho mode: {ortho}");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{AssociatedObject.name}] Error saving preview state: {e.Message}");
+        }
+    }
+
+    private void RestoreEditorPreviewState()
+    {
+        if (_gameObjectEditor == null)
+            return;
+
+        try
+        {
+            // Get the type of the Editor class
+            Type editorType = _gameObjectEditor.GetType();
+
+            // Try to set the m_PreviewDir field
+            FieldInfo previewDirField = GetFieldRecursive(editorType, "m_PreviewDir");
+            if (previewDirField != null)
+            {
+                previewDirField.SetValue(_gameObjectEditor, savedPreviewState.previewDir);
+                Debug.Log($"[{AssociatedObject.name}] Restored preview direction: {savedPreviewState.previewDir}");
+            }
+
+            // Try to set the m_ZoomFactor field
+            FieldInfo zoomFactorField = GetFieldRecursive(editorType, "m_ZoomFactor");
+            if (zoomFactorField != null)
+            {
+                zoomFactorField.SetValue(_gameObjectEditor, savedPreviewState.zoomFactor);
+                Debug.Log($"[{AssociatedObject.name}] Restored zoom factor: {savedPreviewState.zoomFactor}");
+            }
+
+            // Try to set the m_PivotPoint field
+            FieldInfo pivotPointField = GetFieldRecursive(editorType, "m_PivotPoint");
+            if (pivotPointField != null)
+            {
+                pivotPointField.SetValue(_gameObjectEditor, savedPreviewState.pivotPoint);
+                Debug.Log($"[{AssociatedObject.name}] Restored pivot point: {savedPreviewState.pivotPoint}");
+            }
+
+            // Try to set the m_Ortho field
+            FieldInfo orthoField = GetFieldRecursive(editorType, "m_Ortho");
+            if (orthoField != null)
+            {
+                orthoField.SetValue(_gameObjectEditor, savedPreviewState.ortho);
+                Debug.Log($"[{AssociatedObject.name}] Restored ortho mode: {savedPreviewState.ortho}");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{AssociatedObject.name}] Error restoring preview state: {e.Message}");
+        }
+    }
+
+    // Helper method to find a field in a type or its base types
+    private FieldInfo GetFieldRecursive(Type type, string fieldName)
+    {
+        // Try to get the field from the current type
+        FieldInfo field = type.GetField(fieldName,
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+        if (field != null)
+            return field;
+
+        // If not found and there's a base type, try there
+        if (type.BaseType != null)
+            return GetFieldRecursive(type.BaseType, fieldName);
+
+        return null;
+    }
+
+    // Add this method to HapticNode
+    public void PrepareForSerialization()
+    {
+        // Save the current preview state
+        SaveEditorPreviewState();
+    }
+
     public GameObject AssociatedObject { get; private set; }
 
     private List<Port> _outputPorts = new List<Port>();
@@ -924,7 +1064,7 @@ public class HapticNode : Node
             {
                 if (_gameObjectEditor != null)
                 {
-                    Object.DestroyImmediate(_gameObjectEditor);
+                    UnityEngine.Object.DestroyImmediate(_gameObjectEditor);
                 }
 
                 if (AssociatedObject != null)
@@ -991,6 +1131,15 @@ public class HapticNode : Node
 
         RefreshExpandedState();
         RefreshPorts();
+
+        // Try to restore the preview state from serialized data
+        // This will be called when the node is created from a saved graph
+        EditorApplication.delayCall += () => {
+            if (_gameObjectEditor != null && savedPreviewState != null)
+            {
+                RestoreEditorPreviewState();
+            }
+        };
     }
 
     private string TruncateNodeTitle(string originalName)
@@ -1063,7 +1212,7 @@ public class HapticNode : Node
                 // Check if the editor is still valid before destroying it
                 if (_gameObjectEditor.target != null)
                 {
-                    Object.DestroyImmediate(_gameObjectEditor);
+                    UnityEngine.Object.DestroyImmediate(_gameObjectEditor);
                 }
             }
             catch (System.Exception e)
