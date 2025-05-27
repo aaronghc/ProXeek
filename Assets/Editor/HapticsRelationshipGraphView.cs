@@ -285,6 +285,26 @@ public class HapticsRelationshipGraphView : GraphView
 
         foreach (var hNode in _nodes)
         {
+            // Calculate dimensions_meters based on renderer bounds
+            Vector3 dimensions = Vector3.zero;
+            float volume = 0f;
+
+            if (hNode.AssociatedObject != null)
+            {
+                // Try to get dimensions_meters from renderers
+                Bounds bounds = CalculateObjectBounds(hNode.AssociatedObject);
+                dimensions = bounds.size;
+
+                // Round dimensions_meters to two decimal places
+                dimensions.x = Mathf.Round(dimensions.x * 100f) / 100f;
+                dimensions.y = Mathf.Round(dimensions.y * 100f) / 100f;
+                dimensions.z = Mathf.Round(dimensions.z * 100f) / 100f;
+
+                // Calculate volume and round to two decimal places
+                volume = dimensions.x * dimensions.y * dimensions.z;
+                volume = Mathf.Round(volume * 100f) / 100f;
+            }
+
             data.nodeAnnotations.Add(new HapticObjectRecord
             {
                 objectName = hNode.AssociatedObject.name,
@@ -304,7 +324,25 @@ public class HapticsRelationshipGraphView : GraphView
                 outlineValue = hNode.OutlineValue,
                 textureValue = hNode.TextureValue,
                 hardnessValue = hNode.HardnessValue,
-                temperatureValue = hNode.TemperatureValue
+                temperatureValue = hNode.TemperatureValue,
+
+                // Add dimension information
+                //width = dimensions_meters.x,
+                //height = dimensions_meters.y,
+                //depth = dimensions_meters.z,
+                //volume = volume,
+                dimensions_meters = new SerializableStringVector3
+                {
+                    x = dimensions.x.ToString("F2"),
+                    y = dimensions.y.ToString("F2"),
+                    z = dimensions.z.ToString("F2")
+                },
+                //localScale = new SerializableVector3
+                //{
+                //    x = hNode.AssociatedObject.transform.localScale.x,
+                //    y = hNode.AssociatedObject.transform.localScale.y,
+                //    z = hNode.AssociatedObject.transform.localScale.z
+                //}
             });
 
             // Collect tool-mediated annotations
@@ -409,6 +447,43 @@ public class HapticsRelationshipGraphView : GraphView
         }
 
         return data;
+    }
+
+    // Add this helper method to calculate the bounds of a GameObject
+    private Bounds CalculateObjectBounds(GameObject obj)
+    {
+        // Try to get renderer bounds first
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+        if (renderers.Length > 0)
+        {
+            // Start with the first renderer's bounds
+            Bounds bounds = renderers[0].bounds;
+
+            // Expand to include all other renderers
+            for (int i = 1; i < renderers.Length; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+
+            return bounds;
+        }
+
+        // If no renderers, try colliders
+        Collider[] colliders = obj.GetComponentsInChildren<Collider>();
+        if (colliders.Length > 0)
+        {
+            Bounds bounds = colliders[0].bounds;
+
+            for (int i = 1; i < colliders.Length; i++)
+            {
+                bounds.Encapsulate(colliders[i].bounds);
+            }
+
+            return bounds;
+        }
+
+        // If no renderers or colliders, use a default size based on transform
+        return new Bounds(obj.transform.position, obj.transform.localScale);
     }
 
     public List<HapticNode> GetNodes()
@@ -663,6 +738,14 @@ public class HapticObjectRecord
     public float textureValue;
     public float hardnessValue;
     public float temperatureValue;
+
+    // Add dimension information
+    //public float width;
+    //public float height;
+    //public float depth;
+    //public float volume;
+    public SerializableStringVector3 dimensions_meters;
+    //public SerializableVector3 localScale;
 }
 
 // Record for each connection
@@ -699,6 +782,14 @@ public class SerializableVector3
     public float x;
     public float y;
     public float z;
+}
+
+[System.Serializable]
+public class SerializableStringVector3
+{
+    public string x;
+    public string y;
+    public string z;
 }
 
 // Example node class: represents one VR object in the graph

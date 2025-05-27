@@ -1630,6 +1630,26 @@ public class HapticsAnnotationWindow : EditorWindow
             int outputPortCount = node.outputContainer.Query<Port>().ToList().Count;
             int inputPortCount = node.inputContainer.Query<Port>().ToList().Count;
 
+            // Calculate dimensions_meters
+            Vector3 dimensions = Vector3.zero;
+            if (node.AssociatedObject != null)
+            {
+                // Use the same helper method from HapticsRelationshipGraphView
+                Bounds bounds = CalculateObjectBounds(node.AssociatedObject);
+                dimensions = bounds.size;
+
+                // Round dimensions_meters to two decimal places
+                dimensions.x = Mathf.Round(dimensions.x * 100f) / 100f;
+                dimensions.y = Mathf.Round(dimensions.y * 100f) / 100f;
+                dimensions.z = Mathf.Round(dimensions.z * 100f) / 100f;
+            }
+
+            // Get local scale and round to two decimal places
+            Vector3 localScale = node.AssociatedObject.transform.localScale;
+            localScale.x = Mathf.Round(localScale.x * 100f) / 100f;
+            localScale.y = Mathf.Round(localScale.y * 100f) / 100f;
+            localScale.z = Mathf.Round(localScale.z * 100f) / 100f;
+
             var nodeData = new SerializableNodeData
             {
                 id = nodeId,
@@ -1666,6 +1686,20 @@ public class HapticsAnnotationWindow : EditorWindow
                     pivotPointY = node.savedPreviewState.pivotPoint.y,
                     pivotPointZ = node.savedPreviewState.pivotPoint.z,
                     ortho = node.savedPreviewState.ortho
+                },
+
+                // Add dimension information (rounded to two decimal places)
+                dimensions = new SerializableVector3
+                {
+                    x = dimensions.x,
+                    y = dimensions.y,
+                    z = dimensions.z
+                },
+                localScale = new SerializableVector3
+                {
+                    x = localScale.x,
+                    y = localScale.y,
+                    z = localScale.z
                 }
             };
 
@@ -1755,6 +1789,43 @@ public class HapticsAnnotationWindow : EditorWindow
 
         // Serialize to JSON
         return JsonUtility.ToJson(graphData);
+    }
+
+    // Add this helper method to calculate the bounds of a GameObject
+    private Bounds CalculateObjectBounds(GameObject obj)
+    {
+        // Try to get renderer bounds first
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+        if (renderers.Length > 0)
+        {
+            // Start with the first renderer's bounds
+            Bounds bounds = renderers[0].bounds;
+
+            // Expand to include all other renderers
+            for (int i = 1; i < renderers.Length; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+
+            return bounds;
+        }
+
+        // If no renderers, try colliders
+        Collider[] colliders = obj.GetComponentsInChildren<Collider>();
+        if (colliders.Length > 0)
+        {
+            Bounds bounds = colliders[0].bounds;
+
+            for (int i = 1; i < colliders.Length; i++)
+            {
+                bounds.Encapsulate(colliders[i].bounds);
+            }
+
+            return bounds;
+        }
+
+        // If no renderers or colliders, use a default size based on transform
+        return new Bounds(obj.transform.position, obj.transform.localScale);
     }
 
     private void DeserializeGraph(string jsonData)
@@ -2177,6 +2248,10 @@ public class HapticsAnnotationWindow : EditorWindow
 
         // Add preview state
         public SerializablePreviewState previewState;
+
+        // Add dimension information
+        public SerializableVector3 dimensions;
+        public SerializableVector3 localScale;
     }
 
     [Serializable]
