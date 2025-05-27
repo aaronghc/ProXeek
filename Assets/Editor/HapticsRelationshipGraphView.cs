@@ -315,7 +315,7 @@ public class HapticsRelationshipGraphView : GraphView
                 hardness = hNode.Hardness,
                 temperature = hNode.Temperature,
                 engagementLevel = hNode.EngagementLevel,
-                isDirectContacted = hNode.IsDirectContacted,
+                involvementType = hNode.Involvement.ToString().ToLower(), // Convert enum to string
                 description = hNode.Description,
 
                 // Add slider values
@@ -701,6 +701,13 @@ public class HapticsRelationshipGraphView : GraphView
         OnGraphChanged?.Invoke();
     }
 }
+public enum InvolvementType
+{
+    Substrate = 0,
+    Contact = 1,
+    Grasp = 2
+}
+
 
 // Minimal data structure to hold annotation data
 [System.Serializable]
@@ -719,7 +726,8 @@ public class HapticAnnotationData
 public class HapticObjectRecord
 {
     public string objectName;
-    public bool isDirectContacted;
+    public string involvementType; // Changed from isDirectContacted
+    //public bool isDirectContacted;
     public string description;
     public int engagementLevel;
     //public string snapshotPath;
@@ -812,6 +820,7 @@ public class HapticNode : Node
     public delegate void EngagementLevelChangedEventHandler(HapticNode node, int newLevel);
     public static event EngagementLevelChangedEventHandler OnEngagementLevelChanged;
 
+    public InvolvementType Involvement { get; set; } = InvolvementType.Contact; // Default to Contact
     public bool IsDirectContacted { get; set; } = false;
     public string Description { get; set; } = "";
 

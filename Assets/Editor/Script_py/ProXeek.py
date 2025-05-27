@@ -119,7 +119,7 @@ try:
     -lowEngagementOrder: The user occasionally interacts with the following target virtual objects.
 
     -nodeAnnotations.objectName: The target virtual object in the VR scene for which you should propose a haptic proxy from surroundings.
-    -nodeAnnotations.isDirectContacted: Whether this virtual object would be directly contacted or not.
+    -nodeAnnotations.involvementType: grasp: users are very likely to grasp the game object. contact: users are very likely to touch or contact the game object using body parts. substrate: users are unlikely to contact the game object directly; instead, they tend to use another grasped game object ot interact with it.
     -nodeAnnotations.description: Overall description about the usage of this virtual object in the current VR scene.
     -nodeAnnotations.engagementLevel: 0: low engagement, 1: medium engagement, 2: high engagement. It basically reflects how often the VR users will interact with this virtual object.
     -nodeAnnotations.snapshotPath: The path where the snapshot of this target virtual object is stored.
@@ -135,6 +135,7 @@ try:
     -nodeAnnotations.texture: From 0 to 1, how important the texture property is.
     -nodeAnnotations.hardness: From 0 to 1, how important the hardness property is.
     -nodeAnnotations.temperature: From 0 to 1, how important the temperature property is.
+    -nodeAnnotations.dimensions_meters: The dimensions (height, width, depth) of the game object.
 
     -relationshipAnnotations.contactObject: The virtual object which a VR user direct contact with.
     -relationshipAnnotations.substrateObject: The virtual object which a direct contacted virtual object will interact or collide with.

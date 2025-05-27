@@ -325,33 +325,35 @@ public class HapticsAnnotationWindow : EditorWindow
             // Add to the content container
             contentContainer.Add(nodeNameLabel);
 
-            // Create a container for the "Is Direct Contacted" checkbox and label
-            var directContactContainer = new VisualElement();
-            directContactContainer.style.flexDirection = FlexDirection.Row;
-            directContactContainer.style.alignItems = Align.Center;
-            directContactContainer.style.marginBottom = 10;
+            // Replace the "Is Direct Contacted" checkbox with an "Involvement" dropdown
+            var involvementContainer = new VisualElement();
+            involvementContainer.style.flexDirection = FlexDirection.Row;
+            involvementContainer.style.alignItems = Align.Center;
+            involvementContainer.style.marginBottom = 10;
 
-            // Add "Is Direct Contacted" label
-            var directContactLabel = new Label("Is Direct Contacted");
-            directContactLabel.AddToClassList("inspector-field-label");
-            directContactLabel.style.marginRight = 10;
-            directContactLabel.style.marginBottom = 0; // Override default margin
-            directContactLabel.style.flexGrow = 1;
+            // Add "Involvement" label
+            var involvementLabel = new Label("Involvement");
+            involvementLabel.AddToClassList("inspector-field-label");
+            involvementLabel.style.marginRight = 10;
+            involvementLabel.style.marginBottom = 0; // Override default margin
+            involvementLabel.style.flexGrow = 1;
 
-            // Add checkbox
-            var directContactToggle = new Toggle();
-            directContactToggle.value = selectedNode.IsDirectContacted;
-            directContactToggle.RegisterValueChangedCallback(evt =>
-            {
-                selectedNode.IsDirectContacted = evt.newValue;
+            // Create dropdown for involvement type
+            var involvementDropdown = new PopupField<string>(
+                new List<string> { "substrate", "contact", "grasp" },
+                ConvertInvolvementTypeToIndex(selectedNode.Involvement));
+
+            involvementDropdown.RegisterValueChangedCallback(evt => {
+                selectedNode.Involvement = ConvertIndexToInvolvementType(
+                    involvementDropdown.index);
             });
 
-            // Add label and toggle to the container
-            directContactContainer.Add(directContactLabel);
-            directContactContainer.Add(directContactToggle);
+            // Add label and dropdown to the container
+            involvementContainer.Add(involvementLabel);
+            involvementContainer.Add(involvementDropdown);
 
             // Add the container to the main content
-            contentContainer.Add(directContactContainer);
+            contentContainer.Add(involvementContainer);
 
             // Add "Description" text field
             var descriptionLabel = new Label("Description");
@@ -372,7 +374,7 @@ public class HapticsAnnotationWindow : EditorWindow
 
             // Add a title for the property TreeViews
             var propertyHighlightTitle = new Label("Property Highlight");
-            propertyHighlightTitle.AddToClassList("inspector-section-title");
+            propertyHighlightTitle.AddToClassList("inspector-field-label");
             propertyHighlightTitle.style.marginBottom = 10;
             contentContainer.Add(propertyHighlightTitle);
 
@@ -401,6 +403,16 @@ public class HapticsAnnotationWindow : EditorWindow
                 value => selectedNode.Temperature = value, () => selectedNode.Temperature,
                 value => selectedNode.TemperatureValue = value, () => selectedNode.TemperatureValue);
         }
+    }
+    // Helper methods for converting between enum and index
+    private int ConvertInvolvementTypeToIndex(InvolvementType type)
+    {
+        return (int)type;
+    }
+
+    private InvolvementType ConvertIndexToInvolvementType(int index)
+    {
+        return (InvolvementType)index;
     }
 
     // Helper method to truncate long titles in the inspector
@@ -1656,7 +1668,7 @@ public class HapticsAnnotationWindow : EditorWindow
                 objectName = node.AssociatedObject.name,
                 objectPath = GetGameObjectPath(node.AssociatedObject),
                 position = new SerializableVector2 { x = node.GetPosition().x, y = node.GetPosition().y },
-                isDirectContacted = node.IsDirectContacted,
+                involvementType = node.Involvement.ToString().ToLower(), // Changed from isDirectContacted
                 description = node.Description,
                 engagementLevel = node.EngagementLevel,
                 outputPortCount = outputPortCount,
@@ -1861,7 +1873,7 @@ public class HapticsAnnotationWindow : EditorWindow
                     if (node != null)
                     {
                         // Set node properties
-                        node.IsDirectContacted = nodeData.isDirectContacted;
+                        node.Involvement = ParseInvolvementType(nodeData.involvementType);
                         node.Description = nodeData.description;
                         node.SetEngagementLevel(nodeData.engagementLevel);
 
@@ -2038,6 +2050,24 @@ public class HapticsAnnotationWindow : EditorWindow
         {
             Debug.LogError($"Error deserializing graph: {e.Message}");
         }
+    }
+
+    // Helper method to parse involvement type
+    private InvolvementType ParseInvolvementType(string typeString)
+    {
+        if (string.IsNullOrEmpty(typeString))
+            return InvolvementType.Contact; // Default
+
+        if (Enum.TryParse<InvolvementType>(typeString, true, out var result))
+            return result;
+
+        // Backward compatibility with old boolean value
+        if (typeString.ToLower() == "true")
+            return InvolvementType.Contact;
+        else if (typeString.ToLower() == "false")
+            return InvolvementType.Substrate;
+
+        return InvolvementType.Contact; // Default
     }
 
     // Helper method to set node engagement level
@@ -2224,7 +2254,7 @@ public class HapticsAnnotationWindow : EditorWindow
         public string objectName;
         public string objectPath;
         public SerializableVector2 position;
-        public bool isDirectContacted;
+        public string involvementType; // Changed from isDirectContacted
         public string description;
         public int engagementLevel;
 
