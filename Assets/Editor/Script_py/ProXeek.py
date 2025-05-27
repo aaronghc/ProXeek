@@ -159,9 +159,11 @@ try:
         *Substrate Objects
             -These objects interact with the user indirectly via another tool (e.g., a golf ball being struck by a club, a bucket of water being stirred by a stick).
             -Be more flexible and creative when picking a proxy, as long as the user perceives the correct collisions, vibrations or force through the direct contact tool (e.g., a christmas tree could be a haptic proxy of a ping pang ball since the bat normally end up colliding with the tree with every swing; the scissors placed in a pen holder can serve as the haptic proxy for the lock when simulating the feedback of prying the lock open with a crowbar).
-    3. Choose with Focus
+    3. Placement Relationship
+        *When selecting haptic proxies for grouped virtual objects, the similarity of distance or arrangement between selected haptic proxies and grouped virtual objects should be taken as a constrain.
+    4. Choose with Focus
         *Annotated physical properties and description from the haptic annotation json file indicate which properties are especially significant in terms of rendering a anticipated haptic feedback. Although you should consider every property that might matter for immersion, prioritize these highlighted annotation first if there is a trade-off.
-    4. Assign with Priority
+    5. Assign with Priority
         *A single physical object cannot serve as the haptic proxy for multiple virtual objects simultaneously. When there is a conflict between two virtual objects over their haptic proxies, prioritize assigning the proxy to the virtual object with the higher *engagement order*.
 
     Final Output Requirements: 
