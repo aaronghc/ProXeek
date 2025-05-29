@@ -172,7 +172,7 @@ namespace PassthroughCameraSamples.CameraToWorld
                 {
                     if (m_environmentDepthManager.IsDepthAvailable)
                     {
-                        CaptureDepthDataDirect(position, rotation);
+                        CaptureDepthDataSimplified(position, rotation);
                     }
                     else
                     {
@@ -195,9 +195,9 @@ namespace PassthroughCameraSamples.CameraToWorld
             }
         }
 
-        private void CaptureDepthDataDirect(Vector3 position, Quaternion rotation)
+        private void CaptureDepthDataSimplified(Vector3 position, Quaternion rotation)
         {
-            Debug.Log("PCA: Capturing depth data directly...");
+            Debug.Log("PCA: Trying simplified depth capture...");
 
             DepthFrameData depthFrame = new DepthFrameData
             {
@@ -208,172 +208,76 @@ namespace PassthroughCameraSamples.CameraToWorld
 
             try
             {
-                // Get the depth texture from shader globals
-                var depthTexture = Shader.GetGlobalTexture("_EnvironmentDepthTexture") as RenderTexture;
+                // Try different depth texture sources
+                RenderTexture depthSource = null;
+                string sourceName = "";
 
-                if (depthTexture == null)
+                // Option 1: Try preprocessed depth texture (might have better data)
+                var preprocessedDepth = Shader.GetGlobalTexture("_PreprocessedEnvironmentDepthTexture") as RenderTexture;
+                if (preprocessedDepth != null)
                 {
-                    Debug.LogError("PCA: Depth texture is null");
+                    depthSource = preprocessedDepth;
+                    sourceName = "Preprocessed";
+                    Debug.Log($"PCA: Using preprocessed depth texture");
+                }
+                else
+                {
+                    // Option 2: Use regular depth texture
+                    depthSource = Shader.GetGlobalTexture("_EnvironmentDepthTexture") as RenderTexture;
+                    sourceName = "Regular";
+                    Debug.Log($"PCA: Using regular depth texture");
+                }
+
+                if (depthSource == null)
+                {
+                    Debug.LogError("PCA: No depth texture found");
                     m_snapshotDepthData.Add(depthFrame);
                     return;
                 }
 
-                Debug.Log($"PCA: Depth texture - Size: {depthTexture.width}x{depthTexture.height}, Format: {depthTexture.format}, Dimension: {depthTexture.dimension}");
+                Debug.Log($"PCA: {sourceName} depth - Size: {depthSource.width}x{depthSource.height}, Format: {depthSource.format}");
 
                 // Get shader parameters
                 depthFrame.zBufferParams = Shader.GetGlobalVector("_EnvironmentDepthZBufferParams");
-                var reprojectionMatrices = Shader.GetGlobalMatrixArray("_EnvironmentDepthReprojectionMatrices");
 
-                // Create a compute shader or use a special shader to properly read the depth
-                // Meta Quest depth is encoded in a special way
-                string depthDecodeShader = @"
-            Shader ""Hidden/DecodeMetaDepth""
-            {
-                Properties
-                {
-                    _MainTex (""Texture"", 2DArray) = ""white"" {}
-                }
-                SubShader
-                {
-                    Pass
-                    {
-                        CGPROGRAM
-                        #pragma vertex vert
-                        #pragma fragment frag
-                        #include ""UnityCG.cginc""
+                // For preprocessed texture, we might be able to read it directly
+                Texture2D depthTex2D = new Texture2D(depthSource.width, depthSource.height, TextureFormat.RGBAFloat, false);
 
-                        struct appdata
-                        {
-                            float4 vertex : POSITION;
-                            float2 uv : TEXCOORD0;
-                        };
-
-                        struct v2f
-                        {
-                            float2 uv : TEXCOORD0;
-                            float4 vertex : SV_POSITION;
-                        };
-
-                        UNITY_DECLARE_TEX2DARRAY(_MainTex);
-                        float4 _EnvironmentDepthZBufferParams;
-
-                        v2f vert (appdata v)
-                        {
-                            v2f o;
-                            o.vertex = UnityObjectToClipPos(v.vertex);
-                            o.uv = v.uv;
-                            return o;
-                        }
-
-                        float LinearizeDepth(float depth)
-                        {
-                            // Convert from packed depth to linear depth
-                            // Using the z-buffer parameters from Meta's depth API
-                            float ndcDepth = depth * 2.0 - 1.0;
-                            return _EnvironmentDepthZBufferParams.x / (ndcDepth + _EnvironmentDepthZBufferParams.y);
-                        }
-
-                        float4 frag (v2f i) : SV_Target
-                        {
-                            // Sample from the first eye (index 0)
-                            float packedDepth = UNITY_SAMPLE_TEX2DARRAY(_MainTex, float3(i.uv, 0)).r;
-                            
-                            // The depth might be in a special format
-                            // Try to linearize it
-                            float linearDepth = LinearizeDepth(packedDepth);
-                            
-                            // Normalize to 0-1 range for visualization
-                            // Assuming depth range 0.1 to 10 meters
-                            float normalizedDepth = saturate(linearDepth / 10.0);
-                            
-                            return float4(packedDepth, linearDepth, normalizedDepth, 1.0);
-                        }
-                        ENDCG
-                    }
-                }
-            }";
-
-                // Try to find or create the decode shader
-                Shader shader = Shader.Find("Hidden/DecodeMetaDepth");
-                Material decodeMaterial = null;
-
-                if (shader == null)
-                {
-                    Debug.LogWarning("PCA: Decode shader not found, using fallback method");
-
-                    // Fallback: Try to read the preprocessed depth texture instead
-                    var preprocessedDepth = Shader.GetGlobalTexture("_PreprocessedEnvironmentDepthTexture") as RenderTexture;
-                    if (preprocessedDepth != null)
-                    {
-                        Debug.Log("PCA: Found preprocessed depth texture, using that instead");
-                        depthTexture = preprocessedDepth;
-                    }
-                }
-                else
-                {
-                    decodeMaterial = new Material(shader);
-                    decodeMaterial.SetVector("_EnvironmentDepthZBufferParams", depthFrame.zBufferParams);
-                }
-
-                // Create temporary textures
-                RenderTexture tempRT = RenderTexture.GetTemporary(
-                    depthTexture.width,
-                    depthTexture.height,
-                    0,
-                    RenderTextureFormat.ARGBFloat // Use float format to store multiple values
-                );
-
-                if (decodeMaterial != null)
-                {
-                    // Use the decode shader
-                    Graphics.Blit(depthTexture, tempRT, decodeMaterial);
-                    Destroy(decodeMaterial);
-                }
-                else
-                {
-                    // Direct copy
-                    Graphics.Blit(depthTexture, tempRT);
-                }
-
-                // Read the texture
-                Texture2D depthTex2D = new Texture2D(tempRT.width, tempRT.height, TextureFormat.RGBAFloat, false);
-                RenderTexture previousActive = RenderTexture.active;
-                RenderTexture.active = tempRT;
-                depthTex2D.ReadPixels(new Rect(0, 0, tempRT.width, tempRT.height), 0, 0);
+                RenderTexture.active = depthSource;
+                depthTex2D.ReadPixels(new Rect(0, 0, depthSource.width, depthSource.height), 0, 0);
                 depthTex2D.Apply();
-                RenderTexture.active = previousActive;
+                RenderTexture.active = null;
 
-                // Process depth data
+                // Analyze the data
                 Color[] pixels = depthTex2D.GetPixels();
                 float[] depthValues = new float[pixels.Length];
 
+                // Check what data we have in each channel
+                Debug.Log($"PCA: First 5 pixels - R:{pixels[0].r}, G:{pixels[0].g}, B:{pixels[0].b}, A:{pixels[0].a}");
+                for (int i = 1; i < Mathf.Min(5, pixels.Length); i++)
+                {
+                    Debug.Log($"PCA: Pixel {i} - R:{pixels[i].r}, G:{pixels[i].g}, B:{pixels[i].b}, A:{pixels[i].a}");
+                }
+
+                // Process based on which channel has varying data
                 int validCount = 0;
                 float minDepth = float.MaxValue;
                 float maxDepth = float.MinValue;
 
-                // Try different channels to see which contains valid depth
-                Debug.Log($"PCA: Sample pixel values - R:{pixels[0].r}, G:{pixels[0].g}, B:{pixels[0].b}, A:{pixels[0].a}");
-
                 for (int i = 0; i < pixels.Length; i++)
                 {
-                    // Try different interpretations
-                    float depth = pixels[i].r; // Packed depth
-                    float linearDepth = pixels[i].g; // Linear depth if shader worked
-                    float normalizedDepth = pixels[i].b; // Normalized depth if shader worked
+                    // For preprocessed texture, depth might be in different channels
+                    float depth = pixels[i].r; // Try red channel first
 
-                    // Use whichever seems valid
-                    if (linearDepth > 0 && linearDepth != pixels[0].g) // Check if it varies
+                    // If using preprocessed texture, it might store additional data
+                    if (sourceName == "Preprocessed" && pixels[i].g > 0)
                     {
-                        depth = linearDepth;
-                    }
-                    else if (normalizedDepth > 0 && normalizedDepth != pixels[0].b)
-                    {
-                        depth = normalizedDepth;
+                        depth = pixels[i].g; // Might be linear depth
                     }
 
                     depthValues[i] = depth;
 
-                    if (depth > 0.001f && depth < 0.999f && depth != 0.2155762f) // Exclude the stuck value
+                    if (depth > 0.001f && depth < 100.0f) // Wider range for linear depth
                     {
                         validCount++;
                         minDepth = Mathf.Min(minDepth, depth);
@@ -381,262 +285,22 @@ namespace PassthroughCameraSamples.CameraToWorld
                     }
                 }
 
-                // If all values are the same, try to get raw depth differently
-                if (minDepth == maxDepth)
-                {
-                    Debug.LogWarning("PCA: All depth values are identical, trying alternative method");
+                Debug.Log($"PCA: Valid pixels: {validCount}/{pixels.Length}, Range: {minDepth} to {maxDepth}");
 
-                    // Try using Graphics.CopyTexture with specific slice
-                    RenderTexture sliceRT = RenderTexture.GetTemporary(
-                        depthTexture.width,
-                        depthTexture.height,
-                        0,
-                        depthTexture.format
-                    );
-
-                    // Copy specific slice if it's a texture array
-                    if (depthTexture.dimension == TextureDimension.Tex2DArray)
-                    {
-                        Graphics.CopyTexture(depthTexture, 0, 0, sliceRT, 0, 0);
-                    }
-                    else
-                    {
-                        Graphics.Blit(depthTexture, sliceRT);
-                    }
-
-                    // Try reading again
-                    RenderTexture.active = sliceRT;
-                    depthTex2D.ReadPixels(new Rect(0, 0, sliceRT.width, sliceRT.height), 0, 0);
-                    depthTex2D.Apply();
-                    RenderTexture.active = previousActive;
-
-                    // Re-process
-                    pixels = depthTex2D.GetPixels();
-                    validCount = 0;
-                    minDepth = float.MaxValue;
-                    maxDepth = float.MinValue;
-
-                    for (int i = 0; i < pixels.Length; i++)
-                    {
-                        float depth = pixels[i].r;
-                        depthValues[i] = depth;
-
-                        if (depth > 0.001f && depth < 0.999f)
-                        {
-                            validCount++;
-                            if (depth < minDepth) minDepth = depth;
-                            if (depth > maxDepth) maxDepth = depth;
-                        }
-                    }
-
-                    RenderTexture.ReleaseTemporary(sliceRT);
-                }
-
-                Debug.Log($"PCA: Captured {validCount} valid depth pixels out of {pixels.Length}");
-                Debug.Log($"PCA: Depth range: {minDepth} to {maxDepth}");
-                Debug.Log($"PCA: Z-buffer params: {depthFrame.zBufferParams}");
-
-                // Update depth frame
+                // Store the data
                 depthFrame.depthValues = depthValues;
                 depthFrame.width = depthTex2D.width;
                 depthFrame.height = depthTex2D.height;
                 depthFrame.isValid = validCount > 0 && minDepth != maxDepth;
 
-                // Cleanup
-                RenderTexture.ReleaseTemporary(tempRT);
                 Destroy(depthTex2D);
             }
             catch (Exception e)
             {
-                Debug.LogError($"PCA: Error in depth capture: {e.Message}\n{e.StackTrace}");
+                Debug.LogError($"PCA: Error in simplified depth capture: {e.Message}");
             }
 
             m_snapshotDepthData.Add(depthFrame);
-        }
-
-        private IEnumerator CaptureDepthWithDelay(Vector3 position, Quaternion rotation)
-        {
-            // Wait a few frames to ensure depth is available
-            yield return new WaitForSeconds(0.1f);
-
-            // Check if depth is available
-            if (!m_environmentDepthManager.IsDepthAvailable)
-            {
-                Debug.LogWarning("PCA: Depth not available yet, waiting...");
-                float waitTime = 0;
-                while (!m_environmentDepthManager.IsDepthAvailable && waitTime < 2.0f)
-                {
-                    yield return new WaitForSeconds(0.1f);
-                    waitTime += 0.1f;
-                }
-
-                if (!m_environmentDepthManager.IsDepthAvailable)
-                {
-                    Debug.LogError("PCA: Depth still not available after waiting");
-                    m_snapshotDepthData.Add(new DepthFrameData { isValid = false });
-                    yield break;
-                }
-            }
-
-            // Now capture depth
-            yield return StartCoroutine(CaptureDepthDataSimple(position, rotation));
-        }
-
-        private IEnumerator CaptureDepthDataSimple(Vector3 position, Quaternion rotation)
-        {
-            Debug.Log("PCA: Starting depth capture...");
-
-            RenderTexture tempRT = null;
-            DepthFrameData depthFrame = new DepthFrameData { isValid = false };
-            bool shouldProcessDepth = false;
-            Vector4 zBufferParams = Vector4.zero;
-
-            // First try block - setup only, no yields
-            try
-            {
-                // Get the depth texture from shader globals
-                var depthTexture = Shader.GetGlobalTexture("_EnvironmentDepthTexture");
-
-                if (depthTexture == null)
-                {
-                    Debug.LogError("PCA: Global depth texture is null");
-                    m_snapshotDepthData.Add(depthFrame);
-                    yield break;
-                }
-
-                Debug.Log($"PCA: Found depth texture: {depthTexture.name}");
-
-                // Try to cast to RenderTexture
-                RenderTexture depthRT = depthTexture as RenderTexture;
-                if (depthRT == null)
-                {
-                    Debug.LogError("PCA: Depth texture is not a RenderTexture");
-                    m_snapshotDepthData.Add(depthFrame);
-                    yield break;
-                }
-
-                Debug.Log($"PCA: Depth RT info - Size: {depthRT.width}x{depthRT.height}, Format: {depthRT.format}, Dimension: {depthRT.dimension}");
-
-                // Get z-buffer params
-                zBufferParams = Shader.GetGlobalVector("_EnvironmentDepthZBufferParams");
-                Debug.Log($"PCA: Z-buffer params: {zBufferParams}");
-
-                // Create temporary render texture
-                tempRT = RenderTexture.GetTemporary(
-                    depthRT.width,
-                    depthRT.height,
-                    0,
-                    RenderTextureFormat.RFloat,
-                    RenderTextureReadWrite.Linear
-                );
-
-                // Try direct blit
-                Graphics.Blit(depthRT, tempRT);
-
-                // Setup depth frame data
-                depthFrame.width = tempRT.width;
-                depthFrame.height = tempRT.height;
-                depthFrame.cameraPosition = position;
-                depthFrame.cameraRotation = rotation;
-                depthFrame.zBufferParams = zBufferParams;
-
-                shouldProcessDepth = true;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"PCA: Exception in depth capture setup: {e.Message}\n{e.StackTrace}");
-                shouldProcessDepth = false;
-            }
-
-            // Yield outside of any try block
-            if (shouldProcessDepth)
-            {
-                yield return new WaitForEndOfFrame();
-
-                // Process after yield
-                try
-                {
-                    ProcessDepthTexture(tempRT, ref depthFrame);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"PCA: Exception processing depth: {e.Message}");
-                    depthFrame.isValid = false;
-                }
-            }
-
-            // Cleanup
-            if (tempRT != null)
-            {
-                RenderTexture.ReleaseTemporary(tempRT);
-            }
-
-            // Add the depth frame data
-            m_snapshotDepthData.Add(depthFrame);
-            Debug.Log($"PCA: Depth capture completed - Valid: {depthFrame.isValid}");
-        }
-
-        private void ProcessDepthTexture(RenderTexture tempRT, ref DepthFrameData depthFrame)
-        {
-            try
-            {
-                // Create Texture2D and read pixels
-                Texture2D depthTex2D = new Texture2D(tempRT.width, tempRT.height, TextureFormat.RFloat, false);
-
-                RenderTexture previousActive = RenderTexture.active;
-                RenderTexture.active = tempRT;
-
-                try
-                {
-                    depthTex2D.ReadPixels(new Rect(0, 0, tempRT.width, tempRT.height), 0, 0);
-                    depthTex2D.Apply();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"PCA: Failed to read pixels: {e.Message}");
-                    RenderTexture.active = previousActive;
-                    Destroy(depthTex2D);
-                    return;
-                }
-
-                RenderTexture.active = previousActive;
-
-                // Get pixel data
-                Color[] pixels = depthTex2D.GetPixels();
-                float[] depthValues = new float[pixels.Length];
-
-                // Analyze the data
-                float minVal = float.MaxValue;
-                float maxVal = float.MinValue;
-                int nonZeroCount = 0;
-
-                for (int i = 0; i < pixels.Length; i++)
-                {
-                    float val = pixels[i].r;
-                    depthValues[i] = val;
-
-                    if (val > 0.0001f)
-                    {
-                        nonZeroCount++;
-                        minVal = Mathf.Min(minVal, val);
-                        maxVal = Mathf.Max(maxVal, val);
-                    }
-                }
-
-                Debug.Log($"PCA: Depth data analysis - Non-zero pixels: {nonZeroCount}/{pixels.Length}, Range: {minVal} to {maxVal}");
-
-                // Update depth frame data
-                depthFrame.depthValues = depthValues;
-                depthFrame.isValid = nonZeroCount > 0;
-
-                // Cleanup
-                Destroy(depthTex2D);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"PCA: Error processing depth texture: {e.Message}");
-                depthFrame.isValid = false;
-            }
         }
 
         // Simplified save method
@@ -727,8 +391,6 @@ namespace PassthroughCameraSamples.CameraToWorld
                 Debug.LogError($"PCA: Error saving depth visualization: {e.Message}");
             }
         }
-
-        
 
         public void SaveAllSnapshots()
         {
