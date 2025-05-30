@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from PIL import Image
+import asyncio
+from typing import List, Dict, Any
 
 
 # Set up logging to help debug
@@ -97,200 +99,178 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 if langchain_api_key:
     os.environ["LANGCHAIN_API_KEY"] = langchain_api_key
 
-try:
-    # Initialize the LLM     base_url="https://reverse.onechats.top/v1",
-    log("Initializing ChatOpenAI")
-    proxy_picker_llm = ChatOpenAI(
-        model="o3-2025-04-16",
-        temperature=0.1,
-        base_url="https://api.nuwaapi.com/v1",
-        api_key=api_key
-    )
+# Initialize the object recognition LLM
+object_recognition_llm = ChatOpenAI(
+    model="gpt-4o-2024-11-20",
+    temperature=0.1,
+    base_url="https://reverse.onechats.top/v1",
+    api_key=api_key
+)
+# object_recognition_llm = ChatOpenAI(
+#     model="o3-2025-04-16",
+#     temperature=0.1,
+#     base_url="https://api.nuwaapi.com/v1",
+#     api_key=api_key
+# )
 
-    # Create the system prompt
-    system_prompt = """
-    You are a haptic proxy picker. Your primary goal is to select suitable physical proxies from the images of the real-world surroundings of a VR user so that the user experiences the intended haptic feedback when interacting with target virtual objects.
+# System prompt for object recognition
+object_recognition_system_prompt = """
+You are an expert computer vision system that identifies objects in images.
 
-    Annotation of Input JSON File:
-    -summary: Overall description about the current VR scene.
-    
-    -highEngagementOrder: The user almost always interacts with the following target virtual objects.
-    -mediumEngagementOrder: The user frequently interacts with the following target virtual objects.
-    -lowEngagementOrder: The user occasionally interacts with the following target virtual objects.
+For each image, create a detailed list of all recognizable objects with the following information:
 
-    -nodeAnnotations.objectName: The target virtual object in the VR scene for which you should propose a haptic proxy from surroundings.
-    -nodeAnnotations.involvementType: grasp: users are very likely to grasp the game object. contact: users are very likely to touch or contact the game object using body parts. substrate: users are unlikely to contact the game object directly; instead, they tend to use another grasped game object ot interact with it.
-    -nodeAnnotations.description: Overall description about the usage of this virtual object in the current VR scene.
-    -nodeAnnotations.engagementLevel: 0: low engagement, 1: medium engagement, 2: high engagement. It basically reflects how often the VR users will interact with this virtual object.
-    -nodeAnnotations.snapshotPath: The path where the snapshot of this target virtual object is stored.
-    -nodeAnnotations.inertia: Highly expected haptic feedback, if any, regarding the target virtual object's mass and gravity center.
-    -nodeAnnotations.interactivity: Highly expected haptic feedback, if any, regarding the target virtual object's interactable features.
-    -nodeAnnotations.outline: Highly expected haptic feedback, if any, regarding the target virtual object's shape and size.
-    -nodeAnnotations.texture: Highly expected haptic feedback, if any, regarding the target virtual object's surface texture.
-    -nodeAnnotations.hardness: Highly expected haptic feedback, if any, regarding the target virtual object's hardness of contact or flexible parts.
-    -nodeAnnotations.temperature: Highly expected haptic feedback, if any, regarding the perceived temperature of the contact points on the target virtual object.
-    -nodeAnnotations.inertiaValue: From 0 to 1, how important the inertia property is.
-    -nodeAnnotations.interactivity: From 0 to 1, how important the interactivity property is.
-    -nodeAnnotations.outline: From 0 to 1, how important the outline property is.
-    -nodeAnnotations.texture: From 0 to 1, how important the texture property is.
-    -nodeAnnotations.hardness: From 0 to 1, how important the hardness property is.
-    -nodeAnnotations.temperature: From 0 to 1, how important the temperature property is.
-    -nodeAnnotations.dimensions_meters: The dimensions (height, width, depth) of the game object.
+1. Its name with some details (e.g., "white cuboid airpods case")
+2. Its position in the image (e.g., "bottom left of the image")
 
-    -relationshipAnnotations.contactObject: The virtual object which a VR user direct contact with.
-    -relationshipAnnotations.substrateObject: The virtual object which a direct contacted virtual object will interact or collide with.
-    -relationshipAnnotations.annotationText: Anticipated haptic feedback transmitted through the contactObject when it comes into contact with the substrateObject.
+FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
 
-    -groups.title: The name of grouped target virtual objects
-    -groups.objectNames: The names of target virtual objects
-    -groups.objectVectors.objectA: The name of objectA
-    -groups.objectVectors.objectB: The name of objectB
-    -groups.objectVectors.vector: The coordinate of the vector pointing from objectA to objectB.
-    -groups.objectVectors.distance: The distance between objectA and objectB with meters as unit.
-    -groups.objectVectors.additionalViewAngles: Different angles of snapshots of the grouped virtual objects in VR scene.
+```json
+[
+  {
+    "object_id": 1,
+    "object": "object name with some details",
+    "position": "position in image"
+  },
+  {
+    "object_id": 2,
+    ...
+  }
+]
+```
 
-    Proxy Seeking Instructions:
-    1. Base Your Decisions on the Provided Data
-        *Construct the interaction scenario and anticipate the expected haptic feedback by reviewing the haptic annotation and provided images.
-        *Then, think in reverse: envision which physical proxies from the environment can supply the needed haptic sensations.
-    2. Think Differently by Contact Type
-        *Contact Objects
-            -These are virtual objects the user's body directly contacts (e.g., tennis racket, shovel, chair)
-            -Strive for close matching across highlighted properties (inertia, interactivity, outline, texture, hardness, temperature) for contact parts.
-        *Substrate Objects
-            -These objects interact with the user indirectly via another tool (e.g., a golf ball being struck by a club, a bucket of water being stirred by a stick).
-            -Be more flexible and creative when picking a proxy, as long as the user perceives the correct collisions, vibrations or force through the direct contact tool (e.g., a christmas tree could be a haptic proxy of a ping pang ball since the bat normally end up colliding with the tree with every swing; the scissors placed in a pen holder can serve as the haptic proxy for the lock when simulating the feedback of prying the lock open with a crowbar).
-    3. Placement Relationship
-        *When selecting haptic proxies for grouped virtual objects, the similarity of distance or arrangement between selected haptic proxies and grouped virtual objects should be taken as a constrain.
-    4. Choose with Focus
-        *Annotated physical properties and description from the haptic annotation json file indicate which properties are especially significant in terms of rendering a anticipated haptic feedback. Although you should consider every property that might matter for immersion, prioritize these highlighted annotation first if there is a trade-off.
-    5. Assign with Priority
-        *A single physical object cannot serve as the haptic proxy for multiple virtual objects simultaneously. When there is a conflict between two virtual objects over their haptic proxies, prioritize assigning the proxy to the virtual object with the higher *engagement order*.
+Be comprehensive and include all clearly visible objects.
+"""
 
-    Final Output Requirements: 
-    1. Assign the most suitable physical object to each target virtual object.
-    2. Specify the location of each chosen haptic proxy (i.e., where it is found in the provided images)
-    3. Justify your proxy selection for each virtual object.
-    4. Describe how to hold or manipulate the chosen haptic proxy so it could simulate the expected haptic feedback.
-    """
-
-    # Create the messages
-    messages = [SystemMessage(content=system_prompt)]
-
-    # Prepare the human message content
-    human_message_content = []
-
-    # 1. Add text description first
-    text_content = "I need to find haptic proxies for virtual objects in VR. Here's the data:"
-
-    # Add haptic annotation JSON if available
-    if haptic_annotation_json:
+# Function to process a single image and recognize objects
+async def process_single_image(image_base64: str, image_id: int) -> Dict[str, Any]:
+    try:
+        # Create the human message with image content
+        human_message_content = [
+            {"type": "text", "text": f"Identify all objects in this image (image ID: {image_id})."},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}", "detail": "high"}}
+        ]
+        
+        # Create the messages
+        messages = [
+            SystemMessage(content=object_recognition_system_prompt),
+            HumanMessage(content=human_message_content)
+        ]
+        
+        # Get response from the model
+        log(f"Sending image {image_id} to object recognition model")
+        response = await object_recognition_llm.ainvoke(messages)
+        log(f"Received response for image {image_id}")
+        
+        # Extract JSON from response
+        response_text = response.content
+        # Find JSON content between ```json and ```
+        json_start = response_text.find("```json")
+        if json_start != -1:
+            json_start += 7  # Length of ```json
+            json_end = response_text.find("```", json_start)
+            if json_end != -1:
+                json_content = response_text[json_start:json_end].strip()
+            else:
+                json_content = response_text[json_start:].strip()
+        else:
+            # Try to find any JSON array in the response
+            json_start = response_text.find("[")
+            json_end = response_text.rfind("]") + 1
+            if json_start != -1 and json_end > json_start:
+                json_content = response_text[json_start:json_end].strip()
+            else:
+                json_content = response_text
+        
         try:
-            # Parse JSON to make it more readable
-            haptic_data = json.loads(haptic_annotation_json)
-            formatted_json = json.dumps(haptic_data, indent=2)
-            text_content += f"\n\nHaptic Annotation Data:\n```json\n{formatted_json}\n```"
-        except Exception as e:
-            log(f"Error parsing haptic annotation JSON: {e}")
-            text_content += f"\n\nHaptic Annotation Data:\n{haptic_annotation_json}"
+            # Parse the JSON response
+            objects = json.loads(json_content)
+            
+            # Add image_id to each object
+            for obj in objects:
+                obj["image_id"] = image_id
+                
+            return {"image_id": image_id, "objects": objects, "status": "success"}
+            
+        except json.JSONDecodeError as e:
+            log(f"Error parsing JSON for image {image_id}: {e}")
+            log(f"Raw content: {json_content}")
+            return {"image_id": image_id, "objects": [], "status": "error", "error": str(e)}
+            
+    except Exception as e:
+        log(f"Error processing image {image_id}: {e}")
+        return {"image_id": image_id, "objects": [], "status": "error", "error": str(e)}
 
-    human_message_content.append({"type": "text", "text": text_content})
+# Process multiple images concurrently
+async def process_multiple_images(environment_images: List[str]) -> Dict[int, List[Dict]]:
+    tasks = []
+    for i, image_base64 in enumerate(environment_images):
+        tasks.append(process_single_image(image_base64, i))
+    
+    results = await asyncio.gather(*tasks)
+    
+    # Organize results into a database
+    object_database = {}
+    for result in results:
+        image_id = result["image_id"]
+        if result["status"] == "success":
+            object_database[image_id] = result["objects"]
+        else:
+            log(f"Processing failed for image {image_id}: {result.get('error', 'Unknown error')}")
+            object_database[image_id] = []
+            
+    return object_database
 
-    # 2. Add environment images
+# Function to save object database to JSON file
+def save_object_database(object_db: Dict[int, List[Dict]], output_path: str) -> str:
+    try:
+        # Convert to serializable format
+        serializable_db = {str(k): v for k, v in object_db.items()}
+        
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        
+        # Save to file
+        with open(output_path, 'w') as f:
+            json.dump(serializable_db, f, indent=2)
+            
+        log(f"Object database saved to {output_path}")
+        return output_path
+    except Exception as e:
+        log(f"Error saving object database: {e}")
+        return None
+
+try:
+    # Run object detection on environment images
     if environment_image_base64_list:
-        log(f"Adding {len(environment_image_base64_list)} environment images")
-
-        # Add a separator text
-        human_message_content.append({
-            "type": "text",
-            "text": "\nImages of the physical environment (potential haptic proxies):"
-        })
-
-        # Add each environment image
-        for i, image_base64 in enumerate(environment_image_base64_list):
-            human_message_content.append({
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/jpeg;base64,{image_base64}",
-                    "detail": "high"
-                }
-            })
-            log(f"Added environment image {i + 1}/{len(environment_image_base64_list)}")
-
-    # 3. Add virtual object snapshots
-    if virtual_object_snapshots:
-        log(f"Adding {len(virtual_object_snapshots)} virtual object snapshots")
-
-        # Add a separator text
-        human_message_content.append({
-            "type": "text",
-            "text": "\nImages of individual virtual objects:"
-        })
-
-        # Add each virtual object image with its name
-        for i, obj_snapshot in enumerate(virtual_object_snapshots):
-            # Add object name before its image
-            human_message_content.append({
-                "type": "text",
-                "text": f"\nVirtual Object: {obj_snapshot['objectName']}"
-            })
-
-            # Add the image
-            human_message_content.append({
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/jpeg;base64,{obj_snapshot['imageBase64']}",
-                    "detail": "high"
-                }
-            })
-            log(f"Added virtual object image {i + 1}/{len(virtual_object_snapshots)}: {obj_snapshot['objectName']}")
-
-    # 4. Add arrangement snapshots
-    if arrangement_snapshots:
-        log(f"Adding {len(arrangement_snapshots)} arrangement groups")
-
-        # Add a separator text
-        human_message_content.append({
-            "type": "text",
-            "text": "\nImages of virtual object arrangements:"
-        })
-
-        # Add each arrangement group
-        for i, arrangement in enumerate(arrangement_snapshots):
-            # Add arrangement name
-            human_message_content.append({
-                "type": "text",
-                "text": f"\nArrangement: {arrangement['arrangementName']}"
-            })
-
-            # Add all images for this arrangement
-            for j, image_base64 in enumerate(arrangement['imageBase64List']):
-                human_message_content.append({
-                    "type": "image_url",
-                    "image_url": {
-                        "url": f"data:image/jpeg;base64,{image_base64}",
-                        "detail": "high"
-                    }
-                })
-
-            log(f"Added arrangement {i + 1}/{len(arrangement_snapshots)}: {arrangement['arrangementName']} with {len(arrangement['imageBase64List'])} images")
-
-    # Add final instruction
-    # human_message_content.append({
-    #     "type": "text",
-    #     "text": "\nBased on the haptic annotation data, virtual object images, and environment images, please identify the most suitable physical objects to serve as haptic proxies for each virtual object."
-    # })
-
-    # Create the human message with all content
-    messages.append(HumanMessage(content=human_message_content))
-
-    # Get the response
-    log("Sending request to LLM")
-    response = proxy_picker_llm.invoke(messages)
-
-    # Print the response (this will be captured by the server)
-    log("Received response from LLM")
-    print(response.content)
+        log(f"Processing {len(environment_image_base64_list)} environment images for object detection")
+        
+        # Process images asynchronously
+        object_database = asyncio.run(process_multiple_images(environment_image_base64_list))
+        
+        # Save object database
+        output_dir = os.path.join(script_dir, "output")
+        output_path = os.path.join(output_dir, "object_database.json")
+        saved_path = save_object_database(object_database, output_path)
+        
+        # Calculate total objects found
+        total_objects = sum(len(objects) for objects in object_database.values())
+        log(f"Object recognition complete. Found {total_objects} objects across {len(object_database)} images.")
+        
+        # Print result as JSON
+        result = {
+            "status": "success",
+            "message": f"Recognized {total_objects} objects across {len(object_database)} images.",
+            "database_path": saved_path,
+            "object_database": object_database
+        }
+        
+        print(json.dumps(result, indent=2))
+    else:
+        log("No environment images to process")
+        print(json.dumps({"status": "error", "message": "No environment images provided"}))
+        
 except Exception as e:
-    log(f"Error in LLM processing: {e}")
-    print(f"Error: {str(e)}")
+    log(f"Error in object recognition: {e}")
+    import traceback
+    log(traceback.format_exc())
+    print(json.dumps({"status": "error", "message": str(e)}))
