@@ -240,6 +240,18 @@ namespace PassthroughCameraSamples.CameraToWorld
                 // Get shader parameters
                 depthFrame.zBufferParams = Shader.GetGlobalVector("_EnvironmentDepthZBufferParams");
 
+                // Get reprojection matrices (these are critical for accurate 3D reconstruction)
+                Matrix4x4 reprojectionMatrix = Shader.GetGlobalMatrix("_EnvironmentDepthReprojectionMatrix");
+                if (reprojectionMatrix != Matrix4x4.identity)
+                {
+                    depthFrame.reprojectionMatrices = new Matrix4x4[] { reprojectionMatrix };
+                    Debug.Log("PCA: Found reprojection matrix");
+                }
+                else
+                {
+                    Debug.LogWarning("PCA: Reprojection matrix not found or is identity");
+                }
+
                 // For preprocessed texture, we might be able to read it directly
                 Texture2D depthTex2D = new Texture2D(depthSource.width, depthSource.height, TextureFormat.RGBAFloat, false);
 
@@ -303,7 +315,6 @@ namespace PassthroughCameraSamples.CameraToWorld
             m_snapshotDepthData.Add(depthFrame);
         }
 
-        // Simplified save method
         private void SaveDepthData(string folderPath, string timestamp, int index, DepthFrameData depthData)
         {
             try
@@ -350,6 +361,9 @@ namespace PassthroughCameraSamples.CameraToWorld
                     }
                 }
 
+                // Save metadata JSON (important for reconstruction)
+                SaveDepthMetadata(folderPath, timestamp, index, depthData);
+
                 // Save simple visualization
                 SaveSimpleDepthVisualization(folderPath, timestamp, index, depthData);
 
@@ -358,6 +372,85 @@ namespace PassthroughCameraSamples.CameraToWorld
             catch (Exception e)
             {
                 Debug.LogError($"PCA: Error saving depth data: {e.Message}");
+            }
+        }
+
+        private void SaveDepthMetadata(string folderPath, string timestamp, int index, DepthFrameData depthData)
+        {
+            try
+            {
+                string metaPath = Path.Combine(folderPath, $"DepthMeta_{timestamp}_{index:D2}.json");
+                
+                // Create metadata compatible with DepthDataProcessor
+                var metadata = new DepthMetadata
+                {
+                    width = depthData.width,
+                    height = depthData.height,
+                    cameraPosition = new CameraTransform
+                    {
+                        x = depthData.cameraPosition.x,
+                        y = depthData.cameraPosition.y,
+                        z = depthData.cameraPosition.z
+                    },
+                    cameraRotation = new CameraRotation
+                    {
+                        x = depthData.cameraRotation.x,
+                        y = depthData.cameraRotation.y,
+                        z = depthData.cameraRotation.z,
+                        w = depthData.cameraRotation.w
+                    },
+                    zBufferParams = new ZBufferParams
+                    {
+                        x = depthData.zBufferParams.x,
+                        y = depthData.zBufferParams.y,
+                        z = depthData.zBufferParams.z,
+                        w = depthData.zBufferParams.w
+                    }
+                };
+                
+                // Determine min and max depth for reconstruction reference
+                float minDepth = float.MaxValue;
+                float maxDepth = float.MinValue;
+                foreach (var depth in depthData.depthValues)
+                {
+                    if (depth > 0.0001f)
+                    {
+                        minDepth = Mathf.Min(minDepth, depth);
+                        maxDepth = Mathf.Max(maxDepth, depth);
+                    }
+                }
+                metadata.minDepth = minDepth;
+                metadata.maxDepth = maxDepth;
+                
+                // Save reprojection matrix if available
+                if (depthData.reprojectionMatrices != null && depthData.reprojectionMatrices.Length > 0)
+                {
+                    // Convert Matrix4x4 to float array
+                    metadata.reprojectionMatrix = new float[16];
+                    for (int i = 0; i < 16; i++)
+                    {
+                        metadata.reprojectionMatrix[i] = depthData.reprojectionMatrices[0][i];
+                    }
+                }
+                else
+                {
+                    // Create a default reprojection matrix if none is available
+                    // This is a placeholder - ideally we'd have the actual matrix
+                    Debug.LogWarning("PCA: No reprojection matrices available, using identity matrix");
+                    metadata.reprojectionMatrix = new float[16];
+                    Matrix4x4 identity = Matrix4x4.identity;
+                    for (int i = 0; i < 16; i++)
+                    {
+                        metadata.reprojectionMatrix[i] = identity[i];
+                    }
+                }
+                
+                string jsonString = JsonUtility.ToJson(metadata, true);
+                File.WriteAllText(metaPath, jsonString);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"PCA: Error saving depth metadata: {e.Message}");
             }
         }
 
@@ -416,6 +509,8 @@ namespace PassthroughCameraSamples.CameraToWorld
                 ClearPreviousFiles(folderPath, "*.png");
                 ClearPreviousFiles(depthFolderPath, "*.json");
                 ClearPreviousFiles(depthFolderPath, "*.raw");
+                ClearPreviousFiles(depthFolderPath, "*.txt");
+                ClearPreviousFiles(depthFolderPath, "*.png");
 
                 string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
                 int savedCount = 0;
@@ -454,7 +549,6 @@ namespace PassthroughCameraSamples.CameraToWorld
                 Debug.LogError($"PCA: Error saving snapshots: {e.Message}\n{e.StackTrace}");
             }
         }
-
 
         private void ClearPreviousFiles(string folderPath, string pattern)
         {
