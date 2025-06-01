@@ -1,0 +1,100 @@
+{
+  "0": [
+    {
+      "object_id": 1,
+      "object": "large flat-panel computer monitor with Unity editor displayed",
+      "position": "top center of the image",
+      "image_id": 0
+    },
+    {
+      "object_id": 2,
+      "object": "secondary flat-panel monitor (partial view showing code text)",
+      "position": "top left of the image",
+      "image_id": 0
+    },
+    {
+      "object_id": 3,
+      "object": "closed dark gray laptop (HP) under the central monitor",
+      "position": "center of the image, beneath the main monitor",
+      "image_id": 0
+    },
+    {
+      "object_id": 4,
+      "object": "black computer mouse",
+      "position": "bottom center of the image, on the desk surface",
+      "image_id": 0
+    },
+    {
+      "object_id": 5,
+      "object": "partial black keyboard",
+      "position": "bottom left of the image",
+      "image_id": 0
+    },
+    {
+      "object_id": 6,
+      "object": "tall white thermal water flask with stainless steel lid",
+      "position": "middle right of the image",
+      "image_id": 0
+    },
+    {
+      "object_id": 7,
+      "object": "brown leather backpack with dual handles",
+      "position": "right side of the image, behind the thermal flask",
+      "image_id": 0
+    },
+    {
+      "object_id": 8,
+      "object": "transparent shaker bottle with black lid",
+      "position": "far right of the image",
+      "image_id": 0
+    },
+    {
+      "object_id": 9,
+      "object": "roll of clear packing tape",
+      "position": "bottom right of the image",
+      "image_id": 0
+    },
+    {
+      "object_id": 10,
+      "object": "stack of loose paper sheets",
+      "position": "left of the laptop, under the left monitor",
+      "image_id": 0
+    },
+    {
+      "object_id": 11,
+      "object": "blue-covered booklet or magazine (titled '1002')",
+      "position": "on top of the paper stack at left",
+      "image_id": 0
+    },
+    {
+      "object_id": 12,
+      "object": "small rectangular orange sticker or card",
+      "position": "on the closed laptop, just below the monitor stand",
+      "image_id": 0
+    },
+    {
+      "object_id": 13,
+      "object": "red pen or marker",
+      "position": "on top of the paper stack at left",
+      "image_id": 0
+    },
+    {
+      "object_id": 14,
+      "object": "bundle of black and white cables",
+      "position": "underneath the central monitor stand",
+      "image_id": 0
+    },
+    {
+      "object_id": 15,
+      "object": "small white card or box with red logo",
+      "position": "to the right of the backpack on the desk",
+      "image_id": 0
+    },
+    {
+      "object_id": 16,
+      "object": "black desk mat",
+      "position": "covering most of the central desk surface",
+      "image_id": 0
+    }
+  ]
+}
