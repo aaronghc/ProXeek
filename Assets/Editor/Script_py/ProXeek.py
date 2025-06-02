@@ -19,6 +19,11 @@ def log(message):
 
 log("Script started")
 
+# Helper function to normalize object names for matching
+def normalize_name(name):
+    # Convert to lowercase, replace spaces with underscores, remove special characters
+    return name.lower().replace(" ", "_").replace("-", "_")
+
 # Check if we're running from Unity or from the server
 if len(sys.argv) > 1:
     # Running from server with parameters file
@@ -115,6 +120,14 @@ virtual_object_processor_llm = ChatOpenAI(
     api_key=api_key
 )
 
+# Initialize the proxy matching LLM
+proxy_matching_llm = ChatOpenAI(
+    model="o4-mini-2025-04-16",
+    temperature=0.1,
+    base_url="https://api.nuwaapi.com/v1",
+    api_key=api_key
+)
+
 # System prompt for object recognition
 object_recognition_system_prompt = """
 You are an expert computer vision system that identifies objects in images.
@@ -187,6 +200,28 @@ The JSON should look like:
   ...
 ]
 ```
+"""
+
+# System prompt for proxy matching
+proxy_matching_system_prompt = """
+You are an expert in haptic design who specializes in finding physical proxies for virtual objects in VR.
+
+Your task is to analyze ONE virtual object and evaluate ALL physical objects from the environment as potential haptic proxies.
+
+For each physical object, propose a specific method to utilize it as a haptic proxy. Then, critically evaluate this match by rating how realistic the interaction would feel on a 7-point Likert scale:
+
+1 - Strongly Disagree that interactions would feel realistic
+2 - Disagree
+3 - Somewhat Disagree
+4 - Neutral
+5 - Somewhat Agree
+6 - Agree
+7 - Strongly Agree that interactions would feel realistic
+
+Focus on matching the most important haptic properties of the virtual object (those with higher importance values).
+Make sure to include the object_id and image_id for each physical object exactly as they appear in the detected objects list.
+
+IMPORTANT: Image IDs begin at 0 (not 1). The first image has image_id=0, the second has image_id=1, etc.
 """
 
 # Function to process a single image and recognize objects
@@ -303,11 +338,6 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
             return []
         
         log(f"Found {len(node_annotations)} virtual objects in haptic annotation data")
-        
-        # Function to normalize object names for matching
-        def normalize_name(name):
-            # Convert to lowercase, replace spaces with underscores, remove special characters
-            return name.lower().replace(" ", "_").replace("-", "_")
         
         # Create a map of normalized object name to snapshot for flexible lookup
         object_snapshot_map = {}
@@ -465,47 +495,419 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
         log(traceback.format_exc())
         return []
 
+# Function to match a single virtual object with physical objects
+async def match_single_virtual_object(virtual_object, environment_images, physical_object_database, object_snapshot_map):
+    try:
+        virtual_object_name = virtual_object.get("objectName", "Unknown Object")
+        log(f"Matching proxies for virtual object: {virtual_object_name}")
+        
+        # Build the human message content
+        human_message_content = []
+        
+        # 1. Add the virtual object information and haptic feedback
+        virtual_object_text = f"""# Virtual Object to Evaluate: {virtual_object_name}
+
+## Haptic Properties
+```json
+{json.dumps(virtual_object, indent=2)}
+```
+
+## Haptic Feedback Description
+{virtual_object.get('hapticFeedback', 'No haptic feedback available')}
+"""
+        human_message_content.append({
+            "type": "text", 
+            "text": virtual_object_text
+        })
+        
+        # 2. Add virtual object snapshot if available
+        normalized_object_name = normalize_name(virtual_object_name)
+        snapshot_found = False
+        
+        if virtual_object_name in object_snapshot_map:
+            log(f"Adding snapshot for virtual object: {virtual_object_name}")
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[virtual_object_name]}", 
+                    "detail": "high"
+                }
+            })
+            snapshot_found = True
+        elif normalized_object_name in object_snapshot_map:
+            log(f"Adding snapshot for virtual object: {virtual_object_name} (normalized)")
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[normalized_object_name]}", 
+                    "detail": "high"
+                }
+            })
+            snapshot_found = True
+            
+        # 3. Add introduction to physical environment
+        human_message_content.append({
+            "type": "text", 
+            "text": "\n# Physical Environment\nBelow are snapshots of the physical environment with detected objects that could serve as haptic proxies:"
+        })
+        
+        # Pre-check if we actually have objects in the database to avoid "no objects detected" message
+        total_objects = sum(len(objects) for objects in physical_object_database.values())
+        log(f"Preparing to display {total_objects} physical objects from database")
+        
+        # 4. Add environment snapshots with their detected objects
+        for i, image_base64 in enumerate(environment_images):
+            # Add the environment snapshot
+            human_message_content.append({
+                "type": "text", 
+                "text": f"\n## Environment Snapshot {i+1}\n"
+            })
+            
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{image_base64}", 
+                    "detail": "high"
+                }
+            })
+            
+            # Add the detected objects for this snapshot
+            objects_in_snapshot = physical_object_database.get(str(i), [])
+            objects_text = "\n### Detected Objects in this Snapshot\n"
+            
+            if objects_in_snapshot:
+                for obj in objects_in_snapshot:
+                    # Make sure to include the object_id in the displayed information
+                    objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                    # Also display the correct image_id to ensure consistency
+                    objects_text += f"  Image ID: {i}\n"
+            else:
+                # Check if we should look for objects in a different format (in case image_id is stored as integer keys)
+                objects_in_snapshot = physical_object_database.get(i, [])
+                if objects_in_snapshot:
+                    for obj in objects_in_snapshot:
+                        objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                        # Also display the correct image_id to ensure consistency
+                        objects_text += f"  Image ID: {i}\n"
+                else:
+                    # Last attempt - try to find objects that have this image_id in their properties
+                    matching_objects = []
+                    for img_id, objects_list in physical_object_database.items():
+                        for obj in objects_list:
+                            if obj.get("image_id") == i:
+                                matching_objects.append(obj)
+                    
+                    if matching_objects:
+                        for obj in matching_objects:
+                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                            # Also display the correct image_id to ensure consistency
+                            objects_text += f"  Image ID: {i}\n"
+                    else:
+                        objects_text += "- No objects detected in this snapshot\n"
+                
+            human_message_content.append({
+                "type": "text", 
+                "text": objects_text
+            })
+        
+        # 5. Add final instructions
+        human_message_content.append({
+            "type": "text", 
+            "text": """
+# Your Task
+
+1. Evaluate EACH physical object as a potential haptic proxy for the virtual object.
+2. For EACH physical object, propose a specific method to utilize it as a haptic proxy.
+3. Rate how realistic the interaction would feel on the 7-point Likert scale for EACH match.
+
+FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure:
+
+```json
+[
+  {
+    "virtualObject": "name of the virtual object",
+    "physicalObject": "name of the physical object",
+    "object_id": 1,
+    "image_id": 0,
+    "proxyLocation": "location of the physical object in the environment",
+    "utilizationMethod": "detailed method to use this object as a proxy",
+    "likertRating": 5,
+    "ratingJustification": "explanation for your rating"
+  },
+  ...
+]
+```
+
+IMPORTANT: Make sure to use the EXACT image_id values shown above for each object. Do NOT add 1 to the image_id values.
+Include ALL physical objects in your evaluation, even those with low ratings.
+"""
+        })
+        
+        # Create the messages
+        messages = [
+            SystemMessage(content=proxy_matching_system_prompt),
+            HumanMessage(content=human_message_content)
+        ]
+        
+        # Get response from the model
+        log(f"Sending proxy matching request for {virtual_object_name}")
+        response = await proxy_matching_llm.ainvoke(messages)
+        log(f"Received proxy matching response for {virtual_object_name}")
+        
+        # Extract JSON from response
+        response_text = response.content
+        
+        # Try to find JSON array
+        json_start = response_text.find("[")
+        json_end = response_text.rfind("]") + 1
+        if json_start != -1 and json_end > json_start:
+            json_content = response_text[json_start:json_end]
+        else:
+            # Try to find JSON between code blocks
+            json_start = response_text.find("```json")
+            if json_start != -1:
+                json_start += 7  # Length of ```json
+                json_end = response_text.find("```", json_start)
+                if json_end != -1:
+                    json_content = response_text[json_start:json_end].strip()
+                else:
+                    json_content = response_text[json_start:].strip()
+            else:
+                # As a fallback, use the entire response
+                json_content = response_text
+        
+        try:
+            # Parse the JSON response
+            matching_results = json.loads(json_content)
+            
+            # Convert any "imageId" keys to "image_id" right away
+            matching_results = rename_key_in_json(matching_results, "imageId", "image_id")
+            
+            # Add the original virtual object info to each result
+            for result in matching_results:
+                result["virtualObjectInfo"] = virtual_object
+                
+                # Make sure we have object_id and image_id in the result
+                if "object_id" not in result:
+                    log(f"Missing object_id in result for {result.get('physicalObject', 'unknown object')}")
+                    # Try to find the object in the database
+                    img_id = result.get("image_id")
+                    phys_obj = result.get("physicalObject")
+                    if img_id is not None and phys_obj:
+                        img_id_str = str(img_id)
+                        objects_in_img = physical_object_database.get(img_id_str, [])
+                        for obj in objects_in_img:
+                            if obj["object"] == phys_obj:
+                                result["object_id"] = obj["object_id"]
+                                log(f"Found object_id {obj['object_id']} for {phys_obj}")
+                                break
+                
+                # Ensure consistent property types
+                if "object_id" in result and isinstance(result["object_id"], str):
+                    try:
+                        result["object_id"] = int(result["object_id"])
+                    except ValueError:
+                        pass
+                
+                if "image_id" in result and isinstance(result["image_id"], str):
+                    try:
+                        result["image_id"] = int(result["image_id"])
+                    except ValueError:
+                        pass
+                
+                # Double check that image_id matches the database - fix any +1 offset
+                img_id = result.get("image_id")
+                if img_id is not None and isinstance(img_id, int) and img_id > 0:
+                    obj_id = result.get("object_id")
+                    phys_obj = result.get("physicalObject")
+                    
+                    # Check if this is incorrectly offset
+                    correct_img_id = img_id - 1
+                    img_id_str = str(correct_img_id)
+                    
+                    # Look in the database for a matching object at the offset-fixed image_id
+                    found_match = False
+                    if img_id_str in physical_object_database:
+                        for obj in physical_object_database[img_id_str]:
+                            if (obj_id is not None and obj.get("object_id") == obj_id) or obj.get("object") == phys_obj:
+                                # Set the correct image_id
+                                result["image_id"] = correct_img_id
+                                log(f"Fixed image_id offset: was {img_id}, now {correct_img_id}")
+                                found_match = True
+                                break
+                    
+                    # If no matching object was found with the offset, leave the image_id as is
+                    if not found_match:
+                        log(f"Could not find matching object for offset correction: {phys_obj} (ID: {obj_id}, Image: {img_id})")
+                
+                # Make sure the physical object properties are from the database
+                img_id = result.get("image_id")
+                obj_id = result.get("object_id")
+                
+                if img_id is not None and obj_id is not None:
+                    img_id_str = str(img_id)
+                    objects_in_img = physical_object_database.get(img_id_str, [])
+                    for obj in objects_in_img:
+                        if obj.get("object_id") == obj_id:
+                            # Use the database values for consistency
+                            result["physicalObject"] = obj["object"]
+                            result["proxyLocation"] = obj["position"]
+                            break
+            
+            return matching_results
+            
+        except json.JSONDecodeError as e:
+            log(f"Error parsing proxy matching JSON for {virtual_object_name}: {e}")
+            log(f"Raw content: {json_content}")
+            
+            # Return a basic result with the error
+            return [{
+                "virtualObject": virtual_object_name,
+                "error": f"Failed to parse response: {str(e)}",
+                "rawResponse": response_text[:500]  # First 500 chars
+            }]
+            
+    except Exception as e:
+        log(f"Error in proxy matching for {virtual_object.get('objectName', 'unknown')}: {e}")
+        import traceback
+        log(traceback.format_exc())
+        
+        # Return a basic result with the error
+        return [{
+            "virtualObject": virtual_object.get("objectName", "unknown"),
+            "error": f"Processing error: {str(e)}"
+        }]
+
+# Function to run proxy matching for all virtual objects in parallel
+async def run_proxy_matching(virtual_objects, environment_images, physical_object_database, object_snapshot_map):
+    tasks = []
+    for virtual_object in virtual_objects:
+        task = match_single_virtual_object(
+            virtual_object, 
+            environment_images, 
+            physical_object_database, 
+            object_snapshot_map
+        )
+        tasks.append(task)
+    
+    # Run all tasks concurrently
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    
+    # Process results - flatten the array of arrays
+    all_matching_results = []
+    for i, result in enumerate(results):
+        if isinstance(result, Exception):
+            log(f"Error in proxy matching for object {i}: {result}")
+            # Create fallback entry
+            fallback_entry = {
+                "virtualObject": virtual_objects[i].get("objectName", f"Object {i}"),
+                "error": f"Task error: {str(result)}"
+            }
+            all_matching_results.append(fallback_entry)
+        else:
+            # Each result is an array of matching results for a single virtual object
+            all_matching_results.extend(result)
+    
+    # Log summary of results
+    log(f"Completed proxy matching with {len(all_matching_results)} total matches across {len(virtual_objects)} virtual objects")
+    
+    return all_matching_results
+
+# Modify the run_concurrent_tasks function to include proxy matching
+async def run_concurrent_tasks():
+    tasks = []
+    results = {}
+    
+    # Add physical object task if we have environment images
+    if environment_image_base64_list:
+        log(f"Setting up task to process {len(environment_image_base64_list)} environment images")
+        physical_task = process_multiple_images(environment_image_base64_list)
+        tasks.append(physical_task)
+    
+    # Add virtual object task if we have haptic annotation data
+    if haptic_annotation_json:
+        log("Setting up task to process virtual objects from haptic annotation data")
+        virtual_task = process_virtual_objects(haptic_annotation_json)
+        tasks.append(virtual_task)
+    
+    # Run initial tasks concurrently and get results
+    if tasks:
+        log("Starting concurrent processing of physical and virtual objects")
+        task_results = await asyncio.gather(*tasks)
+        
+        # Process results
+        task_index = 0
+        
+        # Handle physical objects result if that task was included
+        if environment_image_base64_list:
+            physical_result = task_results[task_index]
+            task_index += 1
+            results["physical_result"] = physical_result
+        
+        # Handle virtual objects result if that task was included
+        if haptic_annotation_json:
+            virtual_result = task_results[task_index]
+            results["virtual_result"] = virtual_result
+    
+    # Then run proxy matching if both physical and virtual objects are available
+    if environment_image_base64_list and haptic_annotation_json:
+        log("Setting up proxy matching task")
+        
+        # Create object snapshot map for virtual objects
+        object_snapshot_map = {}
+        for snapshot in virtual_object_snapshots:
+            if 'objectName' in snapshot and 'imageBase64' in snapshot:
+                original_name = snapshot['objectName']
+                normalized_name = normalize_name(original_name)
+                object_snapshot_map[normalized_name] = snapshot['imageBase64']
+                object_snapshot_map[original_name] = snapshot['imageBase64']
+        
+        # Get the actual data from the results
+        physical_object_database = results.get("physical_result", {})
+        enhanced_virtual_objects = results.get("virtual_result", [])
+        
+        # Run proxy matching
+        proxy_matching_results = await run_proxy_matching(
+            enhanced_virtual_objects, 
+            environment_image_base64_list, 
+            physical_object_database,
+            object_snapshot_map
+        )
+        
+        # Add to results
+        results["proxy_matching_result"] = proxy_matching_results
+    
+    return results
+
+# Add a utility function to handle key renaming in JSON structures
+def rename_key_in_json(data, old_key, new_key):
+    """Recursively rename a key in a JSON-like data structure"""
+    if isinstance(data, dict):
+        # Create a new dict with updated keys
+        new_dict = {}
+        for k, v in data.items():
+            # Replace the key if it matches
+            new_k = new_key if k == old_key else k
+            
+            # Special case for imageId/image_id: fix 1-based to 0-based
+            if (k == old_key or k == new_key) and new_k == "image_id" and isinstance(v, int) and v > 0:
+                # Adjust image_id value from 1-based to 0-based
+                v = v - 1
+                log(f"Normalized image_id from {v+1} to {v}")
+            
+            # Process the value (which might contain further dict/list structures)
+            new_dict[new_k] = rename_key_in_json(v, old_key, new_key)
+        return new_dict
+    elif isinstance(data, list):
+        # Process each item in the list
+        return [rename_key_in_json(item, old_key, new_key) for item in data]
+    else:
+        # Return primitives unchanged
+        return data
+
 try:
     # Create a variable to store the processing results
     result = {"status": "success", "message": "Processing complete"}
-    
-    # Define a function to run both tasks concurrently
-    async def run_concurrent_tasks():
-        tasks = []
-        results = {}
-        
-        # Add physical object task if we have environment images
-        if environment_image_base64_list:
-            log(f"Setting up task to process {len(environment_image_base64_list)} environment images")
-            physical_task = process_multiple_images(environment_image_base64_list)
-            tasks.append(physical_task)
-        
-        # Add virtual object task if we have haptic annotation data
-        if haptic_annotation_json:
-            log("Setting up task to process virtual objects from haptic annotation data")
-            virtual_task = process_virtual_objects(haptic_annotation_json)
-            tasks.append(virtual_task)
-        
-        # Run both tasks concurrently and get results
-        if tasks:
-            log("Starting concurrent processing of physical and virtual objects")
-            task_results = await asyncio.gather(*tasks)
-            
-            # Process results
-            task_index = 0
-            
-            # Handle physical objects result if that task was included
-            if environment_image_base64_list:
-                physical_result = task_results[task_index]
-                task_index += 1
-                results["physical_result"] = physical_result
-            
-            # Handle virtual objects result if that task was included
-            if haptic_annotation_json:
-                virtual_result = task_results[task_index]
-                results["virtual_result"] = virtual_result
-        
-        return results
     
     # Run all tasks concurrently in a single event loop
     concurrent_results = asyncio.run(run_concurrent_tasks())
@@ -561,6 +963,34 @@ try:
     else:
         log("No haptic annotation data to process")
         result["virtual_objects"] = {"status": "error", "message": "No haptic annotation data provided"}
+    
+    # Process proxy matching results if available
+    if environment_image_base64_list and haptic_annotation_json:
+        log("Processing completed proxy matching results")
+        proxy_matching_results = concurrent_results.get("proxy_matching_result", [])
+        
+        # Save proxy matching results
+        output_dir = os.path.join(script_dir, "output")
+        proxy_output_path = os.path.join(output_dir, "proxy_matching_results.json")
+        
+        # Ensure output directory exists
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Convert any imageId keys to image_id before saving
+        normalized_proxy_results = rename_key_in_json(proxy_matching_results, "imageId", "image_id")
+
+        # Save proxy matching results with normalized keys
+        with open(proxy_output_path, 'w') as f:
+            json.dump(normalized_proxy_results, f, indent=2)
+        
+        log(f"Proxy matching complete. Generated matches for {len(proxy_matching_results)} virtual objects.")
+        
+        # Add to result
+        result["proxy_matching"] = {
+            "count": len(proxy_matching_results),
+            "database_path": proxy_output_path,
+            "matching_results": proxy_matching_results
+        }
     
     # Print final result as JSON
     print(json.dumps(result, indent=2))

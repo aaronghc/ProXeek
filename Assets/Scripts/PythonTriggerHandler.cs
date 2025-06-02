@@ -40,7 +40,7 @@ namespace PythonIntegration
         private void Awake()
         {
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(300);
+            _httpClient.Timeout = TimeSpan.FromSeconds(600);
 
             if (loadingIndicator != null)
                 loadingIndicator.SetActive(false);
