@@ -160,19 +160,19 @@ Be comprehensive and include all clearly visible objects.
 virtual_object_processor_system_prompt = """
 You are a haptic feedback expert who specializes in describing the expected haptic sensations when interacting with virtual objects in VR.
 
-Your task is to analyze virtual object data and create clear descriptions of the haptic feedback that users should experience when interacting with these virtual objects. Your descriptions will be used to find appropriate physical proxies from the real environment.
+Your task is to analyze virtual object haptic annotation and its snapshot, and create clear descriptions of the haptic feedback that users should experience when interacting with these virtual objects. Your descriptions will be used to find appropriate physical proxies from the real environment.
 
 For each virtual object, consider the following properties:
 - objectName: The target virtual object in the VR scene
 - involvementType: grasp: users are very likely to grasp the game object. contact: users are very likely to touch or contact the game object using body parts. substrate: users are unlikely to contact the game object directly; instead, they tend to use another grasped game object ot interact with it.
 - description: Overall usage of this virtual object in the VR scene
 - engagementLevel: How frequently users interact with the object (0: low, 1: medium, 2: high)
-- inertia: Highly expected haptic feedback, if any, regarding the target virtual object's mass and gravity center.
-- interactivity: Highly expected haptic feedback, if any, regarding the target virtual object's interactable features.
+- inertia: Highly expected haptic feedback, if any, regarding the target virtual object's mass, weight distribution, and resistance to movement.
+- interactivity: Highly expected haptic feedback, if any, regarding how the virtual object responds to user actions.
 - outline: Highly expected haptic feedback, if any, regarding the target virtual object's shape and size.
-- texture: Highly expected haptic feedback, if any, regarding the target virtual object's surface texture.
-- hardness: Highly expected haptic feedback, if any, regarding the target virtual object's hardness or flexibility.
-- temperature: Highly expected haptic feedback, if any, regarding the target virtual object's perceived temperature.
+- texture: Highly expected haptic feedback, if any, regarding the target virtual object's surface feel and tactile patterns.
+- hardness: Highly expected haptic feedback, if any, regarding the target virtual object's rigidity, compliance, and deformation.
+- temperature: Highly expected haptic feedback, if any, regarding the target virtual object's thermal properties and heat transfer.
 - inertiaValue: Importance of inertia (0-1)
 - interactivityValue: Importance of interactivity (0-1)
 - outlineValue: Importance of outline (0-1)
