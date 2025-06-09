@@ -60,7 +60,7 @@ def run_python():
             [sys.executable, script_path, params_path],
             capture_output=True,
             text=True,
-            timeout=300  # Increase timeout for processing multiple images
+            timeout=1000  # Increase timeout for processing multiple images
         )
 
         # Clean up the temporary file

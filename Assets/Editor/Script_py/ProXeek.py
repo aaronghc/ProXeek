@@ -208,15 +208,7 @@ You are an expert in haptic design who specializes in finding physical proxies f
 
 Your task is to analyze ONE virtual object and evaluate ALL physical objects from the environment as potential haptic proxies.
 
-For each physical object, propose a specific method to utilize it as a haptic proxy. Then, critically evaluate this match by rating how realistic the interaction would feel on a 7-point Likert scale:
-
-1 - Strongly Disagree that interactions would feel realistic
-2 - Disagree
-3 - Somewhat Disagree
-4 - Neutral
-5 - Somewhat Agree
-6 - Agree
-7 - Strongly Agree that interactions would feel realistic
+For each physical object, propose a specific method to utilize it as a haptic proxy. 
 
 Focus on matching the most important haptic properties of the virtual object (those with higher importance values).
 Make sure to include the object_id and image_id for each physical object exactly as they appear in the detected objects list.
@@ -618,7 +610,6 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
 
 1. Evaluate EACH physical object as a potential haptic proxy for the virtual object.
 2. For EACH physical object, propose a specific method to utilize it as a haptic proxy.
-3. Rate how realistic the interaction would feel on the 7-point Likert scale for EACH match.
 
 FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure:
 
@@ -630,16 +621,14 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "location of the physical object in the environment",
-    "utilizationMethod": "detailed method to use this object as a proxy",
-    "likertRating": 5,
-    "ratingJustification": "explanation for your rating"
+    "utilizationMethod": "detailed method to use this object as a proxy"
   },
   ...
 ]
 ```
 
 IMPORTANT: Make sure to use the EXACT image_id values shown above for each object. Do NOT add 1 to the image_id values.
-Include ALL physical objects in your evaluation, even those with low ratings.
+Include ALL physical objects in your evaluation.
 """
         })
         
@@ -652,7 +641,7 @@ Include ALL physical objects in your evaluation, even those with low ratings.
         # Get response from the model
         log(f"Sending proxy matching request for {virtual_object_name}")
         response = await proxy_matching_llm.ainvoke(messages)
-        log(f"Received proxy matching response for {virtual_object_name}")
+        log(f"Received method proposals for {virtual_object_name}")
         
         # Extract JSON from response
         response_text = response.content
@@ -983,7 +972,7 @@ try:
         with open(proxy_output_path, 'w') as f:
             json.dump(normalized_proxy_results, f, indent=2)
         
-        log(f"Proxy matching complete. Generated matches for {len(proxy_matching_results)} virtual objects.")
+        log(f"Proxy method proposal complete. Generated proposals for {len(proxy_matching_results)} virtual objects.")
         
         # Add to result
         result["proxy_matching"] = {

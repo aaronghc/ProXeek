@@ -2,136 +2,130 @@
   "0": [
     {
       "object_id": 1,
-      "object": "Space Gray Apple MacBook Pro (closed)",
-      "position": "center of the desk, slightly toward the bottom of the image",
+      "object": "closed space-gray Apple MacBook laptop",
+      "position": "center of the image, slightly to the right",
       "image_id": 0
     },
     {
       "object_id": 2,
-      "object": "Black VR headset with attached cable",
-      "position": "bottom left quadrant of the desk",
+      "object": "black virtual-reality headset (straps and ear cups visible)",
+      "position": "left side of the image, mid-height",
       "image_id": 0
     },
     {
       "object_id": 3,
-      "object": "Black rectangular electronic device (speaker or router)",
-      "position": "top left corner of the desk, resting on a pad",
+      "object": "bundle of black cables and wires",
+      "position": "bottom left corner of the image",
       "image_id": 0
     },
     {
       "object_id": 4,
-      "object": "Yellow-green felt pad",
-      "position": "directly beneath the black rectangular device in the top left",
+      "object": "black rectangular speaker or smart-speaker device",
+      "position": "upper left corner of the image",
       "image_id": 0
     },
     {
       "object_id": 5,
-      "object": "Clear acrylic monitor stand",
-      "position": "along the top edge of the desk, center",
+      "object": "transparent acrylic ruler or track with a black clamp",
+      "position": "top center of the image",
       "image_id": 0
     },
     {
       "object_id": 6,
-      "object": "Pack of multi-colored wipes or tissues",
-      "position": "on top of the acrylic stand, toward the top center",
+      "object": "green reel or tape-measure spool",
+      "position": "upper right quadrant of the image",
       "image_id": 0
     },
     {
       "object_id": 7,
-      "object": "Green circular retractable tape measure",
-      "position": "top right corner of the desk",
-      "image_id": 0
-    },
-    {
-      "object_id": 8,
-      "object": "Bundle of black cables and wires",
-      "position": "scattered across the bottom half of the desk and hanging off the edges",
+      "object": "blue and yellow patterned cushion or pillow",
+      "position": "along the top edge of the image, above center",
       "image_id": 0
     }
   ],
   "1": [
     {
       "object_id": 1,
-      "object": "black widescreen computer monitor (left) displaying a dark IDE/editor",
-      "position": "top left of the image",
+      "object": "large black computer monitor with dark screen",
+      "position": "upper left of the image",
       "image_id": 1
     },
     {
       "object_id": 2,
-      "object": "black widescreen computer monitor (right) displaying code on a white background",
-      "position": "top right of the image",
+      "object": "large computer monitor displaying code",
+      "position": "upper right of the image",
       "image_id": 1
     },
     {
       "object_id": 3,
-      "object": "black hardcover notebook under the left monitor, with a coin resting on top",
-      "position": "just below the left monitor, center-left",
+      "object": "black full-size keyboard",
+      "position": "middle left of the image, below the left monitor",
       "image_id": 1
     },
     {
       "object_id": 4,
-      "object": "yellow-covered book directly beneath the left monitor, partially obscured",
-      "position": "below the left monitor, slightly left of center",
-      "image_id": 1
-    },
-    {
-      "object_id": 5,
-      "object": "green circular stress ball or desk toy",
-      "position": "upper left corner, beside the books",
-      "image_id": 1
-    },
-    {
-      "object_id": 6,
-      "object": "black full-size computer keyboard",
-      "position": "bottom left quadrant of the image",
-      "image_id": 1
-    },
-    {
-      "object_id": 7,
-      "object": "white AirPods charging case",
+      "object": "white wireless earbuds charging case",
       "position": "center of the image, just above the microphone",
       "image_id": 1
     },
     {
+      "object_id": 5,
+      "object": "white cylindrical microphone with black foam top and attached cable",
+      "position": "center bottom of the image",
+      "image_id": 1
+    },
+    {
+      "object_id": 6,
+      "object": "black computer mouse or small controller",
+      "position": "slightly right of center, next to the microphone",
+      "image_id": 1
+    },
+    {
+      "object_id": 7,
+      "object": "black and yellow paperback book",
+      "position": "below the left monitor, toward the center",
+      "image_id": 1
+    },
+    {
       "object_id": 8,
-      "object": "white cylindrical USB microphone with black top and attached cable",
-      "position": "center of the image",
+      "object": "bright green stress ball",
+      "position": "middle left, to the left of the keyboard",
       "image_id": 1
     },
     {
       "object_id": 9,
-      "object": "black wireless presenter (or large USB dongle) branded HP",
-      "position": "to the right of the microphone, center-right",
+      "object": "spiral-bound white notepad with faint sketches",
+      "position": "bottom left of the image",
       "image_id": 1
     },
     {
       "object_id": 10,
-      "object": "black and silver ballpoint pen",
-      "position": "lower center-right of the image",
+      "object": "loose sheet of paper with cube sketch",
+      "position": "center right, under the right monitor",
       "image_id": 1
     },
     {
       "object_id": 11,
       "object": "stainless steel travel tumbler with lid",
-      "position": "bottom right quadrant",
+      "position": "bottom right of the image",
       "image_id": 1
     },
     {
       "object_id": 12,
-      "object": "spiral-bound sketchbook or notebook, open to blank pages",
-      "position": "bottom left of the image",
+      "object": "black ballpoint pen with silver clip",
+      "position": "bottom right, near the tumbler",
       "image_id": 1
     },
     {
       "object_id": 13,
-      "object": "white sheet of paper with hand-drawn diagrams under the right monitor",
-      "position": "mid right, beneath the right screen",
+      "object": "manila envelope or folder",
+      "position": "far right edge of the image",
       "image_id": 1
     },
     {
       "object_id": 14,
-      "object": "manila envelope or folder, partially visible",
-      "position": "bottom right, beneath the right edge of the desk",
+      "object": "various USB and power cables",
+      "position": "spanning center and left under the monitors",
       "image_id": 1
     }
   ]

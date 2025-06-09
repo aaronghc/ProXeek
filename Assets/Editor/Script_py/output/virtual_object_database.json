@@ -21,7 +21,7 @@
       "y": "0.36",
       "z": "0.54"
     },
-    "hapticFeedback": "Users will lightly rest their palms and fingertips on a rigid, wooden-grained surface and interact primarily with a hinged lid. They should feel the subtle raised pattern of wood grain under their fingertips (medium grain height and spacing), the solid resistance of a wooden panel when pushing or pulling on the lid edge, and a distinct click or small bump as the hinge reaches its open/closed detent. A good physical proxy is a small wooden box (~0.6 m \u00d7 0.35 m \u00d7 0.5 m) with a functional metal hinge and a visible wood-grain finish so users can experience both the texture and the lid\u2019s opening resistance."
+    "hapticFeedback": "When the user touches the chest\u2019s lid, they should feel the fine grain and slight ridges of a weathered wooden surface (medium-rough friction, 50% emphasis). Reaching up to lift the lid, they encounter a hinged resistance\u2014an initial stiff detent followed by a smooth pivot and a light metallic click at the end of travel (high interactivity). A good physical proxy is a small wooden box with a real hinge and latch: it provides the same grainy wood texture under the fingertips and realistic hinge torque and click."
   },
   {
     "objectName": "key",
@@ -45,7 +45,7 @@
       "y": "0.05",
       "z": "0.14"
     },
-    "hapticFeedback": "Users will touch and manipulate a thin, smooth metal loop and shaft. They should feel a cool, polished finish under their fingertips, the rounded, uniform thickness of the ring (about 5\u20136 cm diameter), and the solid, unyielding hardness of metal throughout. The key\u2019s ring-shaped head provides a precise tactile outline: a seamless circular profile with a small gap for fingertip insertion. An ideal proxy is an actual house key or a metal key-fob ring: roughly 0.06 m thick at the loop, rigid and smooth, so users get the correct sense of outline and surface finish."
+    "hapticFeedback": "Users grasp the round bow of the key and should sense a smooth, polished metal finish (40% emphasis) wrapping around their finger. The large ring-shaped outline (70% emphasis) must register as a circular, rigid loop. When pressed against a virtual lock, they feel the slight bevel of the bit edges. A good proxy is an actual brass or steel skeleton key with the same ring diameter and slender shank: it preserves the smoothness, ring shape, and tactile cues of the teeth."
   },
   {
     "objectName": "simple_pistol",
@@ -69,7 +69,7 @@
       "y": "1.09",
       "z": "9.49"
     },
-    "hapticFeedback": "Users will grip a solid, gun-shaped frame, rest their trigger finger on a pullable trigger, and experience a two-stage tactile response when firing. The grip should feel firm and comfortable, the barrel and slide surfaces hard and temperature-neutral. When the user presses the trigger, they should feel initial spring tension, then a sharper \u2018break\u2019 as the trigger clicks over, followed by a short, sharp vibration simulating recoil. A suitable proxy is a toy or dummy pistol with a working trigger mechanism and a bit of mass in the barrel to transmit feedback, so users can feel both trigger resistance and a brief kickback."
+    "hapticFeedback": "As the user holds the pistol frame, attention turns to the pullable trigger (100% interactivity). They should experience a firm but not overly heavy trigger pull with a clear break at mid-stroke and a quick spring-back or reset click. The grip itself can be smooth plastic or metal but the key sensation is the crisp trigger response. A good proxy is a toy or training pistol that has a realistic metal trigger mechanism\u2014providing the precise pull weight, travel distance, and audible/tactile reset."
   },
   {
     "objectName": "Frisbee",
@@ -93,7 +93,7 @@
       "y": "0.18",
       "z": "0.23"
     },
-    "hapticFeedback": "Users will grasp the thin rim of a lightweight, slightly flexible disc. They should feel the narrow edge thickness (a few millimeters), a slight springiness when they squeeze the rim, and the low overall weight when they accelerate it for a throw. The tactile outline is that of a thin, uniform ring; the disc surface itself is not gripped. A real plastic frisbee or ring-shaped lid (\u223c0.27 m diameter) works well as a proxy, providing the correct inertia, thin-plate outline, and slight flex under pressure."
+    "hapticFeedback": "On grabbing the Frisbee\u2019s rim, users should perceive a thin rigid plate edge with negligible weight (70% inertia, 70% outline). The wrist feels the low inertia as they flick the disc: light, nearly effortless acceleration, and a floating slipperiness. A suitable proxy is a standard lightweight plastic Frisbee\u2014thin-edged, low mass, and easily flicked for the same effortless toss sensation."
   },
   {
     "objectName": "Wheel",
@@ -117,7 +117,7 @@
       "y": "0.41",
       "z": "0.19"
     },
-    "hapticFeedback": "Users will grasp a circular rim roughly 0.4 m across and rotate it continuously. They should feel the continuous curved outline under both palms and fingertips, a firm but slightly textured rubber or plastic grip surface, and a consistent rotational resistance with subtle detents or friction to convey mechanical linkage. A steering-wheel replica (or a bicycle handlebar ring) with a diameter of about 40 cm and a lightly textured grip surface is an excellent proxy to reproduce both the outline and the interactive rotation feedback."
+    "hapticFeedback": "When the user\u2019s hands wrap around the steering wheel rim, they should feel a smooth, slightly rubberized grip rotating under their palms. Turning it conveys steady torque with a slight damping or resistance that mimics steering mechanics (90% interactivity). A good proxy is an automotive or racing-game steering wheel controller with adjustable resistance, so users feel consistent rotary force and smooth uninterrupted rotation."
   },
   {
     "objectName": "Tomato",
@@ -141,7 +141,7 @@
       "y": "0.10",
       "z": "0.17"
     },
-    "hapticFeedback": "Users will press or squeeze a soft, compliant object. They should feel low initial resistance that yields under fingertip pressure, a slight sink-in as the surface deforms, and gentle \u2018give\u2019 without a hard stop. On full compression, a subtle change in resistance reminds them of the flesh inside. A soft foam ball or a stress-ball shaped and sized like a tomato (\u223c0.17 m diameter) provides the correct softness and deformability for users to experience the smashable feel."
+    "hapticFeedback": "Upon contact, the tomato must feel soft and easily deformable (100% hardness emphasis). The surface yields under light finger pressure, giving a squishy, resilient resistance and then springing back partially. A fitting proxy is a soft foam or rubber stress-ball shaped like a tomato, providing realistic dimple-in and rebound when squeezed or smashed."
   },
   {
     "objectName": "Hammer Dispenser 2",
@@ -165,6 +165,6 @@
       "y": "0.42",
       "z": "0.17"
     },
-    "hapticFeedback": "Users will grip a cylindrical, round handle and swing a weighty head. They should feel the handle\u2019s uniform round cross-section under their palm and fingers (about 2\u20133 cm diameter), and the pronounced heft at one end as they lift or swing\u2014this off-center mass creates a natural torque and swing-through resistance. A solid metal or weighted toy hammer with a heavy head and smooth wooden or plastic handle (~0.25 m \u00d7 0.42 m overall) makes a good proxy by delivering the correct inertia distribution and outline of the handle."
+    "hapticFeedback": "Grasping the round handle, users sense a cylindrical grip with a smooth finish. When swung, they should feel a pronounced heavy head (70% inertia) at the distal end\u2014causing a strong torque pull on the wrist and a weighty, pendulum-like momentum. The handle\u2019s round outline (40% outline) must fill the palm. A well-chosen proxy is a real hammer or mallet with a heavy metal head and wooden or plastic round handle: it replicates the off-center mass and heft needed for realistic swings."
   }
 ]
