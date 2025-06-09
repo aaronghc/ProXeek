@@ -128,6 +128,14 @@ proxy_matching_llm = ChatOpenAI(
     api_key=api_key
 )
 
+# Initialize the property rating LLM
+property_rating_llm = ChatOpenAI(
+    model="o4-mini-2025-04-16",
+    temperature=0.1,
+    base_url="https://api.nuwaapi.com/v1",
+    api_key=api_key
+)
+
 # System prompt for object recognition
 object_recognition_system_prompt = """
 You are an expert computer vision system that identifies objects in images.
@@ -215,6 +223,114 @@ Make sure to include the object_id and image_id for each physical object exactly
 
 IMPORTANT: Image IDs begin at 0 (not 1). The first image has image_id=0, the second has image_id=1, etc.
 """
+
+# Function to generate property-specific system prompt
+def get_property_rating_system_prompt(property_name):
+    property_type = property_name.replace("Value", "")
+    
+    # Base prompt
+    base_prompt = f"""
+You are an expert in haptic design who specializes in evaluating how well physical objects can simulate specific haptic properties of virtual objects in VR.
+
+Your task is to evaluate the {property_type} property of ONE virtual object against ALL physical objects from the environment.
+
+Rate each physical object on a 7-point Likert scale for how well it matches the specific haptic property:
+1 - Strongly Disagree 
+2 - Disagree
+3 - Somewhat Disagree
+4 - Neutral
+5 - Somewhat Agree
+6 - Agree
+7 - Strongly Agree
+
+Use the following rubric to guide your evaluation:
+"""
+
+    # Property-specific rubrics
+    rubrics = {
+        "inertia": """
+Inertia:
+- 1-Strong Disagree
+  - The weight difference is immediately and jarringly noticeable upon first contact
+  - Center of mass feels completely misaligned (e.g., top-heavy physical object for a bottom-heavy virtual object)
+  - Movement resistance feels entirely wrong (e.g., extremely light physical plastic bottle for a heavy virtual sledgehammer)
+- 7-Strong Agree
+  - Weight feels natural as expected throughout the entire interaction
+  - Center of mass location allows intuitive and stable manipulation
+  - Movement resistance and momentum feel completely consistent with the virtual object
+""",
+        "interactivity": """
+Interactivity:
+- 1-Strong Disagree
+  - Required interactive elements are completely absent or non-functional
+  - User cannot perform the intended actions at all
+- 7-Strong Agree
+  - All interactive elements are present and function intuitively as expected
+  - Degrees of freedom match exactly (rotation axes, sliding directions, button positions)
+""",
+        "outline": """
+Outline:
+- 1-Strong Disagree
+  - Size mismatch is immediately apparent and disrupts grip formation
+  - Basic shape category is entirely different (e.g., spherical physical object for a virtual tetrahedron)
+  - Key affordances or contact points are absent
+- 7-Strong Agree
+  - Size and proportions feel completely natural in the hand
+  - Shape affords all expected grips and manipulation patterns
+""",
+        "texture": """
+Texture:
+- 1-Strong Disagree
+  - Surface finishing is shockingly different from expectations (e.g., extremely rough physical surface for virtual polished glass)
+  - Tactile landmarks are missing or misplaced
+- 7-Strong Agree
+  - Surface texture feels exactly as anticipated
+  - Texture transitions occur at expected locations
+""",
+        "hardness": """
+Hardness:
+- 1-Strong Disagree
+  - Compliance is completely wrong, it affects basic interaction (e.g., soft foam for a virtual metal tool)
+  - Deformation behavior is shocking and breaks immersion
+- 7-Strong Agree
+  - Material hardness feels precisely as expected
+  - Deformation behavior matches material expectations perfectly
+""",
+        "temperature": """
+Temperature:
+- 1-Strong Disagree
+  - Temperature sensation is shockingly wrong or opposite to expectations (e.g., warm/hot physical object for virtual ice cube)
+  - Thermal conductivity creates wrong sensations (e.g., insulating material for a virtual metal object)
+- 7-Strong Agree
+  - Initial temperature matches the expected thermal sensation
+  - Heat flow during contact feels natural for the material type
+"""
+    }
+    
+    # Output format
+    output_format = """
+FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
+```json
+[
+  {
+    "virtualObject": "name of the virtual object",
+    "property": "name of the property being evaluated",
+    "physicalObject": "name of the physical object",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 5,
+    "explanation": "Brief explanation of why this rating was given"
+  },
+  ...
+]
+```
+
+Make sure to include ALL physical objects in your evaluation, even those with low ratings.
+"""
+    
+    # Construct the complete prompt with only the relevant property rubric
+    full_prompt = base_prompt + rubrics.get(property_type.lower(), "") + output_format
+    return full_prompt
 
 # Function to process a single image and recognize objects
 async def process_single_image(image_base64: str, image_id: int) -> Dict[str, Any]:
@@ -569,10 +685,22 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
             
             if objects_in_snapshot:
                 for obj in objects_in_snapshot:
-                    # Make sure to include the object_id in the displayed information
                     objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
-                    # Also display the correct image_id to ensure consistency
                     objects_text += f"  Image ID: {i}\n"
+                    
+                    # Add all utilization methods for this physical object (from all virtual objects)
+                    util_methods_added = False
+                    for proxy_result in proxy_matching_results:
+                        if (proxy_result.get("object_id") == obj["object_id"] and 
+                            proxy_result.get("image_id") == i):
+                            util_method = proxy_result.get("utilizationMethod", "")
+                            matched_virtual = proxy_result.get("virtualObject", "Unknown")
+                            if util_method:
+                                objects_text += f"  Utilization Method for {matched_virtual}: {util_method}\n"
+                                util_methods_added = True
+                    
+                    if not util_methods_added:
+                        objects_text += f"  No utilization methods available for this object\n"
             else:
                 # Check if we should look for objects in a different format (in case image_id is stored as integer keys)
                 objects_in_snapshot = physical_object_database.get(i, [])
@@ -802,6 +930,286 @@ async def run_proxy_matching(virtual_objects, environment_images, physical_objec
     
     return all_matching_results
 
+# Function to rate a single property of a virtual object against all physical objects
+async def rate_single_property(virtual_object, property_name, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
+    try:
+        virtual_object_name = virtual_object.get("objectName", "Unknown Object")
+        log(f"Rating {property_name} for virtual object: {virtual_object_name}")
+        
+        # Get the property description
+        property_description = virtual_object.get(property_name.replace("Value", ""), "")
+        
+        # Get a property-specific system prompt
+        property_system_prompt = get_property_rating_system_prompt(property_name)
+        
+        # Build the human message content
+        human_message_content = []
+        
+        # 1. Add the virtual object property information
+        property_text = f"""# Property Rating Task
+
+## Virtual Object: {virtual_object_name}
+## Property to Evaluate: {property_name.replace("Value", "")}
+## Property Description: {property_description}
+
+Please rate how well each physical object matches the {property_name.replace("Value", "")} property of {virtual_object_name} when used according to the utilization method.
+"""
+        human_message_content.append({
+            "type": "text", 
+            "text": property_text
+        })
+        
+        # 2. Add virtual object snapshot if available
+        normalized_object_name = normalize_name(virtual_object_name)
+        snapshot_found = False
+        
+        if virtual_object_name in object_snapshot_map:
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[virtual_object_name]}", 
+                    "detail": "high"
+                }
+            })
+            snapshot_found = True
+        elif normalized_object_name in object_snapshot_map:
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[normalized_object_name]}", 
+                    "detail": "high"
+                }
+            })
+            snapshot_found = True
+            
+        # 3. Add introduction to physical environment
+        human_message_content.append({
+            "type": "text", 
+            "text": "\n# Physical Environment\nBelow are snapshots of the physical environment with detected objects:"
+        })
+        
+        # 4. Add environment snapshots with their detected objects and utilization methods
+        for i, image_base64 in enumerate(environment_images):
+            # Add the environment snapshot
+            human_message_content.append({
+                "type": "text", 
+                "text": f"\n## Environment Snapshot {i+1}\n"
+            })
+            
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{image_base64}", 
+                    "detail": "high"
+                }
+            })
+            
+            # Add the detected objects for this snapshot
+            objects_in_snapshot = physical_object_database.get(str(i), [])
+            objects_text = "\n### Detected Objects in this Snapshot\n"
+            
+            if objects_in_snapshot:
+                for obj in objects_in_snapshot:
+                    objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                    objects_text += f"  Image ID: {i}\n"
+                    
+                    # Add all utilization methods for this physical object (from all virtual objects)
+                    util_methods_added = False
+                    for proxy_result in proxy_matching_results:
+                        if (proxy_result.get("object_id") == obj["object_id"] and 
+                            proxy_result.get("image_id") == i):
+                            util_method = proxy_result.get("utilizationMethod", "")
+                            matched_virtual = proxy_result.get("virtualObject", "Unknown")
+                            if util_method:
+                                objects_text += f"  Utilization Method for {matched_virtual}: {util_method}\n"
+                                util_methods_added = True
+                    
+                    if not util_methods_added:
+                        objects_text += f"  No utilization methods available for this object\n"
+            else:
+                # Check if we should look for objects in a different format
+                objects_in_snapshot = physical_object_database.get(i, [])
+                if objects_in_snapshot:
+                    for obj in objects_in_snapshot:
+                        objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                        objects_text += f"  Image ID: {i}\n"
+                else:
+                    # Last attempt - try to find objects that have this image_id in their properties
+                    matching_objects = []
+                    for img_id, objects_list in physical_object_database.items():
+                        for obj in objects_list:
+                            if obj.get("image_id") == i:
+                                matching_objects.append(obj)
+                    
+                    if matching_objects:
+                        for obj in matching_objects:
+                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                            objects_text += f"  Image ID: {i}\n"
+                    else:
+                        objects_text += "- No objects detected in this snapshot\n"
+                
+            human_message_content.append({
+                "type": "text", 
+                "text": objects_text
+            })
+        
+        # 5. Add final instructions
+        human_message_content.append({
+            "type": "text", 
+            "text": f"""
+# Your Task
+
+For each physical object, evaluate the statement: "I felt the haptic feedback closely mimicked the {property_name.replace("Value", "")}" on a 7-point Likert scale:
+1 - Strongly Disagree 
+2 - Disagree
+3 - Somewhat Disagree
+4 - Neutral
+5 - Somewhat Agree
+6 - Agree
+7 - Strongly Agree
+
+FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure:
+
+```json
+[
+  {{
+    "virtualObject": "{virtual_object_name}",
+    "property": "{property_name.replace("Value", "")}",
+    "physicalObject": "name of the physical object",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 5,
+    "explanation": "Brief explanation of why this rating was given"
+  }},
+  ...
+]
+```
+
+IMPORTANT: Include ALL physical objects in your evaluation, even those with low ratings.
+"""
+        })
+        
+        # Create the messages
+        messages = [
+            SystemMessage(content=property_system_prompt),
+            HumanMessage(content=human_message_content)
+        ]
+        
+        # Get response from the model
+        log(f"Sending property rating request for {property_name} of {virtual_object_name}")
+        response = await property_rating_llm.ainvoke(messages)
+        log(f"Received property ratings for {property_name} of {virtual_object_name}")
+        
+        # Extract JSON from response
+        response_text = response.content
+        
+        # Try to find JSON array
+        json_start = response_text.find("[")
+        json_end = response_text.rfind("]") + 1
+        if json_start != -1 and json_end > json_start:
+            json_content = response_text[json_start:json_end]
+        else:
+            # Try to find JSON between code blocks
+            json_start = response_text.find("```json")
+            if json_start != -1:
+                json_start += 7  # Length of ```json
+                json_end = response_text.find("```", json_start)
+                if json_end != -1:
+                    json_content = response_text[json_start:json_end].strip()
+                else:
+                    json_content = response_text[json_start:].strip()
+            else:
+                # As a fallback, use the entire response
+                json_content = response_text
+        
+        try:
+            # Parse the JSON response
+            rating_results = json.loads(json_content)
+            
+            # Add the property value to each result
+            for result in rating_results:
+                # Get the property value from the virtual object
+                property_value = virtual_object.get(property_name, 0.0)
+                result["propertyValue"] = property_value
+                
+                # Remove any extra fields not in the required output format
+                keys_to_keep = ["virtualObject", "property", "physicalObject", "object_id", "image_id", "rating", "explanation", "propertyValue"]
+                for key in list(result.keys()):
+                    if key not in keys_to_keep:
+                        del result[key]
+                
+            return rating_results
+            
+        except json.JSONDecodeError as e:
+            log(f"Error parsing property rating JSON for {property_name} of {virtual_object_name}: {e}")
+            log(f"Raw content: {json_content}")
+            
+            # Return a basic result with the error
+            return [{
+                "virtualObject": virtual_object_name,
+                "property": property_name.replace("Value", ""),
+                "error": f"Failed to parse response: {str(e)}",
+                "rawResponse": response_text[:500]  # First 500 chars
+            }]
+            
+    except Exception as e:
+        log(f"Error in property rating for {property_name} of {virtual_object.get('objectName', 'unknown')}: {e}")
+        import traceback
+        log(traceback.format_exc())
+        
+        # Return a basic result with the error
+        return [{
+            "virtualObject": virtual_object.get("objectName", "unknown"),
+            "property": property_name.replace("Value", ""),
+            "error": f"Processing error: {str(e)}"
+        }]
+
+# Function to run property ratings for all virtual objects in parallel
+async def run_property_ratings(virtual_objects, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
+    all_tasks = []
+    property_names = ["inertiaValue", "interactivityValue", "outlineValue", "textureValue", "hardnessValue", "temperatureValue"]
+    
+    # Create tasks for each virtual object and its highlighted properties
+    for virtual_object in virtual_objects:
+        virtual_object_name = virtual_object.get("objectName", "Unknown Object")
+        
+        # For each property with value > 0, create a rating task
+        for property_name in property_names:
+            property_value = virtual_object.get(property_name, 0.0)
+            
+            # Only rate properties that are highlighted (value > 0)
+            if property_value > 0:
+                log(f"Adding rating task for {property_name} of {virtual_object_name} (value: {property_value})")
+                task = rate_single_property(
+                    virtual_object,
+                    property_name,
+                    environment_images,
+                    physical_object_database,
+                    object_snapshot_map,
+                    proxy_matching_results
+                )
+                all_tasks.append(task)
+    
+    # Run all tasks concurrently
+    log(f"Running {len(all_tasks)} property rating tasks concurrently")
+    results = await asyncio.gather(*all_tasks, return_exceptions=True)
+    
+    # Process results
+    all_rating_results = []
+    for result in results:
+        if isinstance(result, Exception):
+            log(f"Error in property rating task: {result}")
+            # Skip this result
+            continue
+        else:
+            # Each result is an array of rating results for a single property of a single virtual object
+            all_rating_results.extend(result)
+    
+    # Log summary of results
+    log(f"Completed property ratings with {len(all_rating_results)} total ratings")
+    
+    return all_rating_results
+
 # Modify the run_concurrent_tasks function to include proxy matching
 async def run_concurrent_tasks():
     tasks = []
@@ -838,22 +1246,22 @@ async def run_concurrent_tasks():
             virtual_result = task_results[task_index]
             results["virtual_result"] = virtual_result
     
-    # Then run proxy matching if both physical and virtual objects are available
+    # Create object snapshot map for virtual objects
+    object_snapshot_map = {}
+    for snapshot in virtual_object_snapshots:
+        if 'objectName' in snapshot and 'imageBase64' in snapshot:
+            original_name = snapshot['objectName']
+            normalized_name = normalize_name(original_name)
+            object_snapshot_map[normalized_name] = snapshot['imageBase64']
+            object_snapshot_map[original_name] = snapshot['imageBase64']
+    
+    # Get the actual data from the results
+    physical_object_database = results.get("physical_result", {})
+    enhanced_virtual_objects = results.get("virtual_result", [])
+    
+    # Run proxy matching if both physical and virtual objects are available
     if environment_image_base64_list and haptic_annotation_json:
         log("Setting up proxy matching task")
-        
-        # Create object snapshot map for virtual objects
-        object_snapshot_map = {}
-        for snapshot in virtual_object_snapshots:
-            if 'objectName' in snapshot and 'imageBase64' in snapshot:
-                original_name = snapshot['objectName']
-                normalized_name = normalize_name(original_name)
-                object_snapshot_map[normalized_name] = snapshot['imageBase64']
-                object_snapshot_map[original_name] = snapshot['imageBase64']
-        
-        # Get the actual data from the results
-        physical_object_database = results.get("physical_result", {})
-        enhanced_virtual_objects = results.get("virtual_result", [])
         
         # Run proxy matching
         proxy_matching_results = await run_proxy_matching(
@@ -865,6 +1273,19 @@ async def run_concurrent_tasks():
         
         # Add to results
         results["proxy_matching_result"] = proxy_matching_results
+        
+        # Run property-based ratings
+        log("Setting up property-based rating tasks")
+        property_rating_results = await run_property_ratings(
+            enhanced_virtual_objects,
+            environment_image_base64_list,
+            physical_object_database,
+            object_snapshot_map,
+            proxy_matching_results
+        )
+        
+        # Add to results
+        results["property_rating_result"] = property_rating_results
     
     return results
 
@@ -979,6 +1400,31 @@ try:
             "count": len(proxy_matching_results),
             "database_path": proxy_output_path,
             "matching_results": proxy_matching_results
+        }
+    
+    # Process property rating results if available
+    if environment_image_base64_list and haptic_annotation_json:
+        log("Processing completed property rating results")
+        property_rating_results = concurrent_results.get("property_rating_result", [])
+        
+        # Save property rating results
+        output_dir = os.path.join(script_dir, "output")
+        property_rating_output_path = os.path.join(output_dir, "property_rating_results.json")
+        
+        # Ensure output directory exists
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Save property rating results
+        with open(property_rating_output_path, 'w') as f:
+            json.dump(property_rating_results, f, indent=2)
+        
+        log(f"Property rating complete. Generated ratings for {len(property_rating_results)} virtual objects.")
+        
+        # Add to result
+        result["property_rating"] = {
+            "count": len(property_rating_results),
+            "database_path": property_rating_output_path,
+            "rating_results": property_rating_results
         }
     
     # Print final result as JSON

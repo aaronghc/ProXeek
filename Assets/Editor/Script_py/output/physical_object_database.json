@@ -2,130 +2,118 @@
   "0": [
     {
       "object_id": 1,
-      "object": "closed space-gray Apple MacBook laptop",
-      "position": "center of the image, slightly to the right",
+      "object": "Space Gray Apple MacBook (closed)",
+      "position": "center of the desk",
       "image_id": 0
     },
     {
       "object_id": 2,
-      "object": "black virtual-reality headset (straps and ear cups visible)",
-      "position": "left side of the image, mid-height",
+      "object": "Black virtual reality headset with head strap",
+      "position": "left side of the desk",
       "image_id": 0
     },
     {
       "object_id": 3,
-      "object": "bundle of black cables and wires",
-      "position": "bottom left corner of the image",
+      "object": "Black rectangular electronic device (router or speaker) on a yellow cloth",
+      "position": "top left of the desk",
       "image_id": 0
     },
     {
       "object_id": 4,
-      "object": "black rectangular speaker or smart-speaker device",
-      "position": "upper left corner of the image",
+      "object": "Transparent plastic ruler or straightedge",
+      "position": "top center of the desk",
       "image_id": 0
     },
     {
       "object_id": 5,
-      "object": "transparent acrylic ruler or track with a black clamp",
-      "position": "top center of the image",
+      "object": "Green circular tape measure or spool",
+      "position": "top right of the desk",
       "image_id": 0
     },
     {
       "object_id": 6,
-      "object": "green reel or tape-measure spool",
-      "position": "upper right quadrant of the image",
+      "object": "Bundle of black and white cables",
+      "position": "bottom left of the desk",
       "image_id": 0
     },
     {
       "object_id": 7,
-      "object": "blue and yellow patterned cushion or pillow",
-      "position": "along the top edge of the image, above center",
+      "object": "Blue-and-white package of tissues or wipes",
+      "position": "top center, behind the ruler",
       "image_id": 0
     }
   ],
   "1": [
     {
       "object_id": 1,
-      "object": "large black computer monitor with dark screen",
-      "position": "upper left of the image",
+      "object": "left computer monitor with dark screen",
+      "position": "top left",
       "image_id": 1
     },
     {
       "object_id": 2,
-      "object": "large computer monitor displaying code",
-      "position": "upper right of the image",
+      "object": "right computer monitor displaying code",
+      "position": "top right",
       "image_id": 1
     },
     {
       "object_id": 3,
-      "object": "black full-size keyboard",
-      "position": "middle left of the image, below the left monitor",
+      "object": "black hardcover notebook under left monitor with a coin on top",
+      "position": "middle left under monitor",
       "image_id": 1
     },
     {
       "object_id": 4,
-      "object": "white wireless earbuds charging case",
-      "position": "center of the image, just above the microphone",
+      "object": "black mechanical keyboard",
+      "position": "center left",
       "image_id": 1
     },
     {
       "object_id": 5,
-      "object": "white cylindrical microphone with black foam top and attached cable",
-      "position": "center bottom of the image",
+      "object": "white AirPods charging case",
+      "position": "center",
       "image_id": 1
     },
     {
       "object_id": 6,
-      "object": "black computer mouse or small controller",
-      "position": "slightly right of center, next to the microphone",
+      "object": "white handheld USB-connected device with black circular top",
+      "position": "middle center",
       "image_id": 1
     },
     {
       "object_id": 7,
-      "object": "black and yellow paperback book",
-      "position": "below the left monitor, toward the center",
+      "object": "black HP-branded remote control",
+      "position": "middle center-right",
       "image_id": 1
     },
     {
       "object_id": 8,
-      "object": "bright green stress ball",
-      "position": "middle left, to the left of the keyboard",
+      "object": "loose sheet of paper with sketches under right monitor",
+      "position": "center right",
       "image_id": 1
     },
     {
       "object_id": 9,
-      "object": "spiral-bound white notepad with faint sketches",
-      "position": "bottom left of the image",
+      "object": "spiral-bound notepad with handwritten notes",
+      "position": "bottom left",
       "image_id": 1
     },
     {
       "object_id": 10,
-      "object": "loose sheet of paper with cube sketch",
-      "position": "center right, under the right monitor",
+      "object": "blue and silver ballpoint pen",
+      "position": "bottom center-right",
       "image_id": 1
     },
     {
       "object_id": 11,
-      "object": "stainless steel travel tumbler with lid",
-      "position": "bottom right of the image",
+      "object": "stainless steel travel tumbler",
+      "position": "bottom right",
       "image_id": 1
     },
     {
       "object_id": 12,
-      "object": "black ballpoint pen with silver clip",
-      "position": "bottom right, near the tumbler",
-      "image_id": 1
-    },
-    {
-      "object_id": 13,
-      "object": "manila envelope or folder",
-      "position": "far right edge of the image",
-      "image_id": 1
-    },
-    {
-      "object_id": 14,
-      "object": "various USB and power cables",
-      "position": "spanning center and left under the monitors",
+      "object": "yellow manila envelope",
+      "position": "far right bottom",
       "image_id": 1
     }
   ]

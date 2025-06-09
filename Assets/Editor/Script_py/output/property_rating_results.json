@@ -1,0 +1,2092 @@
+[
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 6,
+    "explanation": "The MacBook\u2019s clamshell lid opens on a hinge just like the chest, matching the rotation axis and giving comparable feedback.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "The headset has no lid or hinge mechanism that you can open or close.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Black rectangular electronic device (router or speaker) on a yellow cloth",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "This device is a sealed block with no opening or moving panels.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "The ruler is a rigid, single-piece object with no hinges or interactive opening.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Although it has retractable movement, it doesn\u2019t hinge open like a lid.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Cables have no hinged parts to open or close.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "The package has no rigid hinge or lid that swings open.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Some monitors tilt, but they don\u2019t open a lid like a treasure chest.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Similar to the left monitor, it may tilt but offers no lid-opening interaction.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "The notebook\u2019s cover hinges open along the spine, giving a similar flip-open feel, though without chest-style friction.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "A keyboard is fixed and does not open on a hinge.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "white AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 7,
+    "explanation": "The AirPods case has a smooth, spring-assisted hinge that exactly mimics the open-and-close action of a chest lid.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "white handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "This device has no lid or hinge mechanism.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "The remote is a solid piece with no hinged opening.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "A sheet of paper cannot open or close on a hinge.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Pages flip freely on the spiral spine, providing a pivot but lacking the defined hinge resistance of a chest lid.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "The pen does not open or hinge; it may click but offers no lid-opening action.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "The lid may twist off, but this rotational removal is very different from a hinged lid opening.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "interactivity",
+    "physicalObject": "yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "The envelope\u2019s flap hinges open along one edge, offering a similar lift-and-reveal action, though it\u2019s flexible paper rather than rigid wood and metal.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Cold, smooth aluminum surface feels nothing like the slightly rough, grained wood of a chest.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Fabric and foam are soft and fuzzy but lack the hard grain and ridges of wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Smooth plastic housing is completely unlike wood grain or slight roughness.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Hard, slick plastic lacks any of the tactile irregularities of wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Smooth molded plastic feels nothing like wooden planks.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Flexible rubber and plastic cables do not mimic the firmness or grain of wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Thin soft plastic wrapper is too flexible and smooth to resemble wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat glass and metal casing have no wood-like texture.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Smooth display surface and plastic bezel feel nothing like wood grain.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "The cover has a slight texture but remains too uniform and soft compared to wood grain.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Hard plastic keys are uniform and smooth, not resembling wooden planks.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Glossy plastic is far removed from the tactile feel of wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Smooth plastic and rubber top lack any wood-like unevenness or grain.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Uniform plastic buttons and casing are unlike the natural texture of wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Paper has a slight tooth but is much smoother and flimsier than wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Paper cover and backing offer a bit more stiffness and grain but still differ from wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Smooth metal and plastic barrel have no resemblance to the coarse grain of wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Cool polished metal is completely dissimilar to a wooden surface.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "property": "texture",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Cardstock envelope has a slight paper grain but lacks the depth and hardness of real wood.",
+    "propertyValue": 0.5
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Large flat rectangular shape with no circular or ring-like features; outline mismatch.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Complex curved form but no continuous ring shape suitable for finger insertion.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Rectangular block shape entirely inconsistent with a ring outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Long straight profile, no circular or hollow form to mimic the ring.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "Circular housing approximates a ring outline but lacks a hollow center and stable ring affordance.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Flexible loops can form a ring but lack rigidity and defined circular outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Soft rectangular pouch with no ring shape or hollow section.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Large flat rectangle, no circular ring-like outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat rectangular shape with no hollow or ring form.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Rectangular book form, no ring or circular opening.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Long linear form, no circular or ring-like outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Smooth oval shape but lacks a hollow center to insert a finger.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Circular cap on top but overall form is a solid cylinder without a ring opening.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Elongated rectangular shape, no circular or hollow features.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat rectangular sheet, no ring or hollow outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Rectangular pad form, no circular or open-ring feature.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Cylindrical rod, but no ring opening or circular loop.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Cylindrical shape with circular cross-section but lacks a finger-through ring outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "outline",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat rectangular envelope, no circular or hollow outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 5,
+    "explanation": "The anodized aluminum lid is smooth and matte, somewhat close to the polished key but slightly more textured.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "Hard plastic surfaces and fabric straps have noticeable texture and seams, less smooth than the key.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Black rectangular electronic device (router or speaker) on a yellow cloth",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "Matte plastic finish has slight grain, not as slick or polished as a metal key.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 6,
+    "explanation": "Clear acrylic is very smooth and hard, closely matching the key\u2019s smooth finish.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "The molded plastic housing has ridges and a matte feel, noticeably less smooth.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Rubberized cables and connector grips are textured and far from the key\u2019s polished surface.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 4,
+    "explanation": "Glossy plastic wrap is smooth in places, but wrinkles and seams interrupt the finish.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 7,
+    "explanation": "The glass screen is perfectly smooth and polished, strongly matching the key\u2019s finish.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 7,
+    "explanation": "Same polished glass surface as the left monitor, ideal smoothness match.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "The cover has a slight grainy or cloth-like texture, not matching a polished metal feel.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Keycaps are matte plastic with a tactile finish, disagreeing with the key\u2019s smoothness.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "white AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 6,
+    "explanation": "Glossy plastic case is very smooth and rounded, closely simulating a polished key.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "white handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Matte plastic grip is moderately smooth, though the top has slight texture differences.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Matte plastic body and rubber buttons introduce texture, not as sleek as metal.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Paper has a fibrous, slightly rough feel, far from the key\u2019s polished surface.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Paper pages and metal spirals create a rougher tactile experience than a smooth key.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "The barrel is smooth metal/plastic, somewhat matching the key\u2019s finish despite minor seams.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "Brushed steel has a generally smooth feel, though with slight grain compared to polished key.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "key",
+    "property": "texture",
+    "physicalObject": "yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Coarse paper envelope has a noticeable rough texture, very different from a metal key.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "No movable trigger or mechanism to pull; completely absent.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Has no trigger or pullable element whatsoever.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "No trigger-like parts or interactive pulling mechanism.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Entirely rigid with no moving parts to simulate a trigger.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Has a button lock but it\u2019s a push slider, not a pull-trigger action.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "No distinct movable trigger or interactive element.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Soft packaging with no mechanical trigger to pull.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Fixed display panel without any pullable parts.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "No trigger-like mechanism present.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Rigid cover, no movable trigger component.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Keys provide a click but lack a dedicated pull-trigger mechanism.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "white AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Hinged lid but no pull trigger or button to mimic pistol action.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "white handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "No trigger or pullable control present.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Buttons are pressable but don\u2019t simulate a pull trigger.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "No mechanical or pullable parts.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Stationary binding, no trigger-like movement.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Click mechanism offers a spring action but it\u2019s a push, not pull-trigger.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Twist or slider lid has no pistol-type trigger action.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "property": "interactivity",
+    "physicalObject": "yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Simple paper envelope with no moving trigger components.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "The MacBook is significantly heavier than a frisbee, with much higher inertia.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Heavier and bulkier than a frisbee, inertia feels too high for a light disc.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "This device is much heavier and dense, inertia mismatch is very noticeable.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 6,
+    "explanation": "Very lightweight like a frisbee, inertia feels similarly low and easy to move.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 5,
+    "explanation": "Relatively light and compact, inertia somewhat matches a frisbee's lightness.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "The cables are light but floppy and inconsistent, inertia feels uneven.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 5,
+    "explanation": "Lightweight package close to a frisbee's weight, inertia reasonably similar.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Large and heavy, inertia far above a frisbee's light weight.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Very heavy and bulky, inertia is nowhere near that of a light disc.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Notebook has moderate weight similar to a frisbee, inertia felt neutral.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Quite heavy compared to a frisbee, inertia feels too high.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 6,
+    "explanation": "Very light, inertia closely matches a frisbee's low mass.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Moderate weight, inertia is average but not fully matching a frisbee's low inertia.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 6,
+    "explanation": "Light handheld remote, inertia quite similar to a frisbee's lightness.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "Extremely light, inertia lower than a frisbee but within a similar low range.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Notepad has some weight, inertia is moderate but not exact.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 6,
+    "explanation": "Small and light, inertia matches the frisbee's low weight well.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Heavier stainless steel, inertia too high for a frisbee.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "inertia",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Very light but floppy, inertia slightly lower and shape inconsistent.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 5,
+    "explanation": "The closed MacBook is a thin, flat plate that fills the hand similarly, though it\u2019s rectangular rather than circular.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "The headset is bulky and contoured, not a thin, flat plate shape at all.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "While somewhat flat, it\u2019s too thick and boxy to feel like the thin plate of a frisbee.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 4,
+    "explanation": "It is thin and flat like a frisbee\u2019s profile, but the long rectangular shape changes grip affordances.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "It has a round outline but is too thick compared to a frisbee\u2019s thin plate.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Cables are flexible and irregular, not a rigid plate shape.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Somewhat flat but soft and with a rectangular outline that doesn\u2019t match a rigid disc.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "A large, heavy monitor is not handheld nor thin like a frisbee.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Same reasons as the left monitor: too bulky and not handheld.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Relatively thin and flat, but rectangular and a bit rigid compared to a circular frisbee.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "It is flat but too thick, uneven, and keyed rather than smooth like a disc.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Small and somewhat slab-like, but too compact and not fully flat or circular enough.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "This is a confined, cylindrical object, not a thin plate shape.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Relatively flat but too narrow and irregular to evoke a frisbee outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Extremely thin and flat, though floppy and not rigid like a frisbee.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Flat and plate-like but rectangular and with a binding edge that alters the grip.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "A cylindrical pen is completely unlike a thin, flat disc.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Tall and cylindrical, far from a flat plate outline.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Frisbee",
+    "property": "outline",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 4,
+    "explanation": "Thin and flat but flexible and rectangular, lacking a rigid, circular plate feel.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "The MacBook hinge offers limited rotation (opening/closing) but not continuous 360\u00b0 turning like a wheel.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "No dedicated rotatable element; straps adjust but do not function like a free\u2010spinning wheel.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Completely static housing with no rotational control or knob.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Purely linear tool; no rotational degree of freedom.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Internally the tape spools, but you cannot freely spin it continuously like a wheel.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Flexible but no defined rotational mechanism or knob.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "No rotatable parts at all.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Only tilts on its stand; no wheel\u2010like rotation.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Tilts but does not allow free circular spinning.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Black hardcover notebook under left monitor (with coin)",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Rigid cover, no hinge or rotating element accessible like a wheel.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Keys press but no rotational control.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Lid hinge allows opening/closing but not continuous 360\u00b0 spinning.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "No visible rotating control or dial.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Buttons only; no wheel or dial.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Loose sheet of paper with sketches",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat paper, no rotational mechanism.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Cover flips around the spiral axis but does not offer continuous, free\u2010spinning motion.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Click mechanism only; no twist or rotary control.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "Screw\u2010on lid rotates freely many turns, providing a continuous rotary action similar to a wheel.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Wheel",
+    "property": "interactivity",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Flap rotates on a hinge but only through a limited angle, not like a free\u2010spinning wheel.",
+    "propertyValue": 0.8999999761581421
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "The laptop\u2019s metal body is extremely rigid with no give, completely mismatching a soft tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Mostly hard plastic frame and only slight foam compliance, still far firmer than a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Black rectangular electronic device (router or speaker) on a yellow cloth",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Solid plastic enclosure with no perceptible give, starkly harder than a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Rigid plastic with no flexibility, completely unlike the soft surface of a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Hard plastic casing gives almost no soft compliance compared to a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "Somewhat flexible as a bundle but lacks the uniform soft yielding of tomato flesh.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 4,
+    "explanation": "Soft tissue inside offers some give, though the packaging is not as yielding as tomato skin.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Glass and metal frame are fully rigid, no softness at all.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Same fully hard construction, completely mismatches tomato softness.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Rigid hardcover binding offers no compressibility like a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Hard plastic keys and frame give zero soft compliance.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "white AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Stiff plastic shell, no squishiness akin to tomato flesh.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "white handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Mostly rigid plastic, minor rubberized top but still far firmer than a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Solid plastic construction, no soft deformation.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Thin paper bends easily but doesn\u2019t compress like tomato flesh.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Cardboard cover and pages are quite stiff, no soft give.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Metal and plastic body fully rigid, unmatched softness.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Solid metal, no compliance at all.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Tomato",
+    "property": "hardness",
+    "physicalObject": "yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Paper envelope bends but does not exhibit the soft, fleshy deformation of a tomato.",
+    "propertyValue": 1.0
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "The MacBook is relatively heavy but its center of mass is centered in the middle and lacks a handle, so it doesn\u2019t feel head-heavy like the virtual hammer.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Very light with a balanced center of mass and no pronounced \u2018heavy end,\u2019 completely unlike the virtual hammer\u2019s inertia.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Too light and uniformly balanced, lacking any end-loaded weight profile.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Extremely light and flexible, no resemblance to a heavy, head-weighted tool.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Small, light, and centrally balanced\u2014nothing like the mass distribution of the hammer.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Very low mass and diffuse center of mass, fails to mimic the hammer\u2019s inertia.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Negligible weight and no end-loaded mass.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Extremely heavy and unwieldy for handheld use, no defined handle, and mass distribution is not head-heavy in the proper orientation.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Same issues as the left monitor\u2014too bulky, no distinct head-heavy feel when grasped.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Light and balanced, with no pronounced weight at one end.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Heavier than many small items but still balanced across its length and lacking a head-heavy feel.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Extremely light and uniform in weight.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Light device with central mass, no end-loaded heft.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Too light and evenly balanced along its length.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Loose sheet of paper with sketches",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Negligible inertia, not usable as a weighted tool.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Light and uniformly balanced, no head-heavy characteristic.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Very light and central in mass distribution.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 3,
+    "explanation": "Moderate weight but uniformly distributed and lacks a pronounced heavy head end.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "inertia",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Negligible mass and no defined center-of-mass offset.",
+    "propertyValue": 0.699999988079071
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Space Gray Apple MacBook (closed)",
+    "object_id": 1,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Flat rectangular slab\u2014no cylindrical grip or round handle features.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Black virtual reality headset with head strap",
+    "object_id": 2,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Irregular curved form designed for the head, not a simple round handle.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Black rectangular electronic device (router or speaker)",
+    "object_id": 3,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Box\u2010shaped device with sharp edges\u2014no cylindrical shape.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Transparent plastic ruler or straightedge",
+    "object_id": 4,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Long, thin, flat profile completely unlike a round handle.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Green circular tape measure or spool",
+    "object_id": 5,
+    "image_id": 0,
+    "rating": 3,
+    "explanation": "Disc\u2010shaped outline is circular, but too short and stubby to mimic a handle.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Bundle of black and white cables",
+    "object_id": 6,
+    "image_id": 0,
+    "rating": 2,
+    "explanation": "Flexible strands lack a consistent cylindrical form for gripping.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Blue-and-white package of tissues or wipes",
+    "object_id": 7,
+    "image_id": 0,
+    "rating": 1,
+    "explanation": "Soft rectangular pouch\u2014no rigid round handle shape.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Left computer monitor with dark screen",
+    "object_id": 1,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Large flat panel with no cylindrical outline.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Right computer monitor displaying code",
+    "object_id": 2,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat, rectangular monitor does not approximate a handle.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Black hardcover notebook under left monitor with a coin on top",
+    "object_id": 3,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Blocky, rectangular outline unsuitable for a round grip.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Black mechanical keyboard",
+    "object_id": 4,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Wide, flat profile with keys\u2014no cylindrical shape to hold.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "White AirPods charging case",
+    "object_id": 5,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Rounded edges but too small and more pill\u2010shaped than handle\u2010like.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "White handheld USB-connected device with black circular top",
+    "object_id": 6,
+    "image_id": 1,
+    "rating": 6,
+    "explanation": "Elongated cylindrical body with a round top closely matches handle shape.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Black HP-branded remote control",
+    "object_id": 7,
+    "image_id": 1,
+    "rating": 2,
+    "explanation": "Slim rectangular form with slight edge curvature, but not a true cylinder.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Loose sheet of paper with sketches under right monitor",
+    "object_id": 8,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat sheet\u2014no thickness or round outline to grip.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Spiral-bound notepad with handwritten notes",
+    "object_id": 9,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Rectangular pad with spiral spine\u2014not cylindrical.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Blue and silver ballpoint pen",
+    "object_id": 10,
+    "image_id": 1,
+    "rating": 5,
+    "explanation": "Long, slim cylinder similar in outline, though smaller in diameter.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Stainless steel travel tumbler",
+    "object_id": 11,
+    "image_id": 1,
+    "rating": 7,
+    "explanation": "Full\u2010size cylindrical body closely matches the round handle\u2019s proportions.",
+    "propertyValue": 0.4000000059604645
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "property": "outline",
+    "physicalObject": "Yellow manila envelope",
+    "object_id": 12,
+    "image_id": 1,
+    "rating": 1,
+    "explanation": "Flat envelope\u2014no round handle outline.",
+    "propertyValue": 0.4000000059604645
+  }
+]
