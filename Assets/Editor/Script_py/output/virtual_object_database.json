@@ -21,7 +21,7 @@
       "y": "0.36",
       "z": "0.54"
     },
-    "hapticFeedback": "Users reach out and place their hands on the chest\u2019s lid edge and latch. They feel a subtle wooden grain under their fingertips (medium\u2010fine ridges and slight roughness). As they grip the lid\u2019s front lip and lift, they encounter a smooth but firm hinge resistance: an initial catch followed by steady torque as the lid swings open. At the top of the travel there\u2019s a faint \u2018stop\u2019 or click sensation as the hinge reaches its limit. A good physical proxy is a small wooden box with a functioning hinge and simple latch, so users feel both the wood grain and the opening resistance."
+    "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
   },
   {
     "objectName": "key",
@@ -45,7 +45,7 @@
       "y": "0.05",
       "z": "0.14"
     },
-    "hapticFeedback": "When users wrap a finger through the round key ring, they perceive a smooth, polished metal finish\u2014very low friction, cool to the touch. The circular loop is uniform in cross-section and fits snugly around a fingertip. Sliding the key between thumb and forefinger, they feel a slender cylindrical shaft that tapers into a flat bit. A suitable proxy is any ordinary metal key or a small, smooth metal ring: it provides the same slim profile, ring-shaped hold, and slick surface."
+    "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
   },
   {
     "objectName": "simple_pistol",
@@ -69,7 +69,7 @@
       "y": "1.09",
       "z": "9.49"
     },
-    "hapticFeedback": "Users grasp the pistol\u2019s grip with their palm and fingers, feeling a gently contoured handle. When they depress the trigger with their index finger, they experience a distinct travel with spring-loaded resistance, followed by a crisp click or snap at the end of the pull. A slight kickback vibration is felt against the web of the hand at the moment of \u2018fire.\u2019 A toy trigger mechanism or a plastic pistol replica with a spring-loaded trigger makes an ideal proxy, matching the trigger pull force, click feedback, and grip shape."
+    "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
   },
   {
     "objectName": "Frisbee",
@@ -93,7 +93,7 @@
       "y": "0.18",
       "z": "0.23"
     },
-    "hapticFeedback": "Users hold the frisbee by pinching its thin outer rim between thumb and fingers. They feel a flat, narrow plastic edge\u2014firm but lightweight\u2014with minimal flex under normal grip forces. When they toss it, they notice the low mass and inertia: it shifts easily in the hand and requires only a gentle acceleration to launch. A standard plastic disc or lightweight lid edge serves as an excellent proxy, giving the same thin-rim profile and light throw weight."
+    "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
   },
   {
     "objectName": "Wheel",
@@ -117,7 +117,7 @@
       "y": "0.41",
       "z": "0.19"
     },
-    "hapticFeedback": "Users wrap both hands around the circular rim, feeling a smooth, rounded bar beneath their palms. As they rotate the wheel, they sense continuous, low-friction turning with a subtle detent or resistance that mimics steering torque. The diameter and curvature of the rim fill the hands. A real steering wheel from a pedal-car toy or a rotary hand crank with a similar 40\u2009cm diameter offers the correct rotational feel and rim thickness."
+    "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
   },
   {
     "objectName": "Tomato",
@@ -141,7 +141,7 @@
       "y": "0.10",
       "z": "0.17"
     },
-    "hapticFeedback": "Users press the tomato lightly between fingers and thumb, feeling an easily deformed, compliant surface. The flesh yields under minimal force and rebounds slowly, offering a clear sense of soft, squishy material. There is no hard outline, just uniform give. A stress-ball or foam sphere with low stiffness is the best proxy, replicating the same soft, smashable yield."
+    "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
   },
   {
     "objectName": "Hammer Dispenser 2",
@@ -165,6 +165,6 @@
       "y": "0.42",
       "z": "0.17"
     },
-    "hapticFeedback": "Users grip the round handle, sensing a smooth cylindrical shaft about 2\u20133\u2009cm in diameter. The weight is noticeably concentrated toward the head end, so when lifted, they feel a forward-heavy moment that pulls the handle down. Swings produce a shifting center of mass and inertial torque in the wrist. A real metal\u2013wood hammer or weighted training hammer with a heavy head and round wooden or rubber handle gives the correct heft distribution and handle feel."
+    "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
   }
 ]

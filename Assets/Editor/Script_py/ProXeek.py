@@ -104,9 +104,10 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 if langchain_api_key:
     os.environ["LANGCHAIN_API_KEY"] = langchain_api_key
 
+# o4-mini-2025-04-16
 # Initialize the physical object recognition LLM
 physical_object_recognition_llm = ChatOpenAI(
-    model="o4-mini-2025-04-16",
+    model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
     api_key=api_key
@@ -114,7 +115,7 @@ physical_object_recognition_llm = ChatOpenAI(
 
 # Initialize the virtual object processing LLM
 virtual_object_processor_llm = ChatOpenAI(
-    model="o4-mini-2025-04-16",
+    model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
     api_key=api_key
@@ -122,7 +123,7 @@ virtual_object_processor_llm = ChatOpenAI(
 
 # Initialize the proxy matching LLM
 proxy_matching_llm = ChatOpenAI(
-    model="o4-mini-2025-04-16",
+    model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
     api_key=api_key
@@ -130,7 +131,7 @@ proxy_matching_llm = ChatOpenAI(
 
 # Initialize the property rating LLM
 property_rating_llm = ChatOpenAI(
-    model="o4-mini-2025-04-16",
+    model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
     api_key=api_key
@@ -787,7 +788,7 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure
 ]
 ```
 
-IMPORTANT: Make sure to use the EXACT image_id values shown above for each object. Do NOT add 1 to the image_id values.
+IMPORTANT: Make sure to use the EXACT image_id values shown above for each object.
 Include ALL physical objects in your evaluation.
 """
         })
@@ -963,9 +964,9 @@ async def run_proxy_matching(virtual_objects, environment_images, physical_objec
     return all_matching_results
 
 # Function to rate a single property of a virtual object against all physical objects
-async def rate_single_property(virtual_object, property_name, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
+async def rate_single_property(virtual_object, property_name, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results, run_index=1):
     # Log information about the proxy matching results
-    log(f"Property rating for {property_name} with {len(proxy_matching_results)} proxy matching results")
+    log(f"Property rating for {property_name} (run {run_index}) with {len(proxy_matching_results)} proxy matching results")
     
     # If no proxy matching results, try loading directly from file
     if len(proxy_matching_results) == 0:
@@ -985,7 +986,7 @@ async def rate_single_property(virtual_object, property_name, environment_images
             log(f"Error loading proxy matching results: {e}")
     try:
         virtual_object_name = virtual_object.get("objectName", "Unknown Object")
-        log(f"Rating {property_name} for virtual object: {virtual_object_name}")
+        log(f"Rating {property_name} for virtual object: {virtual_object_name} (run {run_index})")
         
         # Get the property description
         property_description = virtual_object.get(property_name.replace("Value", ""), "")
@@ -1055,82 +1056,70 @@ Please rate how well each physical object matches the {property_name.replace("Va
                 }
             })
             
-            # Add the detected objects for this snapshot
-            objects_in_snapshot = physical_object_database.get(str(i), [])
-            objects_text = "\n### Detected Objects in this Snapshot\n"
+            # Add objects from proxy_matching_results for this image
+            objects_text = "\n### Objects in this Snapshot\n"
             
-            if objects_in_snapshot:
-                for obj in objects_in_snapshot:
-                    objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
-                    objects_text += f"  Image ID: {i}\n"
-                    
-                    # Add all utilization methods for this physical object (from all virtual objects)
-                    util_methods_added = False
-                    # Debug logging
-                    log(f"Checking utilization methods for obj_id: {obj['object_id']}, img_id: {i}")
-                    log(f"Number of proxy results to check: {len(proxy_matching_results)}")
-                    
-                    # Convert object_id to both string and int for flexible comparison
-                    obj_id_int = obj['object_id']
-                    if isinstance(obj_id_int, str):
-                        try:
-                            obj_id_int = int(obj_id_int)
-                        except ValueError:
-                            pass
-                    
-                    obj_id_str = str(obj['object_id'])
-                    
-                    for proxy_result in proxy_matching_results:
-                        # Get proxy object_id in both formats for comparison
-                        proxy_obj_id = proxy_result.get('object_id')
-                        proxy_obj_id_str = str(proxy_obj_id) if proxy_obj_id is not None else None
-                        
-                        # Get proxy image_id in both formats for comparison
-                        proxy_img_id = proxy_result.get('image_id')
-                        proxy_img_id_int = proxy_img_id
-                        if isinstance(proxy_img_id, str):
-                            try:
-                                proxy_img_id_int = int(proxy_img_id)
-                            except ValueError:
-                                pass
-                        
-                        # More flexible comparison with multiple type checks
-                        if ((proxy_obj_id == obj['object_id'] or proxy_obj_id == obj_id_int or proxy_obj_id_str == obj_id_str) and
-                            (proxy_img_id == i or proxy_img_id_int == i)):
-                            util_method = proxy_result.get("utilizationMethod", "")
-                            matched_virtual = proxy_result.get("virtualObject", "Unknown")
-                            if util_method:
-                                log(f"Found utilization method for {matched_virtual}, obj_id: {proxy_obj_id}, img_id: {proxy_img_id}")
-                                objects_text += f"  Utilization Method for {matched_virtual}: {util_method}\n"
-                                util_methods_added = True
-                            else:
-                                log(f"Found proxy result for {matched_virtual} but no utilization method")
-                    
-                    if not util_methods_added:
-                        objects_text += f"  No utilization methods available for this object\n"
-                        log(f"No utilization methods found for obj_id: {obj['object_id']}, img_id: {i}")
-            else:
-                # Check if we should look for objects in a different format
-                objects_in_snapshot = physical_object_database.get(i, [])
-                if objects_in_snapshot:
-                    for obj in objects_in_snapshot:
-                        objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
-                        objects_text += f"  Image ID: {i}\n"
-                else:
-                    # Last attempt - try to find objects that have this image_id in their properties
-                    matching_objects = []
-                    for img_id, objects_list in physical_object_database.items():
-                        for obj in objects_list:
-                            if obj.get("image_id") == i:
-                                matching_objects.append(obj)
-                    
-                    if matching_objects:
-                        for obj in matching_objects:
-                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
-                            objects_text += f"  Image ID: {i}\n"
-                    else:
-                        objects_text += "- No objects detected in this snapshot\n"
+            # Group objects by image_id
+            image_objects = []
+            log(f"Searching through {len(proxy_matching_results)} proxy results for image_id {i}")
+            for proxy_result in proxy_matching_results:
+                proxy_img_id = proxy_result.get('image_id')
+                # Convert to int if it's a string
+                if isinstance(proxy_img_id, str):
+                    try:
+                        proxy_img_id = int(proxy_img_id)
+                    except ValueError:
+                        pass
                 
+                # If this object belongs to the current image
+                if proxy_img_id == i:
+                    log(f"Found object for image_id {i}: {proxy_result.get('physicalObject', 'Unknown')}")
+                    has_method = 'utilizationMethod' in proxy_result and proxy_result['utilizationMethod']
+                    log(f"Has utilization method: {has_method}")
+                    image_objects.append(proxy_result)
+            
+            # Sort by object_id for consistency
+            image_objects.sort(key=lambda x: x.get('object_id', 0))
+            
+            # Remove duplicates (same object_id)
+            unique_objects = []
+            seen_object_ids = set()
+            for obj in image_objects:
+                obj_id = obj.get('object_id')
+                if obj_id not in seen_object_ids:
+                    seen_object_ids.add(obj_id)
+                    unique_objects.append(obj)
+            
+            if unique_objects:
+                for obj in unique_objects:
+                    obj_id = obj.get('object_id', 'Unknown')
+                    obj_name = obj.get('physicalObject', 'Unknown object')
+                    obj_location = obj.get('proxyLocation', 'Unknown position')
+                    
+                    objects_text += f"- Object ID: {obj_id} - {obj_name} ({obj_location})\n"
+                    
+                    # Only show utilization methods that match the current virtual object
+                    utilization_added = False
+                    for proxy_result in proxy_matching_results:
+                        # Check if this proxy result matches the current object ID and image ID
+                        if (proxy_result.get('object_id') == obj_id and 
+                            proxy_result.get('image_id') == i and
+                            proxy_result.get('virtualObject') == virtual_object_name):
+                            
+                            util_method = proxy_result.get("utilizationMethod", "")
+                            if util_method:
+                                log(f"Found matching utilization method for {virtual_object_name}")
+                                objects_text += f"  Utilization Method: {util_method}\n"
+                                utilization_added = True
+                                break
+                    
+                    if not utilization_added:
+                        objects_text += f"  No utilization method for {virtual_object_name}\n"
+                    
+                    objects_text += f"  Image ID: {i}\n\n"
+            else:
+                objects_text += "- No objects found in proxy matching results for this snapshot\n"
+            
             human_message_content.append({
                 "type": "text", 
                 "text": objects_text
@@ -1179,9 +1168,9 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
         ]
         
         # Get response from the model
-        log(f"Sending property rating request for {property_name} of {virtual_object_name}")
+        log(f"Sending property rating request for {property_name} of {virtual_object_name} (run {run_index})")
         response = await property_rating_llm.ainvoke(messages)
-        log(f"Received property ratings for {property_name} of {virtual_object_name}")
+        log(f"Received property ratings for {property_name} of {virtual_object_name} (run {run_index})")
         
         # Extract JSON from response
         response_text = response.content
@@ -1209,14 +1198,20 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
             # Parse the JSON response
             rating_results = json.loads(json_content)
             
-            # Add the property value to each result
+            # Add the property value to each result and rename the rating field based on run_index
+            rating_key = f"rating_{run_index}"
             for result in rating_results:
                 # Get the property value from the virtual object
                 property_value = virtual_object.get(property_name, 0.0)
                 result["propertyValue"] = property_value
                 
+                # Rename the rating field
+                if "rating" in result:
+                    result[rating_key] = result["rating"]
+                    del result["rating"]
+                
                 # Remove any extra fields not in the required output format
-                keys_to_keep = ["virtualObject", "property", "physicalObject", "object_id", "image_id", "rating", "explanation", "propertyValue"]
+                keys_to_keep = ["virtualObject", "property", "physicalObject", "object_id", "image_id", rating_key, "explanation", "propertyValue"]
                 for key in list(result.keys()):
                     if key not in keys_to_keep:
                         del result[key]
@@ -1224,7 +1219,7 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
             return rating_results
             
         except json.JSONDecodeError as e:
-            log(f"Error parsing property rating JSON for {property_name} of {virtual_object_name}: {e}")
+            log(f"Error parsing property rating JSON for {property_name} of {virtual_object_name} (run {run_index}): {e}")
             log(f"Raw content: {json_content}")
             
             # Return a basic result with the error
@@ -1236,7 +1231,7 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
             }]
             
     except Exception as e:
-        log(f"Error in property rating for {property_name} of {virtual_object.get('objectName', 'unknown')}: {e}")
+        log(f"Error in property rating for {property_name} of {virtual_object.get('objectName', 'unknown')} (run {run_index}): {e}")
         import traceback
         log(traceback.format_exc())
         
@@ -1249,6 +1244,15 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
 
 # Function to run property ratings for all virtual objects in parallel
 async def run_property_ratings(virtual_objects, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
+    log(f"run_property_ratings received {len(proxy_matching_results)} proxy matching results")
+    
+    # Check sample proxy result for utilization method
+    if len(proxy_matching_results) > 0:
+        sample = proxy_matching_results[0]
+        log(f"Sample proxy result keys: {list(sample.keys())}")
+        if 'utilizationMethod' in sample:
+            log(f"Sample utilization method: {sample['utilizationMethod'][:50]}...")
+    
     all_tasks = []
     property_names = ["inertiaValue", "interactivityValue", "outlineValue", "textureValue", "hardnessValue", "temperatureValue"]
     
@@ -1262,34 +1266,83 @@ async def run_property_ratings(virtual_objects, environment_images, physical_obj
             
             # Only rate properties that are highlighted (value > 0)
             if property_value > 0:
-                log(f"Adding rating task for {property_name} of {virtual_object_name} (value: {property_value})")
-                task = rate_single_property(
-                    virtual_object,
-                    property_name,
-                    environment_images,
-                    physical_object_database,
-                    object_snapshot_map,
-                    proxy_matching_results
-                )
-                all_tasks.append(task)
+                log(f"Adding rating tasks for {property_name} of {virtual_object_name} (value: {property_value})")
+                
+                # Run each property rating 3 times for reliability
+                for run_index in range(1, 4):
+                    task = rate_single_property(
+                        virtual_object,
+                        property_name,
+                        environment_images,
+                        physical_object_database,
+                        object_snapshot_map,
+                        proxy_matching_results,
+                        run_index
+                    )
+                    all_tasks.append((virtual_object_name, property_name, run_index, task))
     
     # Run all tasks concurrently
-    log(f"Running {len(all_tasks)} property rating tasks concurrently")
-    results = await asyncio.gather(*all_tasks, return_exceptions=True)
+    log(f"Running {len(all_tasks)} property rating tasks concurrently (including multiple runs)")
+    task_results = await asyncio.gather(*[task[3] for task in all_tasks], return_exceptions=True)
     
     # Process results
     all_rating_results = []
-    for result in results:
+    rating_map = {}  # To track and combine multiple runs
+    
+    # Process each result and organize by virtual object, property, and physical object
+    for i, result in enumerate(task_results):
         if isinstance(result, Exception):
-            log(f"Error in property rating task: {result}")
-            # Skip this result
+            log(f"Error in property rating task {i}: {result}")
             continue
         else:
-            # Each result is an array of rating results for a single property of a single virtual object
-            all_rating_results.extend(result)
+            task_info = all_tasks[i]
+            virtual_object_name = task_info[0]
+            property_name = task_info[1]
+            run_index = task_info[2]
+            
+            # Process each rating result in this batch
+            for rating in result:
+                if isinstance(rating, dict) and "error" not in rating:
+                    # Create a unique key based on object_id and image_id instead of physicalObject name
+                    virt_obj = rating.get("virtualObject", "unknown")
+                    prop = rating.get("property", "unknown")
+                    obj_id = rating.get("object_id", -1)
+                    img_id = rating.get("image_id", -1)
+                    
+                    # Create a unique identifier using only IDs, not names
+                    obj_key = f"{virt_obj}:{prop}:{obj_id}:{img_id}"
+                    
+                    # Get the rating value from this run
+                    rating_key = f"rating_{run_index}"
+                    rating_value = rating.get(rating_key, 0)
+                    
+                    if obj_key not in rating_map:
+                        # First time seeing this object, create a new entry
+                        rating_map[obj_key] = rating.copy()
+                    else:
+                        # Update existing entry with this run's rating
+                        rating_map[obj_key][rating_key] = rating_value
+                        
+                        # Keep the physical object name from the first occurrence
+                        # This prevents inconsistent names from affecting the results
+                        if run_index > 1 and "physicalObject" in rating:
+                            # We don't update the physicalObject name, keep the original one
+                            pass
+                else:
+                    log(f"Skipping invalid rating result: {rating}")
+    
+    # Convert the rating map back to a list
+    for obj_key, combined_rating in rating_map.items():
+        # Make sure all three ratings exist
+        for i in range(1, 4):
+            rating_key = f"rating_{i}"
+            if rating_key not in combined_rating:
+                combined_rating[rating_key] = 0  # Use 0 or None for missing ratings
+        
+        all_rating_results.append(combined_rating)
     
     # Log summary of results
-    log(f"Completed property ratings with {len(all_rating_results)} total ratings")
+    log(f"Completed property ratings with {len(all_rating_results)} total combined ratings")
     
     return all_rating_results
 
@@ -1393,12 +1446,6 @@ def rename_key_in_json(data, old_key, new_key):
         for k, v in data.items():
             # Replace the key if it matches
             new_k = new_key if k == old_key else k
-            
-            # Special case for imageId/image_id: fix 1-based to 0-based
-            if (k == old_key or k == new_key) and new_k == "image_id" and isinstance(v, int) and v > 0:
-                # Adjust image_id value from 1-based to 0-based
-                v = v - 1
-                log(f"Normalized image_id from {v+1} to {v}")
             
             # Process the value (which might contain further dict/list structures)
             new_dict[new_k] = rename_key_in_json(v, old_key, new_key)
