@@ -690,17 +690,49 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
                     
                     # Add all utilization methods for this physical object (from all virtual objects)
                     util_methods_added = False
+                    # Debug logging
+                    log(f"Checking utilization methods for obj_id: {obj['object_id']}, img_id: {i}")
+                    log(f"Number of proxy results to check: {len(proxy_matching_results)}")
+                    
+                    # Convert object_id to both string and int for flexible comparison
+                    obj_id_int = obj['object_id']
+                    if isinstance(obj_id_int, str):
+                        try:
+                            obj_id_int = int(obj_id_int)
+                        except ValueError:
+                            pass
+                    
+                    obj_id_str = str(obj['object_id'])
+                    
                     for proxy_result in proxy_matching_results:
-                        if (proxy_result.get("object_id") == obj["object_id"] and 
-                            proxy_result.get("image_id") == i):
+                        # Get proxy object_id in both formats for comparison
+                        proxy_obj_id = proxy_result.get('object_id')
+                        proxy_obj_id_str = str(proxy_obj_id) if proxy_obj_id is not None else None
+                        
+                        # Get proxy image_id in both formats for comparison
+                        proxy_img_id = proxy_result.get('image_id')
+                        proxy_img_id_int = proxy_img_id
+                        if isinstance(proxy_img_id, str):
+                            try:
+                                proxy_img_id_int = int(proxy_img_id)
+                            except ValueError:
+                                pass
+                        
+                        # More flexible comparison with multiple type checks
+                        if ((proxy_obj_id == obj['object_id'] or proxy_obj_id == obj_id_int or proxy_obj_id_str == obj_id_str) and
+                            (proxy_img_id == i or proxy_img_id_int == i)):
                             util_method = proxy_result.get("utilizationMethod", "")
                             matched_virtual = proxy_result.get("virtualObject", "Unknown")
                             if util_method:
+                                log(f"Found utilization method for {matched_virtual}, obj_id: {proxy_obj_id}, img_id: {proxy_img_id}")
                                 objects_text += f"  Utilization Method for {matched_virtual}: {util_method}\n"
                                 util_methods_added = True
+                            else:
+                                log(f"Found proxy result for {matched_virtual} but no utilization method")
                     
                     if not util_methods_added:
                         objects_text += f"  No utilization methods available for this object\n"
+                        log(f"No utilization methods found for obj_id: {obj['object_id']}, img_id: {i}")
             else:
                 # Check if we should look for objects in a different format (in case image_id is stored as integer keys)
                 objects_in_snapshot = physical_object_database.get(i, [])
@@ -932,6 +964,25 @@ async def run_proxy_matching(virtual_objects, environment_images, physical_objec
 
 # Function to rate a single property of a virtual object against all physical objects
 async def rate_single_property(virtual_object, property_name, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
+    # Log information about the proxy matching results
+    log(f"Property rating for {property_name} with {len(proxy_matching_results)} proxy matching results")
+    
+    # If no proxy matching results, try loading directly from file
+    if len(proxy_matching_results) == 0:
+        try:
+            output_dir = os.path.join(script_dir, "output")
+            proxy_output_path = os.path.join(output_dir, "proxy_matching_results.json")
+            if os.path.exists(proxy_output_path):
+                log(f"Loading proxy matching results from {proxy_output_path}")
+                with open(proxy_output_path, 'r') as f:
+                    proxy_matching_results = json.load(f)
+                log(f"Loaded {len(proxy_matching_results)} proxy matching results from file")
+                if len(proxy_matching_results) > 0:
+                    log(f"Sample: {proxy_matching_results[0].get('utilizationMethod', 'N/A')[:50]}...")
+            else:
+                log(f"Warning: Proxy matching results file not found at {proxy_output_path}")
+        except Exception as e:
+            log(f"Error loading proxy matching results: {e}")
     try:
         virtual_object_name = virtual_object.get("objectName", "Unknown Object")
         log(f"Rating {property_name} for virtual object: {virtual_object_name}")
@@ -1015,17 +1066,49 @@ Please rate how well each physical object matches the {property_name.replace("Va
                     
                     # Add all utilization methods for this physical object (from all virtual objects)
                     util_methods_added = False
+                    # Debug logging
+                    log(f"Checking utilization methods for obj_id: {obj['object_id']}, img_id: {i}")
+                    log(f"Number of proxy results to check: {len(proxy_matching_results)}")
+                    
+                    # Convert object_id to both string and int for flexible comparison
+                    obj_id_int = obj['object_id']
+                    if isinstance(obj_id_int, str):
+                        try:
+                            obj_id_int = int(obj_id_int)
+                        except ValueError:
+                            pass
+                    
+                    obj_id_str = str(obj['object_id'])
+                    
                     for proxy_result in proxy_matching_results:
-                        if (proxy_result.get("object_id") == obj["object_id"] and 
-                            proxy_result.get("image_id") == i):
+                        # Get proxy object_id in both formats for comparison
+                        proxy_obj_id = proxy_result.get('object_id')
+                        proxy_obj_id_str = str(proxy_obj_id) if proxy_obj_id is not None else None
+                        
+                        # Get proxy image_id in both formats for comparison
+                        proxy_img_id = proxy_result.get('image_id')
+                        proxy_img_id_int = proxy_img_id
+                        if isinstance(proxy_img_id, str):
+                            try:
+                                proxy_img_id_int = int(proxy_img_id)
+                            except ValueError:
+                                pass
+                        
+                        # More flexible comparison with multiple type checks
+                        if ((proxy_obj_id == obj['object_id'] or proxy_obj_id == obj_id_int or proxy_obj_id_str == obj_id_str) and
+                            (proxy_img_id == i or proxy_img_id_int == i)):
                             util_method = proxy_result.get("utilizationMethod", "")
                             matched_virtual = proxy_result.get("virtualObject", "Unknown")
                             if util_method:
+                                log(f"Found utilization method for {matched_virtual}, obj_id: {proxy_obj_id}, img_id: {proxy_img_id}")
                                 objects_text += f"  Utilization Method for {matched_virtual}: {util_method}\n"
                                 util_methods_added = True
+                            else:
+                                log(f"Found proxy result for {matched_virtual} but no utilization method")
                     
                     if not util_methods_added:
                         objects_text += f"  No utilization methods available for this object\n"
+                        log(f"No utilization methods found for obj_id: {obj['object_id']}, img_id: {i}")
             else:
                 # Check if we should look for objects in a different format
                 objects_in_snapshot = physical_object_database.get(i, [])
@@ -1276,6 +1359,18 @@ async def run_concurrent_tasks():
         
         # Run property-based ratings
         log("Setting up property-based rating tasks")
+        
+        # Log sample proxy matching results for debugging
+        if len(proxy_matching_results) > 0:
+            log("Sample proxy matching result:")
+            log(f"- virtualObject: {proxy_matching_results[0].get('virtualObject', 'N/A')}")
+            log(f"- physicalObject: {proxy_matching_results[0].get('physicalObject', 'N/A')}")
+            log(f"- object_id: {proxy_matching_results[0].get('object_id', 'N/A')}")
+            log(f"- image_id: {proxy_matching_results[0].get('image_id', 'N/A')}")
+            log(f"- utilizationMethod: {proxy_matching_results[0].get('utilizationMethod', 'N/A')}")
+        else:
+            log("Warning: No proxy matching results available!")
+            
         property_rating_results = await run_property_ratings(
             enhanced_virtual_objects,
             environment_image_base64_list,

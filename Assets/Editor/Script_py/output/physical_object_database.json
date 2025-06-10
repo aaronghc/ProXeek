@@ -2,118 +2,142 @@
   "0": [
     {
       "object_id": 1,
-      "object": "Space Gray Apple MacBook (closed)",
-      "position": "center of the desk",
+      "object": "closed space-gray Apple MacBook laptop with an Apple logo",
+      "position": "center-right of the image, on the desk surface",
       "image_id": 0
     },
     {
       "object_id": 2,
-      "object": "Black virtual reality headset with head strap",
-      "position": "left side of the desk",
+      "object": "over-ear virtual reality headset with head straps",
+      "position": "left center of the image, hanging off the desk edge",
       "image_id": 0
     },
     {
       "object_id": 3,
-      "object": "Black rectangular electronic device (router or speaker) on a yellow cloth",
-      "position": "top left of the desk",
+      "object": "black rectangular speaker or small amplifier",
+      "position": "top left of the image, on the desk against the wall",
       "image_id": 0
     },
     {
       "object_id": 4,
-      "object": "Transparent plastic ruler or straightedge",
-      "position": "top center of the desk",
+      "object": "transparent plastic ruler",
+      "position": "top center of the image, lying flat on the desk",
       "image_id": 0
     },
     {
       "object_id": 5,
-      "object": "Green circular tape measure or spool",
-      "position": "top right of the desk",
+      "object": "green circular retractable tape measure",
+      "position": "top right of the image, on the desk",
       "image_id": 0
     },
     {
       "object_id": 6,
-      "object": "Bundle of black and white cables",
-      "position": "bottom left of the desk",
+      "object": "metallic adjustable desk lamp arm with clamp",
+      "position": "upper right quadrant of the image, attached to desk",
       "image_id": 0
     },
     {
       "object_id": 7,
-      "object": "Blue-and-white package of tissues or wipes",
-      "position": "top center, behind the ruler",
+      "object": "blue and white pack of wipes or tissues",
+      "position": "top edge of the image, partially visible",
+      "image_id": 0
+    },
+    {
+      "object_id": 8,
+      "object": "bundle of black and white cables and cords",
+      "position": "bottom and left side of the image, draped over and under the desk",
+      "image_id": 0
+    },
+    {
+      "object_id": 9,
+      "object": "black desk mat or mousepad",
+      "position": "covering most of the desk surface beneath the laptop",
       "image_id": 0
     }
   ],
   "1": [
     {
       "object_id": 1,
-      "object": "left computer monitor with dark screen",
-      "position": "top left",
+      "object": "computer monitor (left) displaying a dark screen",
+      "position": "top left of the image",
       "image_id": 1
     },
     {
       "object_id": 2,
-      "object": "right computer monitor displaying code",
-      "position": "top right",
+      "object": "computer monitor (right) displaying code on a white background",
+      "position": "top right of the image",
       "image_id": 1
     },
     {
       "object_id": 3,
-      "object": "black hardcover notebook under left monitor with a coin on top",
-      "position": "middle left under monitor",
+      "object": "black full-size computer keyboard",
+      "position": "bottom left quadrant of the image",
       "image_id": 1
     },
     {
       "object_id": 4,
-      "object": "black mechanical keyboard",
-      "position": "center left",
+      "object": "white wireless earbuds charging case (AirPods-style)",
+      "position": "slightly right of center, above the cylindrical device",
       "image_id": 1
     },
     {
       "object_id": 5,
-      "object": "white AirPods charging case",
-      "position": "center",
+      "object": "white cylindrical electronic device with black top and attached cable",
+      "position": "center of the image, below the AirPods case",
       "image_id": 1
     },
     {
       "object_id": 6,
-      "object": "white handheld USB-connected device with black circular top",
-      "position": "middle center",
+      "object": "black vertical ergonomic HP mouse or remote",
+      "position": "just to the right of the white cylindrical device",
       "image_id": 1
     },
     {
       "object_id": 7,
-      "object": "black HP-branded remote control",
-      "position": "middle center-right",
+      "object": "stainless steel insulated tumbler with metallic lid",
+      "position": "bottom right of the image",
       "image_id": 1
     },
     {
       "object_id": 8,
-      "object": "loose sheet of paper with sketches under right monitor",
-      "position": "center right",
+      "object": "blue and silver retractable ballpoint pen",
+      "position": "lower center of the image, near the tumbler",
       "image_id": 1
     },
     {
       "object_id": 9,
-      "object": "spiral-bound notepad with handwritten notes",
-      "position": "bottom left",
+      "object": "white spiral-bound notepad with blank pages",
+      "position": "bottom left corner of the image",
       "image_id": 1
     },
     {
       "object_id": 10,
-      "object": "blue and silver ballpoint pen",
-      "position": "bottom center-right",
+      "object": "black hardcover notebook or textbook with a yellow dust jacket underneath",
+      "position": "just below the left monitor",
       "image_id": 1
     },
     {
       "object_id": 11,
-      "object": "stainless steel travel tumbler",
-      "position": "bottom right",
+      "object": "round coin or token resting on top of the black notebook",
+      "position": "center-left above the black notebook",
       "image_id": 1
     },
     {
       "object_id": 12,
-      "object": "yellow manila envelope",
-      "position": "far right bottom",
+      "object": "green spherical object (possibly a stress ball or cable reel)",
+      "position": "far left edge, near the bottom of the left monitor",
+      "image_id": 1
+    },
+    {
+      "object_id": 13,
+      "object": "loose sheet of paper with hand-drawn sketches and notes",
+      "position": "underneath the right monitor, center right",
+      "image_id": 1
+    },
+    {
+      "object_id": 14,
+      "object": "manila envelope or yellow folder",
+      "position": "bottom right edge, partially visible",
       "image_id": 1
     }
   ]

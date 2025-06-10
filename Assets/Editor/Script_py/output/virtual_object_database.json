@@ -21,7 +21,7 @@
       "y": "0.36",
       "z": "0.54"
     },
-    "hapticFeedback": "When you reach out and press on the lid of the treasure chest, you should feel a slightly coarse wood-grain surface under your fingertips, with the subtle raised ridges of the planks and the occasional nail head indentation. As you grasp the front edge or the metal hasp, you get a sharper, colder metallic snap. Pulling the lid upward brings a low-pressure friction at the hinges: a smooth but noticeable resistance that \u2018clicks\u2019 into a detented open position. No overall weight shift should occur (the chest is fixed), but the lid\u2019s hinge should impart a small tactile \u2018stop\u2019 to signal it\u2019s fully open. A good physical proxy is a small wooden box with real metal hinges and latch, lightly sanded to leave visible wood grain and a hinge mechanism that offers gentle resistance and an audible click."
+    "hapticFeedback": "Users reach out and place their hands on the chest\u2019s lid edge and latch. They feel a subtle wooden grain under their fingertips (medium\u2010fine ridges and slight roughness). As they grip the lid\u2019s front lip and lift, they encounter a smooth but firm hinge resistance: an initial catch followed by steady torque as the lid swings open. At the top of the travel there\u2019s a faint \u2018stop\u2019 or click sensation as the hinge reaches its limit. A good physical proxy is a small wooden box with a functioning hinge and simple latch, so users feel both the wood grain and the opening resistance."
   },
   {
     "objectName": "key",
@@ -45,7 +45,7 @@
       "y": "0.05",
       "z": "0.14"
     },
-    "hapticFeedback": "The key should feel like a cool, smooth metal object. Your thumb and index finger curl through the circular bow (ring-shaped holding part), which has a thin, uniformly rounded edge. The shank is narrow and cylindrical, leading out to the toothed bit: there you feel the distinct flat facets and sharp sawtooth pattern under mild finger pressure. A suitable proxy is a standard brass key blank\u2014ring hole up front, slim shaft, and real machining on the teeth so you can feel each notch."
+    "hapticFeedback": "When users wrap a finger through the round key ring, they perceive a smooth, polished metal finish\u2014very low friction, cool to the touch. The circular loop is uniform in cross-section and fits snugly around a fingertip. Sliding the key between thumb and forefinger, they feel a slender cylindrical shaft that tapers into a flat bit. A suitable proxy is any ordinary metal key or a small, smooth metal ring: it provides the same slim profile, ring-shaped hold, and slick surface."
   },
   {
     "objectName": "simple_pistol",
@@ -69,7 +69,7 @@
       "y": "1.09",
       "z": "9.49"
     },
-    "hapticFeedback": "Grasping the pistol, your hand settles around a matte-finished grip that feels firm but untextured. Key interaction comes from the trigger: you should feel an initial spring tension as you pull, a well-defined \u2018break\u2019 point where the trigger snaps back, followed by a crisp click. Upon release, the trigger returns smoothly under spring tension. A good proxy is a lightweight plastic or metal toy gun with an operational trigger mechanism that replicates the pull-and-snap action with moderate resistance."
+    "hapticFeedback": "Users grasp the pistol\u2019s grip with their palm and fingers, feeling a gently contoured handle. When they depress the trigger with their index finger, they experience a distinct travel with spring-loaded resistance, followed by a crisp click or snap at the end of the pull. A slight kickback vibration is felt against the web of the hand at the moment of \u2018fire.\u2019 A toy trigger mechanism or a plastic pistol replica with a spring-loaded trigger makes an ideal proxy, matching the trigger pull force, click feedback, and grip shape."
   },
   {
     "objectName": "Frisbee",
@@ -93,7 +93,7 @@
       "y": "0.18",
       "z": "0.23"
     },
-    "hapticFeedback": "The Frisbee should feel like a thin plastic disc: lightweight in your hand with almost no inertia, easily pinched between thumb and fingers. The rim is only a few millimeters thick but rounded, so when you flex it slightly you get a small bending sensation. The top and bottom surfaces are smooth, with just enough stiffness that the disc holds its shape but yields a bit under strong pinch. A standard plastic flying disc (real-world Frisbee) is an ideal physical proxy."
+    "hapticFeedback": "Users hold the frisbee by pinching its thin outer rim between thumb and fingers. They feel a flat, narrow plastic edge\u2014firm but lightweight\u2014with minimal flex under normal grip forces. When they toss it, they notice the low mass and inertia: it shifts easily in the hand and requires only a gentle acceleration to launch. A standard plastic disc or lightweight lid edge serves as an excellent proxy, giving the same thin-rim profile and light throw weight."
   },
   {
     "objectName": "Wheel",
@@ -117,7 +117,7 @@
       "y": "0.41",
       "z": "0.19"
     },
-    "hapticFeedback": "Place both hands on the steering wheel\u2019s outer rim and you feel a uniform cylindrical surface\u2014smooth but with enough diameter (\u224840 cm overall) to fill your palms. As you rotate, you encounter steady, low-torque resistance that simulates mechanical friction in a car\u2019s steering column; turning one way or the other should require constant, gentle pressure and deliver continuous haptic feedback of rotational drag. A real automotive wheel or a simulator wheel with adjustable friction is the best proxy."
+    "hapticFeedback": "Users wrap both hands around the circular rim, feeling a smooth, rounded bar beneath their palms. As they rotate the wheel, they sense continuous, low-friction turning with a subtle detent or resistance that mimics steering torque. The diameter and curvature of the rim fill the hands. A real steering wheel from a pedal-car toy or a rotary hand crank with a similar 40\u2009cm diameter offers the correct rotational feel and rim thickness."
   },
   {
     "objectName": "Tomato",
@@ -141,7 +141,7 @@
       "y": "0.10",
       "z": "0.17"
     },
-    "hapticFeedback": "When you press the tomato between your fingers, you encounter an initially taut, slightly slippery skin that gives way under light pressure into a soft, yielding interior. As you compress further, the object deforms noticeably, and a squishy, fluid-like resistance builds before the structure collapses. A well-filled silicone stress ball or a water-balloon-style object encased in a thin rubber skin makes an excellent proxy for this smashable, compliant feel."
+    "hapticFeedback": "Users press the tomato lightly between fingers and thumb, feeling an easily deformed, compliant surface. The flesh yields under minimal force and rebounds slowly, offering a clear sense of soft, squishy material. There is no hard outline, just uniform give. A stress-ball or foam sphere with low stiffness is the best proxy, replicating the same soft, smashable yield."
   },
   {
     "objectName": "Hammer Dispenser 2",
@@ -165,6 +165,6 @@
       "y": "0.42",
       "z": "0.17"
     },
-    "hapticFeedback": "Grasp the round handle and immediately sense a substantial overall weight (head-heavy bias). The handle is smooth and cylindrical (\u22482 cm diameter), filling your palm comfortably. When you lift or swing, you feel the center of mass strongly toward the hammerhead end, creating a torque in your wrist. The head itself is rigid and dense under impact, delivering a sharp impulse on contact. A small machinist\u2019s hammer or tack hammer\u2014with a solid metal head, round handle, and the same head-heavy balance\u2014is the ideal physical proxy."
+    "hapticFeedback": "Users grip the round handle, sensing a smooth cylindrical shaft about 2\u20133\u2009cm in diameter. The weight is noticeably concentrated toward the head end, so when lifted, they feel a forward-heavy moment that pulls the handle down. Swings produce a shifting center of mass and inertial torque in the wrist. A real metal\u2013wood hammer or weighted training hammer with a heavy head and round wooden or rubber handle gives the correct heft distribution and handle feel."
   }
 ]

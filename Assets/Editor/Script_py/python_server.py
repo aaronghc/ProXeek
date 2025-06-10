@@ -4,6 +4,8 @@ import os
 import sys
 import json
 import traceback
+import threading
+import queue
 
 app = Flask(__name__)
 
@@ -55,34 +57,68 @@ def run_python():
 
         print(f"Running script: {sys.executable} {script_path} {params_path}")
 
-        # Run the Python script with the parameters file path as an argument
-        result = subprocess.run(
+        # Create a list to collect output
+        output_lines = []
+
+        def stream_output(pipe, prefix):
+            """Read from pipe and print + store output"""
+            for line in iter(pipe.readline, ''):
+                if line:
+                    formatted_line = f"[{prefix}] {line.rstrip()}"
+                    print(formatted_line, flush=True)  # Print to Flask console
+                    output_lines.append(line)
+            pipe.close()
+
+        # Run the Python script with real-time output streaming
+        process = subprocess.Popen(
             [sys.executable, script_path, params_path],
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=1000  # Increase timeout for processing multiple images
+            bufsize=1,  # Line buffered
+            universal_newlines=True
         )
+
+        # Create threads to read stdout and stderr
+        stdout_thread = threading.Thread(
+            target=stream_output, 
+            args=(process.stdout, "ProXeek")
+        )
+        stderr_thread = threading.Thread(
+            target=stream_output, 
+            args=(process.stderr, "ProXeek-ERROR")
+        )
+
+        stdout_thread.start()
+        stderr_thread.start()
+
+        # Wait for the process to complete
+        return_code = process.wait(timeout=1000)
+        
+        # Wait for output threads to finish
+        stdout_thread.join()
+        stderr_thread.join()
 
         # Clean up the temporary file
         if os.path.exists(params_path):
             os.remove(params_path)
 
-        # Check for errors
-        if result.returncode != 0:
-            print(f"Script execution failed with code {result.returncode}")
-            print(f"STDOUT: {result.stdout}")
-            print(f"STDERR: {result.stderr}")
+        # Join all output lines
+        full_output = ''.join(output_lines)
 
+        # Check for errors
+        if return_code != 0:
+            print(f"Script execution failed with code {return_code}")
             return jsonify({
                 'status': 'error',
-                'output': f"Error executing script:\n{result.stderr}\n{result.stdout}"
+                'output': f"Error executing script (code {return_code}):\n{full_output}"
             }), 500
 
         # Return the output
-        print(f"Script executed successfully, output length: {len(result.stdout)}")
+        print(f"Script executed successfully, output length: {len(full_output)}")
         return jsonify({
             'status': 'success',
-            'output': result.stdout
+            'output': full_output
         })
 
     except Exception as e:
