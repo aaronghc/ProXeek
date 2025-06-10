@@ -1457,6 +1457,77 @@ def rename_key_in_json(data, old_key, new_key):
         # Return primitives unchanged
         return data
 
+# Function to calculate final scores and update proxy matching results
+def calculate_final_scores(property_rating_results, proxy_matching_results):
+    """Calculate final weighted scores for each virtual-physical pair and update proxy matching results"""
+    log("Calculating final weighted scores for each virtual-physical pair")
+    
+    # Create a dictionary to store scores for each virtual-physical pair
+    scores = {}
+    
+    # Process each property rating result
+    for rating in property_rating_results:
+        if "error" in rating:
+            continue
+            
+        # Create a key for this virtual-physical pair
+        virt_obj = rating.get("virtualObject", "unknown")
+        obj_id = rating.get("object_id", -1)
+        img_id = rating.get("image_id", -1)
+        
+        # Use object_id and image_id as the primary identifiers
+        pair_key = f"{virt_obj}:{obj_id}:{img_id}"
+        property_name = rating.get("property", "unknown")
+        
+        # Calculate the mean of the three ratings
+        rating_1 = rating.get("rating_1", 0)
+        rating_2 = rating.get("rating_2", 0)
+        rating_3 = rating.get("rating_3", 0)
+        mean_rating = (rating_1 + rating_2 + rating_3) / 3 if (rating_1 or rating_2 or rating_3) else 0
+        
+        # Get the property value (significance)
+        property_value = rating.get("propertyValue", 0.0)
+        
+        # Calculate the weighted score for this property
+        weighted_score = mean_rating * property_value
+        
+        # Initialize the entry if it doesn't exist
+        if pair_key not in scores:
+            scores[pair_key] = {
+                "virtual_object": virt_obj,
+                "object_id": obj_id,
+                "image_id": img_id,
+                "total_score": 0,
+                "property_scores": {}
+            }
+        
+        # Add the weighted score to the total
+        scores[pair_key]["total_score"] += weighted_score
+        
+        # Store the individual property score
+        scores[pair_key]["property_scores"][property_name] = {
+            "mean_rating": mean_rating,
+            "property_value": property_value,
+            "weighted_score": weighted_score
+        }
+    
+    # Update proxy matching results with the calculated scores
+    for proxy_result in proxy_matching_results:
+        virt_obj = proxy_result.get("virtualObject", "unknown")
+        obj_id = proxy_result.get("object_id", -1)
+        img_id = proxy_result.get("image_id", -1)
+        
+        pair_key = f"{virt_obj}:{obj_id}:{img_id}"
+        
+        if pair_key in scores:
+            # Add the total score to the proxy result
+            proxy_result["rating_score"] = scores[pair_key]["total_score"]
+            
+            # Add detailed property scores if desired
+            proxy_result["property_scores"] = scores[pair_key]["property_scores"]
+    
+    return proxy_matching_results
+
 try:
     # Create a variable to store the processing results
     result = {"status": "success", "message": "Processing complete"}
@@ -1561,6 +1632,17 @@ try:
             json.dump(property_rating_results, f, indent=2)
         
         log(f"Property rating complete. Generated ratings for {len(property_rating_results)} virtual objects.")
+        
+        # Calculate final scores and update proxy matching results
+        if len(property_rating_results) > 0 and len(proxy_matching_results) > 0:
+            log("Calculating final scores for proxy matching results")
+            updated_proxy_results = calculate_final_scores(property_rating_results, proxy_matching_results)
+            
+            # Save updated proxy matching results
+            with open(proxy_output_path, 'w') as f:
+                json.dump(updated_proxy_results, f, indent=2)
+            
+            log("Updated proxy matching results with final scores")
         
         # Add to result
         result["property_rating"] = {

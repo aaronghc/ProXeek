@@ -21,7 +21,7 @@
       "y": "0.36",
       "z": "0.54"
     },
-    "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+    "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
   },
   {
     "objectName": "key",
@@ -45,7 +45,7 @@
       "y": "0.05",
       "z": "0.14"
     },
-    "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+    "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
   },
   {
     "objectName": "simple_pistol",
@@ -69,7 +69,7 @@
       "y": "1.09",
       "z": "9.49"
     },
-    "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+    "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
   },
   {
     "objectName": "Frisbee",
@@ -93,7 +93,7 @@
       "y": "0.18",
       "z": "0.23"
     },
-    "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+    "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
   },
   {
     "objectName": "Wheel",
@@ -117,7 +117,7 @@
       "y": "0.41",
       "z": "0.19"
     },
-    "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+    "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
   },
   {
     "objectName": "Tomato",
@@ -141,7 +141,7 @@
       "y": "0.10",
       "z": "0.17"
     },
-    "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+    "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
   },
   {
     "objectName": "Hammer Dispenser 2",
@@ -165,6 +165,6 @@
       "y": "0.42",
       "z": "0.17"
     },
-    "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+    "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
   }
 ]

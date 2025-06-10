@@ -5,7 +5,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "Use the laptop's surface to simulate the solid, immovable surface of the treasure chest. Users can place their hands on the laptop to feel the flat, hard surface, mimicking the chest's base.",
+    "utilizationMethod": "Use the laptop as a stable base to simulate the immovable nature of the treasure chest. Users can place their hands on the laptop's surface to feel a firm texture, mimicking the wooden texture of the chest.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -28,7 +28,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 4.0,
+        "property_value": 0.5,
+        "weighted_score": 2.0
+      }
     }
   },
   {
@@ -37,7 +50,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Utilize the VR headset's solid structure to represent the chest. Users can grasp the headset, feeling its weight and solidness, simulating the chest's immovable nature.",
+    "utilizationMethod": "Utilize the VR headset as a tactile object to represent the treasure chest's lid. Users can press down on the headset to simulate the resistance felt when opening the hinged lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -60,7 +73,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 7.166666666666667,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 1.0,
+        "weighted_score": 5.666666666666667
+      },
+      "texture": {
+        "mean_rating": 3.0,
+        "property_value": 0.5,
+        "weighted_score": 1.5
+      }
     }
   },
   {
@@ -69,7 +95,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "Use the speaker as a proxy for the treasure chest's base. Users can touch the speaker's surface to experience a solid, immovable object, similar to the chest.",
+    "utilizationMethod": "The speaker can be used to represent the chest's body. Users can touch the speaker's surface to feel a firm texture, similar to the wooden texture of the treasure chest.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -92,7 +118,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 5.0,
+        "property_value": 0.5,
+        "weighted_score": 2.5
+      }
     }
   },
   {
@@ -100,8 +139,8 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "While small, the bottle cap can be used to simulate the texture of the chest's surface. Users can feel the cap's texture with their fingers, providing a tactile experience.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "The bottle cap can be used to simulate the key or lock mechanism of the treasure chest. Users can manipulate the cap to experience a tactile interaction, representing the act of unlocking the chest.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -124,16 +163,29 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.333333333333333,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 1.0,
+        "weighted_score": 5.333333333333333
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.5,
+        "weighted_score": 1.0
+      }
     }
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
     "proxyLocation": "bottom of the image",
-    "utilizationMethod": "Cables can be used to simulate the resistance felt when opening the chest's lid. Users can pull on the cables to experience a similar tactile sensation.",
+    "utilizationMethod": "Cables can be used to simulate the hinges of the treasure chest. Users can pull on the cables to feel resistance, mimicking the experience of opening the chest's lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -156,7 +208,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 4.833333333333333,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 1.0,
+        "weighted_score": 3.6666666666666665
+      },
+      "texture": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 0.5,
+        "weighted_score": 1.1666666666666667
+      }
     }
   },
   {
@@ -165,7 +230,7 @@
     "object_id": 6,
     "image_id": 0,
     "proxyLocation": "top right of the image",
-    "utilizationMethod": "The metal rail can be used to represent the solid structure of the treasure chest. Users can touch and grasp the rail to feel its rigidity and weight.",
+    "utilizationMethod": "The metal rail can be used to represent the sturdy structure of the treasure chest. Users can touch the rail to feel its firmness, simulating the stability of the chest.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -188,7 +253,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 5.833333333333333,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.5,
+        "weighted_score": 1.8333333333333333
+      }
     }
   },
   {
@@ -197,7 +275,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "The keyboard can simulate the flat, solid surface of the treasure chest. Users can place their hands on it to experience a similar tactile sensation.",
+    "utilizationMethod": "The keyboard can serve as a flat surface for users to interact with, simulating the chest's immovable nature. Users can feel the texture of the keys to mimic the wooden texture.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -220,16 +298,29 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 4.0,
+        "property_value": 0.5,
+        "weighted_score": 2.0
+      }
     }
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "The airpods case can be used to represent the texture of the chest. Users can feel its smooth surface, simulating the tactile experience of touching the chest.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "The AirPods case can be used to represent the lock mechanism of the treasure chest. Users can open and close the case to simulate the action of opening the chest's lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -252,7 +343,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 7.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 6.0,
+        "property_value": 1.0,
+        "weighted_score": 6.0
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.5,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -260,8 +364,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "The gaming mouse can provide a solid object for users to grasp, simulating the feeling of the chest's edges when opening the lid.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "The gaming mouse can be used to simulate the tactile feedback of interacting with the chest. Users can click and scroll to mimic the experience of opening and closing the chest.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -284,7 +388,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 4.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.0,
+        "property_value": 1.0,
+        "weighted_score": 3.0
+      },
+      "texture": {
+        "mean_rating": 3.0,
+        "property_value": 0.5,
+        "weighted_score": 1.5
+      }
     }
   },
   {
@@ -293,7 +410,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "The water bottle can represent the weight and solidness of the treasure chest. Users can hold it to experience a similar tactile sensation.",
+    "utilizationMethod": "The water bottle can represent the chest's body. Users can touch its surface to feel a firm texture, simulating the wooden texture of the treasure chest.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -316,16 +433,29 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 5.0,
+        "property_value": 0.5,
+        "weighted_score": 2.5
+      }
     }
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "The notepad can simulate the texture of the chest's surface. Users can feel the paper's texture, providing a different tactile experience.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "The notepad can be used as a flat surface to simulate the chest's immovable nature. Users can feel the texture of the paper to mimic the wooden texture.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -348,7 +478,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 5.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 3.0,
+        "property_value": 0.5,
+        "weighted_score": 1.5
+      }
     }
   },
   {
@@ -356,8 +499,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "The stress ball can simulate the tactile sensation of the chest's texture. Users can squeeze it to experience a different form of interaction.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "The stress ball can be used to simulate the resistance felt when opening the chest's lid. Users can squeeze the ball to experience tactile feedback.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -380,7 +523,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 1.0,
+        "weighted_score": 5.0
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.5,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -389,7 +545,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "While not directly tactile, users can interact with the monitors to visualize the treasure chest's opening, enhancing the overall experience.",
+    "utilizationMethod": "The monitors can be used as a backdrop to enhance the immersive experience. Users can interact with the virtual chest while visually engaging with the monitors.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -412,7 +568,20 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 2.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.0,
+        "property_value": 1.0,
+        "weighted_score": 2.0
+      },
+      "texture": {
+        "mean_rating": 1.0,
+        "property_value": 0.5,
+        "weighted_score": 0.5
+      }
     }
   },
   {
@@ -420,8 +589,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "The papers can simulate the texture of the chest's surface. Users can feel the paper's texture, providing a tactile experience when interacting with the chest.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "The papers can serve as a flat surface for users to interact with, simulating the chest's immovable nature. Users can feel the texture of the paper to mimic the wooden texture.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -444,7 +613,65 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "hapticFeedback": "When users contact the treasure chest, they will feel a solid, immovable surface with a slightly rough wooden texture. The chest's hinged lid can be opened, providing a tactile sensation of resistance as it swings open, simulating the weight of the lid. Users will likely use their hands to grasp the edges of the chest, feeling the texture of the wood against their skin."
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 5.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      },
+      "texture": {
+        "mean_rating": 3.0,
+        "property_value": 0.5,
+        "weighted_score": 1.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "The pen can be used to simulate the action of unlocking the treasure chest. Users can click the pen to experience tactile feedback, representing the interaction with the chest.",
+    "virtualObjectInfo": {
+      "objectName": "Treasure Chest",
+      "involvementType": "contact",
+      "description": "an immovable treasure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "its hinged lid could be opened",
+      "outline": "",
+      "texture": "wooden texture on the surface",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.5,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.62",
+        "y": "0.36",
+        "z": "0.54"
+      },
+      "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 1.0,
+        "weighted_score": 5.0
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.5,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -453,7 +680,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "Users can simulate the feeling of a key by using the smooth surface of the laptop's trackpad. The user can slide their fingers across it, mimicking the smooth texture and lightweight nature of a key.",
+    "utilizationMethod": "Users can simulate the feel of a key by lightly tapping or sliding their fingers across the smooth surface of the laptop's trackpad, mimicking the smooth texture and lightweight sensation of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -476,7 +703,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 3.4000000059604645,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "texture": {
+        "mean_rating": 5.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.0000000298023224
+      }
     }
   },
   {
@@ -485,7 +725,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "The VR headset can be used to simulate the grip of a key by holding the headset's strap. The strap's smooth texture can provide a similar tactile experience to the key's ring-shaped holding part.",
+    "utilizationMethod": "Users can grip the headset's strap or side, which has a smooth finish, to replicate the feeling of holding a key, focusing on the lightweight and comfortable grip.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -508,7 +748,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 4.5,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
+      },
+      "texture": {
+        "mean_rating": 6.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.400000035762787
+      }
     }
   },
   {
@@ -517,7 +770,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "Users can tap on the smooth surface of the speaker to simulate the interaction with a key. The cool sensation of the metal can mimic the feel of a key.",
+    "utilizationMethod": "Users can press their fingers against the smooth surface of the speaker to experience a similar tactile sensation, although it may not replicate the lightweight aspect as effectively.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -540,7 +793,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 3.0,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "texture": {
+        "mean_rating": 4.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.600000023841858
+      }
     }
   },
   {
@@ -548,8 +814,7 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "The bottle cap can be held between the fingers to simulate the ring-shaped holding part of the key. Its lightweight nature allows for easy manipulation, similar to a key.",
+    "utilizationMethod": "Users can hold the bottle cap between their fingers, feeling its smooth texture and small size, which can mimic the outline and lightweight nature of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -572,16 +837,28 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 5.499999970197678,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      },
+      "texture": {
+        "mean_rating": 5.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.0000000298023224
+      }
     }
   },
   {
     "virtualObject": "key",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
-    "proxyLocation": "bottom of the image",
-    "utilizationMethod": "Users can simulate the feel of a key by lightly gripping a section of the cable. The smooth texture can provide a tactile experience similar to that of a key.",
+    "utilizationMethod": "Users can run their fingers along the cables to feel the smoothness, but this may not effectively replicate the key's outline or lightweight feel.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -604,7 +881,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 1.5,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
     }
   },
   {
@@ -612,8 +902,7 @@
     "physicalObject": "metal rail",
     "object_id": 6,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Users can run their fingers along the smooth surface of the metal rail to mimic the cool, smooth sensation of a key. The rail's rigidity can also simulate the key's structure.",
+    "utilizationMethod": "Users can grasp the metal rail to experience a smooth surface, but the weight and rigidity may not accurately reflect the lightweight nature of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -636,7 +925,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 2.5999999940395355,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "texture": {
+        "mean_rating": 3.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.2000000178813934
+      }
     }
   },
   {
@@ -645,7 +947,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can press the smooth keys of the keyboard to simulate the tactile feedback of a key. The lightweight nature of the keys can mimic the agility of a key in hand.",
+    "utilizationMethod": "Users can press the smooth keys of the keyboard to simulate the tactile feedback of a key, focusing on the lightweight sensation when pressing down.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -668,16 +970,29 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 5.066666652758917,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 4.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.799999952316284
+      },
+      "texture": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.266666700442632
+      }
     }
   },
   {
     "virtualObject": "key",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "The smooth surface of the AirPods case can be used to simulate the texture of a key. Users can hold it in their hand to mimic the grip of a key.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Users can hold the AirPods case, which has a smooth finish and compact size, to replicate the feel of a key, especially the ring-shaped holding part.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -700,7 +1015,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 6.333333293596903,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 6.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 4.199999928474426
+      },
+      "texture": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.133333365122477
+      }
     }
   },
   {
@@ -708,8 +1036,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Users can use the smooth surface of the gaming mouse to simulate the feel of a key. The lightweight nature allows for quick movements, similar to how a key feels in hand.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Users can grip the mouse, feeling its smooth surface, which can mimic the tactile experience of holding a key, although it may be heavier.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -732,7 +1060,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 4.399999976158142,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 4.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.799999952316284
+      },
+      "texture": {
+        "mean_rating": 4.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.600000023841858
+      }
     }
   },
   {
@@ -741,7 +1082,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Users can hold the water bottle by its smooth body to simulate the grip of a key. The cool metal surface can mimic the sensation of a key.",
+    "utilizationMethod": "Users can hold the water bottle, experiencing its smooth surface, but the weight may not accurately reflect the lightweight nature of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -764,16 +1105,29 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 3.2999999821186066,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
+      },
+      "texture": {
+        "mean_rating": 3.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.2000000178813934
+      }
     }
   },
   {
     "virtualObject": "key",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Users can flip through the pages of the notepad to simulate the lightweight, agile movement of a key. The smooth paper can provide a tactile experience.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Users can run their fingers over the smooth paper surface, but this may not effectively replicate the tactile feedback of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -796,7 +1150,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 2.199999988079071,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
     }
   },
   {
@@ -804,8 +1171,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Users can squeeze the stress ball to simulate the grip of a key. The smooth texture can provide a tactile experience similar to that of a key.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Users can squeeze the stress ball to feel its smooth texture, but it may not accurately represent the lightweight and outline characteristics of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -828,7 +1195,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 2.4666666587193804,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "texture": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.0666666825612385
+      }
     }
   },
   {
@@ -837,7 +1217,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "Users can interact with the smooth edges of the monitors to simulate the cool, smooth sensation of a key. This can help create a mental association with the key's texture.",
+    "utilizationMethod": "Users can touch the smooth edges of the monitors, but this may not effectively replicate the lightweight and outline feel of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -860,7 +1240,20 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 1.633333335320155,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "texture": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.9333333472410839
+      }
     }
   },
   {
@@ -868,8 +1261,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "Users can run their fingers over the smooth surface of the papers to simulate the texture of a key. The lightweight nature of the papers can mimic the agility of a key.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "Users can run their fingers over the paper to feel the smooth texture, but this may not effectively mimic the tactile feedback of a key.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "contact",
@@ -892,7 +1285,65 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "hapticFeedback": "Interacting with the key will provide a smooth, cool sensation due to its polished surface. Users will feel the ring-shaped holding part, which is easy to grip. The key's lightweight nature allows for a quick, effortless movement, making it feel agile in the user's hand."
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 2.199999988079071,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Users can hold the pen, which has a smooth surface and lightweight feel, to replicate the experience of holding a key.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "contact",
+      "description": "a key",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
+    },
+    "rating_score": 5.499999970197678,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      },
+      "texture": {
+        "mean_rating": 5.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.0000000298023224
+      }
     }
   },
   {
@@ -901,7 +1352,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "The laptop can be held in one hand to simulate the weight of the pistol. Users can press down on the trackpad to mimic the pullable trigger, providing a tactile feedback similar to the click of a trigger.",
+    "utilizationMethod": "The laptop can be held in one hand, simulating the weight and solid presence of the pistol. Users can press down on the touchpad to mimic the trigger pull, providing a tactile feedback experience.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -924,7 +1375,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 5.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 1.0,
+        "weighted_score": 5.0
+      }
     }
   },
   {
@@ -933,7 +1392,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "The VR headset can be held in one hand, allowing users to experience a solid grip. The buttons on the headset can be used to simulate the trigger action, providing a tactile response.",
+    "utilizationMethod": "The VR headset can be held in a way that mimics the grip of a pistol. Users can press the buttons on the headset to simulate the trigger action, providing a sense of interactivity.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -956,7 +1415,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 6.0,
+        "property_value": 1.0,
+        "weighted_score": 6.0
+      }
     }
   },
   {
@@ -965,7 +1432,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "The speaker can be held to simulate the weight of the pistol. Users can press any buttons on the speaker to mimic the trigger action, providing a satisfying click.",
+    "utilizationMethod": "The speaker can be held in one hand, providing a solid and weighty feel. Users can press any buttons on the speaker to simulate the trigger pull, enhancing the interactivity.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -988,7 +1455,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 5.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 1.0,
+        "weighted_score": 5.0
+      }
     }
   },
   {
@@ -996,8 +1471,8 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "The bottle cap can be used to simulate the trigger mechanism. Users can press down on it to feel a click, although it lacks the weight and grip of a pistol.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "The bottle cap can be used as a small trigger mechanism. Users can press it down while holding another object to simulate the trigger pull of the pistol, although it lacks the weighty feel.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1020,16 +1495,24 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 3.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.0,
+        "property_value": 1.0,
+        "weighted_score": 3.0
+      }
     }
   },
   {
     "virtualObject": "simple_pistol",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
     "proxyLocation": "bottom of the image",
-    "utilizationMethod": "While not ideal, users can wrap the cables around their hand to simulate the grip of the pistol. However, it lacks the necessary weight and trigger functionality.",
+    "utilizationMethod": "Cables can be bundled together to create a makeshift grip. Users can simulate the action of pulling a trigger by squeezing the cables, though this lacks the solid presence of the pistol.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1052,7 +1535,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 2.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.0,
+        "property_value": 1.0,
+        "weighted_score": 2.0
+      }
     }
   },
   {
@@ -1061,7 +1552,7 @@
     "object_id": 6,
     "image_id": 0,
     "proxyLocation": "top right of the image",
-    "utilizationMethod": "The metal rail can be held to simulate the weight of the pistol. Users can press down on any protruding parts to mimic the trigger action, providing a tactile response.",
+    "utilizationMethod": "The metal rail can be held to simulate the weight and shape of a pistol. Users can press down on any protruding parts to mimic the trigger action, providing a tactile experience.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1084,7 +1575,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 4.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      }
     }
   },
   {
@@ -1093,7 +1592,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "The keyboard can be held in one hand to simulate the weight of the pistol. Users can press the keys to mimic the trigger action, providing tactile feedback.",
+    "utilizationMethod": "The keyboard can be held in one hand, simulating the weight of the pistol. Users can press the keys to mimic the trigger pull, providing a tactile feedback experience.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1116,16 +1615,24 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 4.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      }
     }
   },
   {
     "virtualObject": "simple_pistol",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "The AirPods case can be held in one hand to simulate the grip of the pistol. Users can open and close the lid to mimic the trigger action, although it lacks weight.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "The AirPods case can be held in one hand, providing a small and lightweight proxy. Users can press the lid to simulate the trigger action, although it lacks the weighty feel.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1148,7 +1655,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 3.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.0,
+        "property_value": 1.0,
+        "weighted_score": 3.0
+      }
     }
   },
   {
@@ -1156,8 +1671,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "The gaming mouse can be held to simulate the grip of the pistol. Users can click the mouse buttons to mimic the trigger action, providing a satisfying tactile response.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "The gaming mouse can be held in one hand, simulating the grip of a pistol. Users can click the buttons to mimic the trigger pull, providing a tactile feedback experience.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1180,7 +1695,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 5.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 1.0,
+        "weighted_score": 5.0
+      }
     }
   },
   {
@@ -1189,7 +1712,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "The water bottle can be held to simulate the weight of the pistol. Users can press the lid to mimic the trigger action, providing a tactile feedback.",
+    "utilizationMethod": "The water bottle can be held in one hand, providing a solid and weighty feel. Users can press the lid to simulate the trigger action, enhancing the interactivity.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1212,16 +1735,24 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 6.0,
+        "property_value": 1.0,
+        "weighted_score": 6.0
+      }
     }
   },
   {
     "virtualObject": "simple_pistol",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "The notepad can be held in one hand to simulate the grip of the pistol. However, it lacks the necessary weight and trigger functionality.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "The notepad can be held in one hand, but it lacks the weight and interactivity. It can be used to simulate the grip, but does not provide a trigger mechanism.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1244,7 +1775,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 2.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.0,
+        "property_value": 1.0,
+        "weighted_score": 2.0
+      }
     }
   },
   {
@@ -1252,8 +1791,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "The stress ball can be squeezed to simulate the grip of the pistol. While it lacks weight, it can provide a tactile feedback when squeezed.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "The stress ball can be squeezed to simulate the action of pulling a trigger. However, it lacks the solid presence and weight of the pistol.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1276,7 +1815,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 3.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.0,
+        "property_value": 1.0,
+        "weighted_score": 3.0
+      }
     }
   },
   {
@@ -1285,7 +1832,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "While not suitable for holding, users can interact with the monitors to simulate aiming. However, they do not provide haptic feedback.",
+    "utilizationMethod": "The monitors cannot be used as a haptic proxy due to their size and immobility. They do not provide any tactile feedback relevant to the pistol.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1308,7 +1855,15 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -1316,8 +1871,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "The papers can be held to simulate the grip of the pistol. However, they lack weight and trigger functionality.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "The papers can be held in one hand, but they lack the weight and interactivity. They can simulate the grip but do not provide a trigger mechanism.",
     "virtualObjectInfo": {
       "objectName": "simple_pistol",
       "involvementType": "contact",
@@ -1340,7 +1895,55 @@
         "y": "1.09",
         "z": "9.49"
       },
-      "hapticFeedback": "Users will experience a solid, weighty sensation when holding the pistol, emphasizing its loaded nature. The pullable trigger will provide a distinct tactile feedback, allowing users to feel a satisfying click as they engage it. The overall shape will fit comfortably in the hand, enhancing the sense of control and readiness."
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 2.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.0,
+        "property_value": 1.0,
+        "weighted_score": 2.0
+      }
+    }
+  },
+  {
+    "virtualObject": "simple_pistol",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "The pen can be held in one hand, simulating the grip of a pistol. Users can click the pen to mimic the trigger action, providing a small tactile feedback experience.",
+    "virtualObjectInfo": {
+      "objectName": "simple_pistol",
+      "involvementType": "contact",
+      "description": "a loaded pistol",
+      "engagementLevel": 2,
+      "inertia": "",
+      "interactivity": "a pullable trigger",
+      "outline": "",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "5.84",
+        "y": "1.09",
+        "z": "9.49"
+      },
+      "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
+    },
+    "rating_score": 4.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      }
     }
   },
   {
@@ -1349,7 +1952,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "Use the laptop as a flat surface to simulate the frisbee's lightweight, thin plate-like structure. Users can place their hands on the laptop's surface and mimic the throwing motion, feeling the smoothness and lightness.",
+    "utilizationMethod": "Use the laptop's flat surface to simulate the lightweight, thin plate-like outline of the frisbee. Users can place their hands on the laptop and mimic the throwing motion, feeling the resistance and weightlessness of the frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1372,7 +1975,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 5.599999904632568,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.333333293596904
+      },
+      "outline": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.266666611035665
+      }
     }
   },
   {
@@ -1381,7 +1997,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Hold the VR headset in one hand to simulate the frisbee's lightweight feel. The rounded edges can mimic the grip of a frisbee, allowing users to practice throwing motions.",
+    "utilizationMethod": "Hold the VR headset in one hand to replicate the lightweight feel of the frisbee. The user can practice throwing motions while feeling the balance and lightness, enhancing the frisbee's haptic feedback.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1404,7 +2020,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 6.9999998807907104,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      },
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      }
     }
   },
   {
@@ -1413,7 +2042,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "Use the speaker as a weight reference. While it is heavier than a frisbee, users can practice the throwing motion by holding it and feeling the difference in inertia compared to the frisbee.",
+    "utilizationMethod": "Use the speaker's flat top surface to simulate the frisbee's outline. Users can toss the speaker lightly to experience the throwing motion, although it may not perfectly replicate the frisbee's lightweight nature.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1436,7 +2065,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 4.433333257834117,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
+      },
+      "outline": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.333333293596904
+      }
     }
   },
   {
@@ -1444,8 +2086,8 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Use the bottle cap to simulate the frisbee's lightweight and small size. Users can toss the cap to practice the throwing motion, feeling the lightness and grip.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Use the bottle cap to simulate the frisbee's lightweight and small size. Users can practice flicking the cap to mimic the throwing action, feeling the agility and lightness associated with the frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1468,16 +2110,29 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 8.166666527589163,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 6.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 4.199999928474426
+      },
+      "outline": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.966666599114736
+      }
     }
   },
   {
     "virtualObject": "Frisbee",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
     "proxyLocation": "bottom of the image",
-    "utilizationMethod": "Use the cables to simulate the feel of holding a frisbee. Users can wrap their fingers around the cables to mimic the grip and practice the throwing motion, although the experience will differ due to the lack of structure.",
+    "utilizationMethod": "While not ideal, users can simulate the frisbee's lightweight nature by holding a section of the cable and practicing throwing motions. The flexibility of the cable can provide a different tactile experience.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1500,7 +2155,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 3.4999999403953552,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.8666666348775227
+      },
+      "outline": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.6333333055178325
+      }
     }
   },
   {
@@ -1509,7 +2177,7 @@
     "object_id": 6,
     "image_id": 0,
     "proxyLocation": "top right of the image",
-    "utilizationMethod": "Use the metal rail to simulate the frisbee's outline. Users can hold the rail and practice the throwing motion, feeling the difference in weight and structure.",
+    "utilizationMethod": "Use the metal rail to simulate the frisbee's outline by holding it flat. Users can practice the throwing motion, although the weight and rigidity will differ from the frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1532,7 +2200,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 4.199999928474426,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.8666666348775227
+      },
+      "outline": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.333333293596904
+      }
     }
   },
   {
@@ -1541,7 +2222,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Use the keyboard as a flat surface to simulate the frisbee's lightweight feel. Users can practice the throwing motion by mimicking the grip and release action.",
+    "utilizationMethod": "Use the keyboard's flat surface to mimic the frisbee's outline. Users can practice the throwing motion by flicking their wrist while holding the keyboard, simulating the frisbee's lightweight feel.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1564,16 +2245,29 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 5.833333233992258,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.5666666229565935
+      },
+      "outline": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.266666611035665
+      }
     }
   },
   {
     "virtualObject": "Frisbee",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Hold the airpods case to simulate the frisbee's lightweight and small size. Users can toss it lightly to practice the throwing motion.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Hold the AirPods case to simulate the frisbee's lightweight nature. Users can practice tossing it lightly to experience the agility associated with throwing a frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1596,7 +2290,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 7.6999998688697815,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.7333332697550454
+      },
+      "outline": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.966666599114736
+      }
     }
   },
   {
@@ -1604,8 +2311,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Use the gaming mouse to simulate the grip of a frisbee. Users can hold it and practice the throwing motion, although it will not replicate the frisbee's lightness.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Use the gaming mouse to simulate the frisbee's lightweight feel. Users can practice quick flicks and throws, mimicking the action of tossing a frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1628,7 +2335,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 6.53333322207133,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.266666611035665
+      },
+      "outline": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.266666611035665
+      }
     }
   },
   {
@@ -1637,7 +2357,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Hold the water bottle to simulate the weight difference from a frisbee. Users can practice the throwing motion, feeling the difference in inertia.",
+    "utilizationMethod": "Hold the water bottle to simulate the frisbee's outline. Users can practice throwing motions, although the weight will differ significantly from the frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1660,16 +2380,29 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 4.199999928474426,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.8666666348775227
+      },
+      "outline": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.333333293596904
+      }
     }
   },
   {
     "virtualObject": "Frisbee",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Use the notepad as a flat surface to simulate the frisbee's lightweight feel. Users can practice the throwing motion by mimicking the grip and release action.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Use the notepad to simulate the frisbee's flat surface. Users can practice the throwing motion by flicking the notepad, although it won't replicate the frisbee's lightweight nature.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1692,7 +2425,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 5.133333245913187,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.5666666229565935
+      },
+      "outline": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.5666666229565935
+      }
     }
   },
   {
@@ -1700,8 +2446,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Hold the stress ball to simulate the lightweight feel of a frisbee. Users can practice the throwing motion, feeling the grip and lightness.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Hold the stress ball to simulate the lightweight feel of the frisbee. Users can practice tossing it to experience the agility and lightness associated with throwing a frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1724,7 +2470,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 7.6999998688697815,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.966666599114736
+      },
+      "outline": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.7333332697550454
+      }
     }
   },
   {
@@ -1733,7 +2492,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "Use the monitors as a visual reference for the frisbee's flight path. While they cannot be used as a physical proxy, they can enhance the experience by providing visual feedback.",
+    "utilizationMethod": "While not a direct proxy, users can use the monitors' flat surfaces to visualize the frisbee's outline and practice the throwing motion in a simulated environment.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1756,7 +2515,20 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 2.3333332935969033,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.9333333174387614
+      },
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      }
     }
   },
   {
@@ -1764,8 +2536,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "Use the papers as a flat surface to simulate the frisbee's lightweight feel. Users can practice the throwing motion by mimicking the grip and release action.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "Use the papers to simulate the frisbee's lightweight nature. Users can practice tossing the papers lightly to mimic the action of throwing a frisbee.",
     "virtualObjectInfo": {
       "objectName": "Frisbee",
       "involvementType": "contact",
@@ -1788,7 +2560,65 @@
         "y": "0.18",
         "z": "0.23"
       },
-      "hapticFeedback": "When users grasp the frisbee, they will feel a lightweight, thin plate-like structure. The frisbee's smooth surface will glide against the skin, and its lightness will allow for easy throwing motions. Users will likely hold it with their fingers spread, feeling the edges as they prepare to launch it."
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 5.133333245913188,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 4.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.799999952316284
+      },
+      "outline": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.333333293596904
+      }
+    }
+  },
+  {
+    "virtualObject": "Frisbee",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Hold the pen to simulate the frisbee's lightweight feel. Users can practice quick flicks to mimic the throwing motion of a frisbee.",
+    "virtualObjectInfo": {
+      "objectName": "Frisbee",
+      "involvementType": "contact",
+      "description": "a frisbee that players can throw",
+      "engagementLevel": 2,
+      "inertia": "light weight",
+      "interactivity": "",
+      "outline": "holding part feels like a thin plate",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.27",
+        "y": "0.18",
+        "z": "0.23"
+      },
+      "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
+    },
+    "rating_score": 6.066666563351949,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      },
+      "outline": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.5666666229565935
+      }
     }
   },
   {
@@ -1797,7 +2627,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "Use the laptop's touchpad as a rotational input. Users can simulate the steering wheel's rotation by moving their fingers in a circular motion on the touchpad, providing a sense of control.",
+    "utilizationMethod": "Place the laptop on a stable surface and use the touchpad to simulate the rotational movement of a steering wheel. The user can grip the edges of the laptop to mimic the feeling of holding a wheel.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -1820,7 +2650,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 2.6999999284744263,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 2.6999999284744263
+      }
     }
   },
   {
@@ -1829,7 +2667,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Utilize the headset's controllers to mimic the grip of a steering wheel. Users can hold the controllers in a circular manner to simulate the feel of a steering wheel while rotating them to navigate.",
+    "utilizationMethod": "Use the VR headset's controllers to simulate the grip and rotation of a steering wheel. The controllers can provide haptic feedback to enhance the experience of turning the wheel.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -1852,7 +2690,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 5.3999998569488525,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 6.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 5.3999998569488525
+      }
     }
   },
   {
@@ -1861,7 +2707,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "Place the speaker on a flat surface and use it as a stable base to simulate the resistance felt when turning a steering wheel. Users can grip the speaker while rotating their hands around it.",
+    "utilizationMethod": "Utilize the circular shape of the speaker to simulate the wheel. Users can grip the speaker and rotate it to mimic steering, while the weight provides a sense of inertia.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -1884,7 +2730,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 4.4999998807907104,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 4.4999998807907104
+      }
     }
   },
   {
@@ -1892,8 +2746,8 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Use the bottle cap as a small, handheld object to simulate the tactile feedback of a steering wheel. Users can rotate the cap between their fingers to mimic the action of steering.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Use the bottle cap as a small, handheld object to simulate the feel of a steering wheel. Users can rotate it between their fingers to mimic the action of steering.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -1916,16 +2770,24 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 3.5999999046325684,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 3.5999999046325684
+      }
     }
   },
   {
     "virtualObject": "Wheel",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
     "proxyLocation": "bottom of the image",
-    "utilizationMethod": "Wrap the cables in a circular shape and hold them to simulate the grip of a steering wheel. Users can rotate the cables to create a sense of movement.",
+    "utilizationMethod": "Twist and turn the cables to simulate the rotational aspect of a steering wheel. The flexibility of the cables can provide a unique tactile experience.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -1948,7 +2810,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 1.7999999523162842,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 1.7999999523162842
+      }
     }
   },
   {
@@ -1957,7 +2827,7 @@
     "object_id": 6,
     "image_id": 0,
     "proxyLocation": "top right of the image",
-    "utilizationMethod": "Use the metal rail as a rigid structure to simulate the steering wheel's resistance. Users can grip the rail and rotate their hands around it to mimic steering.",
+    "utilizationMethod": "Grip the metal rail and rotate it to simulate the steering action. The solid structure can provide a firm grip and a sense of resistance.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -1980,7 +2850,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 4.4999998807907104,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 4.4999998807907104
+      }
     }
   },
   {
@@ -1989,7 +2867,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Utilize the keyboard's surface to simulate the tactile feedback of a steering wheel. Users can press down on the keys while rotating their hands around the keyboard to create a sense of control.",
+    "utilizationMethod": "Use the keyboard's surface to simulate the feel of a steering wheel. Users can grip the edges and rotate their hands to mimic steering movements.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2012,16 +2890,24 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 2.6999999284744263,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 2.6999999284744263
+      }
     }
   },
   {
     "virtualObject": "Wheel",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Hold the AirPods case in one hand and rotate it to simulate the action of steering. The compact size allows for easy manipulation while providing tactile feedback.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Hold the AirPods case and rotate it in hand to simulate the action of steering. The compact size allows for easy manipulation.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2044,7 +2930,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 3.5999999046325684,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 3.5999999046325684
+      }
     }
   },
   {
@@ -2052,8 +2946,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Use the mouse to simulate the steering wheel's rotation. Users can move the mouse in circular motions to mimic steering, providing a sense of control.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Use the mouse to simulate steering by rotating it on a flat surface. The mouse's design allows for a comfortable grip and movement.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2076,7 +2970,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 4.199999888737997,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 4.199999888737997
+      }
     }
   },
   {
@@ -2085,7 +2987,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Grip the water bottle to simulate the feel of a steering wheel. Users can rotate the bottle while holding it to create a tactile experience similar to steering.",
+    "utilizationMethod": "Grip the water bottle and rotate it to simulate the steering wheel. The weight and shape can provide a realistic feel.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2108,16 +3010,24 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 5.099999864896139,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 5.099999864896139
+      }
     }
   },
   {
     "virtualObject": "Wheel",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Use the notepad as a flat surface to simulate the steering wheel's outline. Users can trace their fingers around the edges while rotating their hands to mimic steering.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Use the notepad to simulate the circular outline of a steering wheel. Users can grip the edges and rotate it to mimic steering.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2140,7 +3050,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 2.399999936421712,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 2.399999936421712
+      }
     }
   },
   {
@@ -2148,8 +3066,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Grip the stress ball to simulate the tactile feedback of a steering wheel. Users can squeeze and rotate the ball to create a sense of control.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Grip the stress ball and rotate it in hand to simulate the action of steering. The soft texture can enhance the tactile experience.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2172,7 +3090,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 3.5999999046325684,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 3.5999999046325684
+      }
     }
   },
   {
@@ -2181,7 +3107,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "Use the edge of the monitors as a reference point for rotation. Users can simulate steering by moving their hands in a circular motion around the monitors.",
+    "utilizationMethod": "Use the edge of the monitor to simulate the grip of a steering wheel. Users can pretend to turn the monitor to mimic steering.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2204,7 +3130,15 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 1.7999999523162842,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 1.7999999523162842
+      }
     }
   },
   {
@@ -2212,8 +3146,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "Use the papers as a flat surface to simulate the steering wheel's outline. Users can trace their fingers around the edges while rotating their hands to mimic steering.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "Use the papers to simulate the feel of a steering wheel by gripping the edges and rotating them as if steering.",
     "virtualObjectInfo": {
       "objectName": "Wheel",
       "involvementType": "contact",
@@ -2236,7 +3170,55 @@
         "y": "0.41",
         "z": "0.19"
       },
-      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip, with a noticeable resistance when rotated. Users will feel the circular outline of the wheel, which fits comfortably in their hands. The tactile feedback from the wheel's surface will enhance the sensation of control as they maneuver it."
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 2.0999999443689985,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 2.0999999443689985
+      }
+    }
+  },
+  {
+    "virtualObject": "Wheel",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Hold the pen and rotate it in hand to simulate the action of steering. The small size allows for easy manipulation.",
+    "virtualObjectInfo": {
+      "objectName": "Wheel",
+      "involvementType": "contact",
+      "description": "a steering wheel in a car",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "rotatable structure",
+      "outline": "",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.8999999761581421,
+      "outlineValue": 0.0,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.40",
+        "y": "0.41",
+        "z": "0.19"
+      },
+      "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
+    },
+    "rating_score": 2.9999999205271406,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 2.9999999205271406
+      }
     }
   },
   {
@@ -2245,7 +3227,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "While the laptop is not soft, it can be used to simulate the weight and size of a tomato. Users can press down on the laptop's surface to feel the resistance, mimicking the firmness of a tomato without the smashable quality.",
+    "utilizationMethod": "Place a soft cloth on the laptop's surface to simulate the softness of a tomato. Users can press down gently on the cloth to mimic the squishy sensation of squeezing a tomato.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2268,7 +3250,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 4.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      }
     }
   },
   {
@@ -2277,7 +3267,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "The VR headset can be used to simulate the weight and bulk of a tomato. Users can hold it in their hands and press against it to feel the resistance, although it lacks the softness and yielding nature of a tomato.",
+    "utilizationMethod": "Use the padding on the VR headset as a proxy. Users can press against the soft padding to experience a yielding sensation similar to that of a ripe tomato.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2300,7 +3290,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 5.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 5.0,
+        "property_value": 1.0,
+        "weighted_score": 5.0
+      }
     }
   },
   {
@@ -2309,7 +3307,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "The speaker can be used to simulate the weight and size of a tomato. Users can press against it to feel the solid surface, but it does not provide the soft, yielding feedback characteristic of a tomato.",
+    "utilizationMethod": "Utilize the soft fabric covering of the speaker. Users can press against it to simulate the soft, squishy feel of a tomato, although the interaction may be less engaging.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2332,7 +3330,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 4.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
+      }
     }
   },
   {
@@ -2340,8 +3346,8 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "The bottle cap can be used to simulate the tactile sensation of a tomato's surface. Users can press down on it to feel a slight give, although it is much smaller and lacks the overall size and weight of a tomato.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Use the cap as a small, soft object to press against. While it may not fully replicate the sensation of a tomato, it can provide a slight yielding feel when pressed.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2364,16 +3370,24 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 3.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 3.0,
+        "property_value": 1.0,
+        "weighted_score": 3.0
+      }
     }
   },
   {
     "virtualObject": "Tomato",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
     "proxyLocation": "bottom of the image",
-    "utilizationMethod": "The cables can be used to simulate the texture of a tomato's surface. Users can run their fingers along the cables to feel a smooth surface, but they do not provide the softness or yielding nature of a tomato.",
+    "utilizationMethod": "Cables can be bundled together and pressed against to create a soft, yielding sensation. However, this may not be as effective in simulating the tomato's texture.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2396,7 +3410,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 2.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 2.0,
+        "property_value": 1.0,
+        "weighted_score": 2.0
+      }
     }
   },
   {
@@ -2405,7 +3427,7 @@
     "object_id": 6,
     "image_id": 0,
     "proxyLocation": "top right of the image",
-    "utilizationMethod": "The metal rail can be used to simulate the firmness of a tomato. Users can press against it to feel the solid resistance, but it does not replicate the softness or smashable quality of a tomato.",
+    "utilizationMethod": "The metal rail is too hard and rigid to serve as a suitable proxy for the soft, squishy nature of a tomato. It is not recommended for this purpose.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2428,7 +3450,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -2437,7 +3467,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "The keyboard can be used to simulate the weight and size of a tomato. Users can press down on the keys to feel the resistance, but it lacks the softness and yielding nature of a tomato.",
+    "utilizationMethod": "The keyboard can be pressed down on, but its hard keys do not replicate the softness of a tomato. It is not an effective proxy.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2460,16 +3490,24 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
     "virtualObject": "Tomato",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "The airpods case can be used to simulate the size of a tomato. Users can hold it and press down to feel a slight give, although it does not replicate the softness characteristic of a tomato.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "The hard surface of the AirPods case does not provide the soft, squishy feedback needed to simulate a tomato. It is not suitable as a proxy.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2492,7 +3530,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -2500,8 +3546,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "The gaming mouse can be used to simulate the weight of a tomato. Users can press down on it to feel the resistance, but it does not provide the softness or yielding nature of a tomato.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "The gaming mouse is too rigid and does not provide the soft feedback required to simulate the tomato's texture. It is not recommended.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2524,7 +3570,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -2533,7 +3587,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "The water bottle can be used to simulate the weight and size of a tomato. Users can press against it to feel the solid surface, but it lacks the softness and smashable quality of a tomato.",
+    "utilizationMethod": "The hard surface of the water bottle does not replicate the softness of a tomato. It is not an effective proxy.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2556,16 +3610,24 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
     "virtualObject": "Tomato",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "The notepad can be used to simulate the texture of a tomato's surface. Users can run their fingers over the paper to feel a smooth surface, but it does not provide the softness or yielding nature of a tomato.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "The notepad can be pressed down on, but it does not provide the soft, squishy feedback needed to simulate a tomato. It is not suitable.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2588,7 +3650,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.3333333333333333,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 1.0,
+        "weighted_score": 1.3333333333333333
+      }
     }
   },
   {
@@ -2596,8 +3666,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "The stress ball can be used to simulate the softness and yielding nature of a tomato. Users can squeeze it to feel the give, closely mimicking the tactile sensation of handling a fresh tomato.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "This stress ball can be squeezed to replicate the soft, squishy sensation of a tomato. It is an excellent proxy for simulating the haptic feedback of the virtual tomato.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2620,7 +3690,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 7.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 7.0,
+        "property_value": 1.0,
+        "weighted_score": 7.0
+      }
     }
   },
   {
@@ -2629,7 +3707,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "The monitors can be used to simulate the weight and size of a tomato. Users can press against the edges to feel the solid resistance, but they do not replicate the softness or smashable quality of a tomato.",
+    "utilizationMethod": "The monitors are rigid and do not provide any soft feedback. They are not suitable as a proxy for the tomato.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2652,7 +3730,15 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -2660,8 +3746,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "The papers can be used to simulate the texture of a tomato's surface. Users can run their fingers over the paper to feel a smooth surface, but they do not provide the softness or yielding nature of a tomato.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "The papers are too flat and rigid to simulate the soft, squishy nature of a tomato. They are not effective as a proxy.",
     "virtualObjectInfo": {
       "objectName": "Tomato",
       "involvementType": "contact",
@@ -2684,7 +3770,55 @@
         "y": "0.10",
         "z": "0.17"
       },
-      "hapticFeedback": "When users contact the tomato, they will feel a soft, yielding surface that gives slightly under pressure, simulating its smashable nature. The tactile sensation will be smooth, and users may feel a slight coolness from the tomato's surface, enhancing the realism of handling a fresh fruit."
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
+    }
+  },
+  {
+    "virtualObject": "Tomato",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "The pen is too hard and does not provide the soft feedback needed to simulate a tomato. It is not suitable.",
+    "virtualObjectInfo": {
+      "objectName": "Tomato",
+      "involvementType": "contact",
+      "description": "a smashable tomato",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "",
+      "texture": "",
+      "hardness": "relatively soft or extendable",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.0,
+      "hardnessValue": 1.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.17",
+        "y": "0.10",
+        "z": "0.17"
+      },
+      "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    },
+    "rating_score": 1.0,
+    "property_scores": {
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 1.0,
+        "weighted_score": 1.0
+      }
     }
   },
   {
@@ -2693,7 +3827,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "Use the laptop as a flat surface to simulate the weight and resistance of the hammer dispenser. Users can lift the laptop to feel the inertia and weight distribution, mimicking the heavy sensation of the hammer.",
+    "utilizationMethod": "Use the laptop as a flat surface to simulate the weight and impact of the hammer. Users can tap the laptop's surface to feel the resistance and feedback similar to striking with a hammer.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2716,7 +3850,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 2.899999976158142,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
+      },
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
     }
   },
   {
@@ -2725,7 +3872,7 @@
     "object_id": 2,
     "image_id": 0,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Hold the VR headset in one hand to simulate the round handle of the hammer dispenser. The weight of the headset can provide a similar heavy sensation, allowing users to experience the effort required to lift it.",
+    "utilizationMethod": "Hold the VR headset in one hand to simulate the weight distribution of the hammer. The rounded edges can mimic the grip of the hammer's handle, providing a sense of heft.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2748,7 +3895,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 4.799999982118607,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 4.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.799999952316284
+      },
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.0000000298023224
+      }
     }
   },
   {
@@ -2757,7 +3917,7 @@
     "object_id": 3,
     "image_id": 0,
     "proxyLocation": "left side of the image",
-    "utilizationMethod": "Use the speaker as a weight to simulate the hammer dispenser. Users can lift the speaker to feel the inertia and solid sensation, emphasizing the concentration of mass at one end.",
+    "utilizationMethod": "Use the speaker to simulate the weight and mass of the hammer. Users can lift and swing the speaker to experience the inertia and balance similar to that of a hammer.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2780,7 +3940,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 5.39999994635582,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 6.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 4.199999928474426
+      },
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.2000000178813934
+      }
     }
   },
   {
@@ -2788,8 +3961,8 @@
     "physicalObject": "green bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "While not heavy, the bottle cap can be used to simulate the grip of the hammer dispenser. Users can practice the motion of lifting and gripping, though it won't provide the same weight sensation.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Use the bottle cap as a lightweight proxy for the hammer's head. Users can flick or tap it to simulate the action of striking, though it won't replicate the weight.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2812,16 +3985,29 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.0999999940395355,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.4000000059604645
+      }
     }
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "black cables",
+    "physicalObject": "cables",
     "object_id": 5,
     "image_id": 0,
     "proxyLocation": "bottom of the image",
-    "utilizationMethod": "Use the cables to simulate the round handle by wrapping them around the hand. This can provide a tactile experience of gripping, but lacks the weight and inertia of the hammer dispenser.",
+    "utilizationMethod": "Bundle the cables to create a makeshift handle. Users can grip the cables to simulate the round handle of the hammer, though the weight will be less than that of the hammer.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2844,7 +4030,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 3.0,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "outline": {
+        "mean_rating": 4.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.600000023841858
+      }
     }
   },
   {
@@ -2853,7 +4052,7 @@
     "object_id": 6,
     "image_id": 0,
     "proxyLocation": "top right of the image",
-    "utilizationMethod": "Hold the metal rail to simulate the weight and solid sensation of the hammer dispenser. Its rigidity and weight can help users feel the inertia and effort required to lift it.",
+    "utilizationMethod": "Use the metal rail to simulate the hammer's weight and balance. Users can hold it and swing it to feel the inertia and mass distribution similar to that of a hammer.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2876,7 +4075,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 7.299999952316284,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 7.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 4.899999916553497
+      },
+      "outline": {
+        "mean_rating": 6.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.400000035762787
+      }
     }
   },
   {
@@ -2885,7 +4097,7 @@
     "object_id": 1,
     "image_id": 1,
     "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Use the keyboard as a flat surface to simulate the weight of the hammer dispenser. Users can lift it to experience a lighter version of the inertia and resistance.",
+    "utilizationMethod": "Use the keyboard as a flat surface to simulate the impact of the hammer. Users can tap on the keys to feel the feedback, though it won't replicate the weight.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2908,16 +4120,29 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 2.199999988079071,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
     }
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "white cuboid airpods case",
+    "physicalObject": "white cuboid AirPods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "While lightweight, the airpods case can be used to simulate the grip of the hammer dispenser. Users can practice the motion of lifting, but it won't provide the necessary weight.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Hold the AirPods case to simulate the grip of the hammer's handle. It is lightweight but can provide a sense of holding an object while interacting in VR.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2940,7 +4165,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.9000000059604645,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.2000000178813934
+      }
     }
   },
   {
@@ -2948,8 +4186,8 @@
     "physicalObject": "white gaming mouse",
     "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Use the gaming mouse to simulate the grip and motion of the hammer dispenser. It can provide a tactile experience but lacks the weight and inertia.",
+    "proxyLocation": "center right of the image",
+    "utilizationMethod": "Use the gaming mouse to simulate the action of gripping and moving an object. While it lacks weight, it can provide tactile feedback during interactions.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -2972,7 +4210,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.5,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
     }
   },
   {
@@ -2981,7 +4232,7 @@
     "object_id": 4,
     "image_id": 1,
     "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Hold the water bottle to simulate the weight and solid sensation of the hammer dispenser. Its weight can help users feel the inertia and effort required to lift it.",
+    "utilizationMethod": "Hold the water bottle to simulate the weight and balance of the hammer. Users can swing it to feel the inertia and mass distribution similar to that of a hammer.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -3004,16 +4255,29 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 5.499999970197678,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      },
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.0000000298023224
+      }
     }
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "notepad with visible writing",
+    "physicalObject": "notepad with visible lines",
     "object_id": 5,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Use the notepad as a lightweight object to simulate the grip of the hammer dispenser. Users can practice the motion of lifting, but it won't provide the necessary weight.",
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Use the notepad as a flat surface to simulate the impact of the hammer. Users can tap on it to feel the feedback, though it won't replicate the weight.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -3036,7 +4300,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.3333333233992257,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.9333333174387614
+      },
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.4000000059604645
+      }
     }
   },
   {
@@ -3044,8 +4321,8 @@
     "physicalObject": "green object (possibly a stress ball)",
     "object_id": 6,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Use the stress ball to simulate the grip of the hammer dispenser. While it provides a tactile experience, it lacks the weight and inertia.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Squeeze the stress ball to simulate the grip of the hammer's handle. While it lacks weight, it can provide a tactile feedback experience.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -3068,7 +4345,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 2.300000011920929,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 4.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.600000023841858
+      }
     }
   },
   {
@@ -3077,7 +4367,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "While not directly usable as a proxy, users can simulate the weight of the hammer dispenser by lifting the monitors if they are lightweight enough, emphasizing the effort required.",
+    "utilizationMethod": "Use the monitors as a visual reference for the hammer's impact. While they cannot be used physically, they can enhance the immersive experience.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -3100,7 +4390,20 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.0999999940395355,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.4000000059604645
+      }
     }
   },
   {
@@ -3108,8 +4411,8 @@
     "physicalObject": "papers with visible text",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitors",
-    "utilizationMethod": "Use the papers to simulate the grip of the hammer dispenser. Users can practice the motion of lifting, but it won't provide the necessary weight.",
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "Use the papers as a flat surface to simulate the impact of the hammer. Users can tap on them to feel the feedback, though it won't replicate the weight.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "contact",
@@ -3132,7 +4435,65 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "hapticFeedback": "Users will experience a heavy, solid sensation when interacting with the hammer dispenser, emphasizing its weight and the concentration of mass at one end. The round handle will provide a comfortable grip, and users will feel a slight resistance when lifting it, simulating the effort required to wield a hammer."
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.3333333233992257,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.9333333174387614
+      },
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.4000000059604645
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "pen",
+    "object_id": 9,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Use the pen to simulate the action of gripping an object. While it lacks weight, it can provide tactile feedback during interactions.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "contact",
+      "description": "a hammer to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    },
+    "rating_score": 1.9000000059604645,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.2000000178813934
+      }
     }
   }
 ]
