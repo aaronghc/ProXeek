@@ -173,7 +173,7 @@ Your task is to analyze virtual object haptic annotation and its snapshot, and c
 
 For each virtual object, consider the following properties:
 - objectName: The target virtual object in the VR scene
-- involvementType: grasp: users are very likely to grasp the game object. contact: users are very likely to touch or contact the game object using body parts. substrate: users are unlikely to contact the game object directly; instead, they tend to use another grasped game object ot interact with it.
+- involvementType: grasp: users are very likely to grasp the game object. contact: users are very likely to touch or contact the game object using body parts. substrate: users are unlikely to contact the game object directly; instead, they tend to use another grasped game object to interact with it.
 - description: Overall usage of this virtual object in the VR scene
 - engagementLevel: How frequently users interact with the object (0: low, 1: medium, 2: high)
 - inertia: Highly expected haptic feedback, if any, regarding the target virtual object's mass, weight distribution, and resistance to movement.
