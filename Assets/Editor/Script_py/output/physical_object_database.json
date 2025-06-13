@@ -21,7 +21,7 @@
     {
       "object_id": 4,
       "object": "green bottle cap",
-      "position": "top right of the laptop",
+      "position": "top right of the image",
       "image_id": 0
     },
     {
@@ -46,14 +46,14 @@
     },
     {
       "object_id": 2,
-      "object": "white cuboid AirPods case",
-      "position": "center right of the image",
+      "object": "white cuboid airpods case",
+      "position": "bottom center of the image",
       "image_id": 1
     },
     {
       "object_id": 3,
       "object": "white gaming mouse",
-      "position": "center right of the image",
+      "position": "bottom center of the image, next to the airpods case",
       "image_id": 1
     },
     {
@@ -64,14 +64,14 @@
     },
     {
       "object_id": 5,
-      "object": "notepad with visible lines",
-      "position": "bottom center of the image",
+      "object": "notepad with blue lines",
+      "position": "bottom left of the image, above the keyboard",
       "image_id": 1
     },
     {
       "object_id": 6,
       "object": "green object (possibly a stress ball)",
-      "position": "bottom left of the image",
+      "position": "bottom left of the image, next to the keyboard",
       "image_id": 1
     },
     {
@@ -82,14 +82,14 @@
     },
     {
       "object_id": 8,
-      "object": "papers with visible text",
-      "position": "bottom right of the image",
+      "object": "papers with text",
+      "position": "bottom right of the image, under the monitors",
       "image_id": 1
     },
     {
       "object_id": 9,
       "object": "pen",
-      "position": "bottom center of the image",
+      "position": "bottom left of the image, next to the notepad",
       "image_id": 1
     }
   ]

@@ -2,7 +2,7 @@
   {
     "objectName": "Treasure Chest",
     "involvementType": "contact",
-    "description": "an immovable treasure chest",
+    "usage": "A chest for players to store and take treasures",
     "engagementLevel": 1,
     "inertia": "",
     "interactivity": "its hinged lid could be opened",
@@ -21,12 +21,12 @@
       "y": "0.36",
       "z": "0.54"
     },
-    "hapticFeedback": "When users contact the treasure chest, they will feel a firm, wooden texture under their hands, providing a sense of stability and immovability. The hinged lid will offer a noticeable resistance when pulled, allowing users to experience a satisfying tactile feedback as they open it. The wooden surface may feel slightly rough, enhancing the realism of the interaction."
+    "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to lift the lid, which may require a momentary push to overcome any resistance from the hinge. The wooden texture suggests a tactile feedback that feels rough and solid, enhancing the realism of the interaction."
   },
   {
     "objectName": "key",
-    "involvementType": "contact",
-    "description": "a key",
+    "involvementType": "grasp",
+    "usage": "players will use it to open a tresure chest",
     "engagementLevel": 1,
     "inertia": "",
     "interactivity": "",
@@ -45,108 +45,12 @@
       "y": "0.05",
       "z": "0.14"
     },
-    "hapticFeedback": "Interacting with the key will provide a smooth, polished surface feel, particularly around the ring-shaped holding part. Users will experience a lightweight sensation, making it easy to manipulate. The outline of the key will be distinctly felt, allowing users to grasp it comfortably and securely."
-  },
-  {
-    "objectName": "simple_pistol",
-    "involvementType": "contact",
-    "description": "a loaded pistol",
-    "engagementLevel": 2,
-    "inertia": "",
-    "interactivity": "a pullable trigger",
-    "outline": "",
-    "texture": "",
-    "hardness": "",
-    "temperature": "",
-    "inertiaValue": 0.0,
-    "interactivityValue": 1.0,
-    "outlineValue": 0.0,
-    "textureValue": 0.0,
-    "hardnessValue": 0.0,
-    "temperatureValue": 0.0,
-    "dimensions_meters": {
-      "x": "5.84",
-      "y": "1.09",
-      "z": "9.49"
-    },
-    "hapticFeedback": "Users will feel a solid, weighty presence when holding the pistol, with a significant emphasis on the pullable trigger. The trigger will provide a tactile click sensation when pulled, enhancing the interactivity. The overall shape will fit comfortably in the hand, allowing for a natural grip."
-  },
-  {
-    "objectName": "Frisbee",
-    "involvementType": "contact",
-    "description": "a frisbee that players can throw",
-    "engagementLevel": 2,
-    "inertia": "light weight",
-    "interactivity": "",
-    "outline": "holding part feels like a thin plate",
-    "texture": "",
-    "hardness": "",
-    "temperature": "",
-    "inertiaValue": 0.699999988079071,
-    "interactivityValue": 0.0,
-    "outlineValue": 0.699999988079071,
-    "textureValue": 0.0,
-    "hardnessValue": 0.0,
-    "temperatureValue": 0.0,
-    "dimensions_meters": {
-      "x": "0.27",
-      "y": "0.18",
-      "z": "0.23"
-    },
-    "hapticFeedback": "When users contact the frisbee, they will feel a lightweight, thin plate-like outline, making it easy to throw. The frisbee's surface will feel smooth, allowing for a comfortable grip. The lightweight nature will give a sense of agility, making it easy to toss and catch."
-  },
-  {
-    "objectName": "Wheel",
-    "involvementType": "contact",
-    "description": "a steering wheel in a car",
-    "engagementLevel": 1,
-    "inertia": "",
-    "interactivity": "rotatable structure",
-    "outline": "",
-    "texture": "",
-    "hardness": "",
-    "temperature": "",
-    "inertiaValue": 0.0,
-    "interactivityValue": 0.8999999761581421,
-    "outlineValue": 0.0,
-    "textureValue": 0.0,
-    "hardnessValue": 0.0,
-    "temperatureValue": 0.0,
-    "dimensions_meters": {
-      "x": "0.40",
-      "y": "0.41",
-      "z": "0.19"
-    },
-    "hapticFeedback": "Interacting with the steering wheel will provide a firm grip with a noticeable rotational resistance. Users will feel the circular outline distinctly, allowing for precise control. The wheel's surface may have a slight texture, enhancing grip and providing a realistic driving experience."
-  },
-  {
-    "objectName": "Tomato",
-    "involvementType": "contact",
-    "description": "a smashable tomato",
-    "engagementLevel": 0,
-    "inertia": "",
-    "interactivity": "",
-    "outline": "",
-    "texture": "",
-    "hardness": "relatively soft or extendable",
-    "temperature": "",
-    "inertiaValue": 0.0,
-    "interactivityValue": 0.0,
-    "outlineValue": 0.0,
-    "textureValue": 0.0,
-    "hardnessValue": 1.0,
-    "temperatureValue": 0.0,
-    "dimensions_meters": {
-      "x": "0.17",
-      "y": "0.10",
-      "z": "0.17"
-    },
-    "hapticFeedback": "When users contact the tomato, they will experience a soft, squishy sensation, indicative of its smashable nature. The surface will feel slightly yielding, allowing for a gentle press. This softness will create an engaging interaction, simulating the feeling of squeezing a ripe tomato."
+    "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve inserting the key into the lock of the treasure chest, requiring a twisting motion to turn the key. The smooth finish of the key will provide a comfortable tactile experience, while the ring-shaped holding part allows for easy manipulation."
   },
   {
     "objectName": "Hammer Dispenser 2",
-    "involvementType": "contact",
-    "description": "a hammer to smash things",
+    "involvementType": "grasp",
+    "usage": "players will use it to smash things",
     "engagementLevel": 2,
     "inertia": "relatively heavy with the center of mass concentrated at one end",
     "interactivity": "",
@@ -165,6 +69,30 @@
       "y": "0.42",
       "z": "0.17"
     },
-    "hapticFeedback": "Users will feel a relatively heavy object with a concentrated mass at one end when interacting with the hammer. The round handle will provide a comfortable grip, while the weight will give a sense of power and control. The overall heft will enhance the feeling of using a tool designed for smashing."
+    "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, wrapping their hand around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design, with the center of mass concentrated at one end, will provide a noticeable inertia, requiring users to exert force to control the swing effectively."
+  },
+  {
+    "objectName": "Scarecrow punching bag",
+    "involvementType": "contact",
+    "usage": "players will punch it for blowing off steam",
+    "engagementLevel": 0,
+    "inertia": "",
+    "interactivity": "",
+    "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+    "texture": "",
+    "hardness": "feeling a little bit soft while punching",
+    "temperature": "",
+    "inertiaValue": 0.0,
+    "interactivityValue": 0.0,
+    "outlineValue": 0.8999999761581421,
+    "textureValue": 0.0,
+    "hardnessValue": 0.5,
+    "temperatureValue": 0.0,
+    "dimensions_meters": {
+      "x": "1.02",
+      "y": "1.64",
+      "z": "0.70"
+    },
+    "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists, employing a striking motion. The interaction will involve sustained contact as users punch the bag, feeling a slight give due to its soft hardness. The punching bag's position on the ground encourages users to stand and engage with it, providing a physical outlet for stress relief."
   }
 ]

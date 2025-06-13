@@ -167,44 +167,49 @@ Be comprehensive and include all clearly visible objects.
 
 # System prompt for virtual object processing
 virtual_object_processor_system_prompt = """
-You are a haptic feedback expert who specializes in describing the expected haptic sensations when interacting with virtual objects in VR.
+You are an expert in user interaction analysis who specializes in understanding how users physically interact with virtual objects in VR.
 
-Your task is to analyze virtual object haptic annotation and its snapshot, and create clear descriptions of the haptic feedback that users should experience when interacting with these virtual objects. Your descriptions will be used to find appropriate physical proxies from the real environment.
+Your task is to analyze virtual object metadata and its snapshot, and deduce how users would likely interact with these virtual objects based on the annotations. This will help identify appropriate physical proxies from the real environment.
 
-For each virtual object, consider the following properties:
+For each virtual object, consider the following information:
 - objectName: The target virtual object in the VR scene
-- involvementType: grasp: users are very likely to grasp the game object. contact: users are very likely to touch or contact the game object using body parts. substrate: users are unlikely to contact the game object directly; instead, they tend to use another grasped game object to interact with it.
-- description: Overall usage of this virtual object in the VR scene
-- engagementLevel: How frequently users interact with the object (0: low, 1: medium, 2: high)
+- involvementType: grasp: objects that users hold and manipulate. contact: objects that users touch/hit/push with body parts. substrate: objects that users interact with indirectly using other objects.
+- usage: Overall usage of this virtual object in the VR scene
 - inertia: Highly expected haptic feedback, if any, regarding the target virtual object's mass, weight distribution, and resistance to movement.
 - interactivity: Highly expected haptic feedback, if any, regarding how the virtual object responds to user actions.
 - outline: Highly expected haptic feedback, if any, regarding the target virtual object's shape and size.
 - texture: Highly expected haptic feedback, if any, regarding the target virtual object's surface feel and tactile patterns.
 - hardness: Highly expected haptic feedback, if any, regarding the target virtual object's rigidity, compliance, and deformation.
 - temperature: Highly expected haptic feedback, if any, regarding the target virtual object's thermal properties and heat transfer.
-- inertiaValue: Importance of inertia (0-1)
-- interactivityValue: Importance of interactivity (0-1)
-- outlineValue: Importance of outline (0-1)
-- textureValue: Importance of texture (0-1)
-- hardnessValue: Importance of hardness (0-1)
-- temperatureValue: Importance of temperature (0-1)
 - dimensions_meters: Physical dimensions of the object
 
-Create a comprehensive haptic feedback description that:
-1. Prioritizes the properties with higher importance values
-2. Describes the highlighted haptic sensations users should feel
-3. Infers the most likely contact part(s) of the target virtual object
+Consider these deduction strategies based on involvement type:
+
+For grasp objects:
+- Identify the grip type (power grip, precision grip, pinch, etc.)
+- Consider manipulation patterns (swing, rotate, squeeze, trigger, etc.)
+- Analyze tool-like behaviors (pointing, striking, cutting motions, etc.)
+
+For contact objects:
+- Identify contact method (press, push, strike, slide, etc.)
+- Determine body part involved (finger, palm, fist, foot, etc.)
+- Consider interaction duration (momentary tap vs. sustained contact)
+
+Create a comprehensive interaction deduction that:
+1. Identifies the specific way users would interact with the object
+2. Describes the physical movements and contact patterns
+3. Explains how the object would respond to user interaction
 
 FORMAT YOUR RESPONSE AS A JSON ARRAY where each object has:
 - "objectName": Name of the virtual object
-- "hapticFeedback": Your comprehensive haptic feedback description
+- "interactionDeduction": Your comprehensive interaction deduction
 
 The JSON should look like:
 ```json
 [
   {
     "objectName": "Example Object",
-    "hapticFeedback": "Detailed haptic feedback description focusing on the most important properties..."
+    "interactionDeduction": "Detailed description of how users would interact with this object..."
   },
   ...
 ]
@@ -217,9 +222,12 @@ You are an expert in haptic design who specializes in finding physical proxies f
 
 Your task is to analyze ONE virtual object and evaluate ALL physical objects from the environment as potential haptic proxies.
 
-For each physical object, propose a specific method to utilize it as a haptic proxy. 
+First, carefully consider the deduced interaction for the virtual object—how users are expected to interact with it
 
-Focus on matching the most important haptic properties of the virtual object (those with higher importance values).
+For each physical object, propose a specific method to utilize it as a haptic proxy that best replicates the deduced interaction of the virtual object.
+
+Focus on matching the most important haptic properties of the virtual object (those with higher importance values), but always ensure your proxy method enables the user to perform the same type of interaction as described in the interaction deduction.
+
 Make sure to include the object_id and image_id for each physical object exactly as they appear in the detected objects list.
 
 IMPORTANT: Image IDs begin at 0 (not 1). The first image has image_id=0, the second has image_id=1, etc.
@@ -469,18 +477,39 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
         human_message_content = []
         
         # Add introduction text
-        human_message_content.append({
-            "type": "text", 
-            "text": "Please analyze the following virtual objects and create detailed haptic feedback descriptions for each. Focus on the properties with higher importance values (those with higher *Value numbers)."
-        })
+        # human_message_content.append({
+        #     "type": "text", 
+        #     "text": "Please analyze the following virtual objects and create detailed haptic feedback descriptions for each. Focus on the properties with higher importance values (those with higher *Value numbers)."
+        # })
         
-        # Process each virtual object one by one
+        # Process each virtual object one by one, but only grasp and contact objects
         for node in node_annotations:
             object_name = node.get("objectName", "Unknown Object")
+            involvement_type = node.get("involvementType", "")
+            
+            # Skip substrate objects - only process grasp and contact objects
+            if involvement_type not in ["grasp", "contact"]:
+                log(f"Skipping {object_name} with involvementType: {involvement_type}")
+                continue
+                
             normalized_object_name = normalize_name(object_name)
             
-            # Add object's annotation data as JSON
-            object_json = json.dumps(node, indent=2)
+            # Create filtered object data with only the fields mentioned in system prompt
+            filtered_node = {
+                "objectName": node.get("objectName", ""),
+                "involvementType": node.get("involvementType", ""),
+                "usage": node.get("usage", ""),
+                "inertia": node.get("inertia", ""),
+                "interactivity": node.get("interactivity", ""),
+                "outline": node.get("outline", ""),
+                "texture": node.get("texture", ""),
+                "hardness": node.get("hardness", ""),
+                "temperature": node.get("temperature", ""),
+                "dimensions_meters": node.get("dimensions_meters", {})
+            }
+            
+            # Add object's filtered annotation data as JSON
+            object_json = json.dumps(filtered_node, indent=2)
             object_text = f"\n\n## Virtual Object: {object_name}\n```json\n{object_json}\n```"
             
             # Add text content for this object
@@ -536,10 +565,10 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
                 log(f"No snapshot found for {object_name} (normalized: {normalized_object_name})")
         
         # Add final instruction
-        human_message_content.append({
-            "type": "text",
-            "text": "\nDescribe what makes a good physical proxy for each object based on its haptic properties."
-        })
+        # human_message_content.append({
+        #     "type": "text",
+        #     "text": "\nDescribe what makes a good physical proxy for each object based on its haptic properties."
+        # })
         
         # Create the messages
         messages = [
@@ -579,14 +608,21 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
             haptic_feedback_data = json.loads(json_content)
             
             # Create a mapping from object name to haptic feedback
-            haptic_feedback_map = {item["objectName"]: item["hapticFeedback"] for item in haptic_feedback_data}
+            haptic_feedback_map = {item["objectName"]: item["interactionDeduction"] for item in haptic_feedback_data}
             
             # Merge the original node annotations with the haptic feedback descriptions
+            # Only include grasp and contact objects
             enhanced_node_annotations = []
             for node in node_annotations:
+                involvement_type = node.get("involvementType", "")
+                
+                # Skip substrate objects - only include grasp and contact objects
+                if involvement_type not in ["grasp", "contact"]:
+                    continue
+                    
                 object_name = node["objectName"]
                 enhanced_node = node.copy()
-                enhanced_node["hapticFeedback"] = haptic_feedback_map.get(object_name, "No haptic feedback description available")
+                enhanced_node["interactionDeduction"] = haptic_feedback_map.get(object_name, "No interaction deduction available")
                 enhanced_node_annotations.append(enhanced_node)
             
             return enhanced_node_annotations
@@ -596,7 +632,9 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
             log(f"Raw content: {json_content}")
             
             # Return the original node annotations without haptic feedback as a fallback
-            return [node.copy() for node in node_annotations]
+            # Only include grasp and contact objects
+            return [node.copy() for node in node_annotations 
+                    if node.get("involvementType", "") in ["grasp", "contact"]]
             
     except Exception as e:
         log(f"Error processing virtual objects: {e}")
@@ -621,8 +659,6 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
 {json.dumps(virtual_object, indent=2)}
 ```
 
-## Haptic Feedback Description
-{virtual_object.get('hapticFeedback', 'No haptic feedback available')}
 """
         human_message_content.append({
             "type": "text", 

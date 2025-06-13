@@ -24,8 +24,8 @@ public class HapticsAnnotationWindow : EditorWindow
     private List<HapticNode> _orderedLowEngagementNodes = new List<HapticNode>();
 
     // Add these properties to the HapticNode class
-    public bool IsDirectContacted { get; set; } = false;
-    public string Description { get; set; } = "";
+    // public bool IsDirectContacted { get; set; } = false;
+    public string Usage { get; set; } = "";
 
     private HapticAnnotationGraph _currentGraph;
 
@@ -355,22 +355,22 @@ public class HapticsAnnotationWindow : EditorWindow
             // Add the container to the main content
             contentContainer.Add(involvementContainer);
 
-            // Add "Description" text field
-            var descriptionLabel = new Label("Description");
-            descriptionLabel.AddToClassList("inspector-field-label");
-            contentContainer.Add(descriptionLabel);
+            // Add "Usage" text field
+            var usageLabel = new Label("Usage");
+            usageLabel.AddToClassList("inspector-field-label");
+            contentContainer.Add(usageLabel);
 
-            var descriptionField = new TextField();
-            descriptionField.multiline = true;
-            descriptionField.value = selectedNode.Description;
-            //descriptionField.style.height = 60;
-            descriptionField.style.marginBottom = 15;
-            descriptionField.AddToClassList("inspector-field");
-            descriptionField.RegisterValueChangedCallback(evt =>
+            var usageField = new TextField();
+            usageField.multiline = true;
+            usageField.value = selectedNode.Usage;
+            //usageField.style.height = 60;
+            usageField.style.marginBottom = 15;
+            usageField.AddToClassList("inspector-field");
+            usageField.RegisterValueChangedCallback(evt =>
             {
-                selectedNode.Description = evt.newValue;
+                selectedNode.Usage = evt.newValue;
             });
-            contentContainer.Add(descriptionField);
+            contentContainer.Add(usageField);
 
             // Add a title for the property TreeViews
             var propertyHighlightTitle = new Label("Property Highlight");
@@ -1669,7 +1669,7 @@ public class HapticsAnnotationWindow : EditorWindow
                 objectPath = GetGameObjectPath(node.AssociatedObject),
                 position = new SerializableVector2 { x = node.GetPosition().x, y = node.GetPosition().y },
                 involvementType = node.Involvement.ToString().ToLower(), // Changed from isDirectContacted
-                description = node.Description,
+                usage = node.Usage,
                 engagementLevel = node.EngagementLevel,
                 outputPortCount = outputPortCount,
                 inputPortCount = inputPortCount,
@@ -1874,7 +1874,7 @@ public class HapticsAnnotationWindow : EditorWindow
                     {
                         // Set node properties
                         node.Involvement = ParseInvolvementType(nodeData.involvementType);
-                        node.Description = nodeData.description;
+                        node.Usage = nodeData.usage;
                         node.SetEngagementLevel(nodeData.engagementLevel);
 
                         // Set haptic properties
@@ -2255,7 +2255,7 @@ public class HapticsAnnotationWindow : EditorWindow
         public string objectPath;
         public SerializableVector2 position;
         public string involvementType; // Changed from isDirectContacted
-        public string description;
+        public string usage;
         public int engagementLevel;
 
         // Haptic properties

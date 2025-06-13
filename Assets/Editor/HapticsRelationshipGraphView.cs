@@ -316,7 +316,7 @@ public class HapticsRelationshipGraphView : GraphView
                 temperature = hNode.Temperature,
                 engagementLevel = hNode.EngagementLevel,
                 involvementType = hNode.Involvement.ToString().ToLower(), // Convert enum to string
-                description = hNode.Description,
+                usage = hNode.Usage,
 
                 // Add slider values
                 inertiaValue = hNode.InertiaValue,
@@ -728,7 +728,7 @@ public class HapticObjectRecord
     public string objectName;
     public string involvementType; // Changed from isDirectContacted
     //public bool isDirectContacted;
-    public string description;
+    public string usage;
     public int engagementLevel;
     //public string snapshotPath;
 
@@ -822,7 +822,7 @@ public class HapticNode : Node
 
     public InvolvementType Involvement { get; set; } = InvolvementType.Contact; // Default to Contact
     public bool IsDirectContacted { get; set; } = false;
-    public string Description { get; set; } = "";
+    public string Usage { get; set; } = "";
 
     public string Inertia { get; set; } = "";
     public string Interactivity { get; set; } = "";
