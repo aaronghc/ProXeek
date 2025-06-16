@@ -8,7 +8,7 @@
     },
     {
       "object_id": 2,
-      "object": "black VR headset",
+      "object": "black VR headset with cables",
       "position": "bottom left of the image",
       "image_id": 0
     },
@@ -26,14 +26,14 @@
     },
     {
       "object_id": 5,
-      "object": "cables",
-      "position": "bottom of the image",
+      "object": "metal rail",
+      "position": "top right of the image",
       "image_id": 0
     },
     {
       "object_id": 6,
-      "object": "metal rail",
-      "position": "top right of the image",
+      "object": "various cables",
+      "position": "bottom center of the image",
       "image_id": 0
     }
   ],
@@ -71,7 +71,7 @@
     {
       "object_id": 6,
       "object": "green object (possibly a stress ball)",
-      "position": "bottom left of the image, next to the keyboard",
+      "position": "bottom left of the image, near the keyboard",
       "image_id": 1
     },
     {
@@ -83,13 +83,13 @@
     {
       "object_id": 8,
       "object": "papers with text",
-      "position": "bottom right of the image, under the monitors",
+      "position": "bottom right of the image, under the monitor",
       "image_id": 1
     },
     {
       "object_id": 9,
       "object": "pen",
-      "position": "bottom left of the image, next to the notepad",
+      "position": "bottom left of the image, near the notepad",
       "image_id": 1
     }
   ]

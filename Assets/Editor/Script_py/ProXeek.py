@@ -137,6 +137,14 @@ property_rating_llm = ChatOpenAI(
     api_key=api_key
 )
 
+# Initialize the relationship rating LLM
+relationship_rating_llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0.1,
+    base_url="https://api.nuwaapi.com/v1",
+    api_key=api_key
+)
+
 # System prompt for object recognition
 object_recognition_system_prompt = """
 You are an expert computer vision system that identifies objects in images.
@@ -239,11 +247,11 @@ def get_property_rating_system_prompt(property_name):
     
     # Base prompt
     base_prompt = f"""
-You are an expert in haptic design who specializes in evaluating how well physical objects can simulate specific haptic properties of virtual objects in VR.
+You are an expert in haptic design who specializes in evaluating how well physical objects can deliver the expected haptic feedback for virtual objects in VR.
 
-Your task is to evaluate the {property_type} property of ONE virtual object against ALL physical objects from the environment.
+Your task is to evaluate how well each physical object can provide the expected {property_type} haptic feedback described for the virtual object. Focus on the specific haptic description provided rather than making general assumptions about the property type.
 
-Rate each physical object on a 7-point Likert scale for how well it matches the specific haptic property:
+Rate each physical object on a 7-point Likert scale based on how well it can deliver the described {property_type} experience:
 1 - Strongly Disagree 
 2 - Disagree
 3 - Somewhat Disagree
@@ -340,6 +348,52 @@ Make sure to include ALL physical objects in your evaluation, even those with lo
     # Construct the complete prompt with only the relevant property rubric
     full_prompt = base_prompt + rubrics.get(property_type.lower(), "") + output_format
     return full_prompt
+
+# System prompt for relationship rating
+relationship_rating_system_prompt = """
+You are an expert in haptic design who specializes in evaluating how well pairs of physical objects can simulate the expected haptic feedback when two virtual objects interact with each other in VR.
+
+Your task is to evaluate how well each pair of physical objects (one as contact object, one as substrate object) can deliver the expected haptic feedback described for the virtual object relationship.
+
+Rate each physical object pair on a 7-point Likert scale for the following three aspects:
+1 - Strongly Disagree 
+2 - Disagree
+3 - Somewhat Disagree
+4 - Neutral
+5 - Somewhat Agree
+6 - Agree
+7 - Strongly Agree
+
+Evaluate each pair based on these three questions:
+1. "I felt the haptic feedback was well coordinated with visual feedback" - Harmony: How well the physical interaction would align with what users see visually
+2. "I felt the haptic feedback changed depending on how things changed in the system" - Expressivity: How well the physical objects can provide dynamic feedback that changes during interaction
+3. "I felt the generated haptic feedback while two physical objects interacting closely mimicked the experiences I would expect" - Realism: How well the overall interaction matches the expected haptic experience
+
+FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
+```json
+[
+  {
+    "virtualContactObject": "name of virtual contact object",
+    "virtualSubstrateObject": "name of virtual substrate object", 
+    "physicalContactObject": "name of physical contact object",
+    "physicalSubstrateObject": "name of physical substrate object",
+    "contactObject_id": 1,
+    "contactImage_id": 0,
+    "substrateObject_id": 2,
+    "substrateImage_id": 1,
+    "harmony_rating": 5,
+    "harmony_explanation": "Brief explanation for harmony rating",
+    "expressivity_rating": 4,
+    "expressivity_explanation": "Brief explanation for expressivity rating", 
+    "realism_rating": 6,
+    "realism_explanation": "Brief explanation for realism rating"
+  },
+  ...
+]
+```
+
+Include ALL possible pairs in your evaluation.
+"""
 
 # Function to process a single image and recognize objects
 async def process_single_image(image_base64: str, image_id: int) -> Dict[str, Any]:
@@ -1034,13 +1088,16 @@ async def rate_single_property(virtual_object, property_name, environment_images
         human_message_content = []
         
         # 1. Add the virtual object property information
+        interaction_deduction = virtual_object.get("interactionDeduction", "No interaction deduction available")
+        
         property_text = f"""# Property Rating Task
 
 ## Virtual Object: {virtual_object_name}
 ## Property to Evaluate: {property_name.replace("Value", "")}
 ## Property Description: {property_description}
+## Interaction Deduction: {interaction_deduction}
 
-Please rate how well each physical object matches the {property_name.replace("Value", "")} property of {virtual_object_name} when used according to the utilization method.
+Please rate how well each physical object can deliver the expected {property_name.replace("Value", "")} haptic feedback described above, considering the deduced interaction pattern when used according to the utilization method.
 """
         human_message_content.append({
             "type": "text", 
@@ -1382,6 +1439,305 @@ async def run_property_ratings(virtual_objects, environment_images, physical_obj
     
     return all_rating_results
 
+# Function to rate a single relationship interaction group
+async def rate_single_relationship_group(relationship_annotation, contact_object, substrate_objects, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, group_index=1):
+    try:
+        virtual_contact_name = relationship_annotation.get("contactObject", "Unknown Contact Object")
+        virtual_substrate_name = relationship_annotation.get("substrateObject", "Unknown Substrate Object")
+        annotation_text = relationship_annotation.get("annotationText", "No annotation available")
+        
+        log(f"Rating relationship group {group_index}: {virtual_contact_name} -> {virtual_substrate_name}")
+        
+        # Build the human message content
+        human_message_content = []
+        
+        # 1. Add the relationship information
+        # Get virtual contact object details
+        virtual_contact_obj = None
+        virtual_substrate_obj = None
+        for vobj in enhanced_virtual_objects:
+            if vobj.get("objectName") == virtual_contact_name:
+                virtual_contact_obj = vobj
+            elif vobj.get("objectName") == virtual_substrate_name:
+                virtual_substrate_obj = vobj
+        
+        contact_interaction_deduction = virtual_contact_obj.get("interactionDeduction", "No interaction deduction available") if virtual_contact_obj else "No interaction deduction available"
+        
+        # Get utilization method for the physical contact object
+        contact_utilization_method = "No utilization method available"
+        for proxy_result in proxy_matching_results:
+            if (proxy_result.get('object_id') == contact_object.get('object_id') and 
+                proxy_result.get('image_id') == contact_object.get('image_id') and
+                proxy_result.get('virtualObject') == virtual_contact_name):
+                contact_utilization_method = proxy_result.get("utilizationMethod", "No utilization method available")
+                break
+        
+        relationship_text = f"""# Relationship Rating Task (Group {group_index})
+
+## Virtual Object Relationship
+- **Contact Object**: {virtual_contact_name}
+- **Substrate Object**: {virtual_substrate_name}
+- **Expected Haptic Feedback**: {annotation_text}
+
+## Virtual Contact Object Interaction
+- **Interaction Deduction**: {contact_interaction_deduction}
+
+## Physical Object Assignment
+- **Contact Object**: {contact_object.get('object', 'Unknown')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
+- **Utilization Method**: {contact_utilization_method}
+- **Substrate Objects**: All other physical objects listed below
+
+Please rate how well each pair (contact + substrate) can simulate the expected haptic feedback described above.
+"""
+        human_message_content.append({
+            "type": "text", 
+            "text": relationship_text
+        })
+        
+        # 2. Add virtual object snapshots if available
+        # Add virtual contact object snapshot
+        if virtual_contact_name in object_snapshot_map:
+            human_message_content.append({
+                "type": "text",
+                "text": f"\n## Virtual Contact Object: {virtual_contact_name}\n"
+            })
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[virtual_contact_name]}", 
+                    "detail": "high"
+                }
+            })
+        
+        # Add virtual substrate object snapshot
+        if virtual_substrate_name in object_snapshot_map:
+            human_message_content.append({
+                "type": "text",
+                "text": f"\n## Virtual Substrate Object: {virtual_substrate_name}\n"
+            })
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[virtual_substrate_name]}", 
+                    "detail": "high"
+                }
+            })
+        
+        # 3. Add environment snapshots with their detected objects
+        for i, image_base64 in enumerate(environment_images):
+            # Add the environment snapshot
+            human_message_content.append({
+                "type": "text", 
+                "text": f"\n## Environment Snapshot {i+1}\n"
+            })
+            
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{image_base64}", 
+                    "detail": "high"
+                }
+            })
+            
+            # Add the detected objects for this snapshot
+            objects_in_snapshot = physical_object_database.get(str(i), [])
+            objects_text = "\n### Physical Objects in this Snapshot\n"
+            
+            if objects_in_snapshot:
+                for obj in objects_in_snapshot:
+                    # Highlight the contact object
+                    if (obj['object_id'] == contact_object.get('object_id') and 
+                        obj.get('image_id') == contact_object.get('image_id')):
+                        objects_text += f"- **CONTACT OBJECT** - Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                    else:
+                        objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']}) - *Substrate candidate*\n"
+                    objects_text += f"  Image ID: {i}\n"
+            else:
+                # Check if we should look for objects in a different format
+                objects_in_snapshot = physical_object_database.get(i, [])
+                if objects_in_snapshot:
+                    for obj in objects_in_snapshot:
+                        if (obj['object_id'] == contact_object.get('object_id') and 
+                            obj.get('image_id') == contact_object.get('image_id')):
+                            objects_text += f"- **CONTACT OBJECT** - Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                        else:
+                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']}) - *Substrate candidate*\n"
+                        objects_text += f"  Image ID: {i}\n"
+                else:
+                    objects_text += "- No objects detected in this snapshot\n"
+                
+            human_message_content.append({
+                "type": "text", 
+                "text": objects_text
+            })
+        
+        # 4. Add final instructions
+        human_message_content.append({
+            "type": "text", 
+            "text": f"""
+# Your Task
+
+Rate each pair where the **contact object** is "{contact_object.get('object')}" and each **substrate object** is one of the other physical objects.
+
+For each pair, rate on a 7-point Likert scale:
+1. **Harmony**: "I felt the haptic feedback was well coordinated with visual feedback"
+2. **Expressivity**: "I felt the haptic feedback changed depending on how things changed in the system"  
+3. **Realism**: "I felt the generated haptic feedback while two physical objects interacting closely mimicked the experiences I would expect"
+
+Expected interaction: {annotation_text}
+
+FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt.
+"""
+        })
+        
+        # Create the messages
+        messages = [
+            SystemMessage(content=relationship_rating_system_prompt),
+            HumanMessage(content=human_message_content)
+        ]
+        
+        # Get response from the model
+        log(f"Sending relationship rating request for group {group_index}")
+        response = await relationship_rating_llm.ainvoke(messages)
+        log(f"Received relationship ratings for group {group_index}")
+        
+        # Extract JSON from response
+        response_text = response.content
+        
+        # Try to find JSON array
+        json_start = response_text.find("[")
+        json_end = response_text.rfind("]") + 1
+        if json_start != -1 and json_end > json_start:
+            json_content = response_text[json_start:json_end]
+        else:
+            # Try to find JSON between code blocks
+            json_start = response_text.find("```json")
+            if json_start != -1:
+                json_start += 7  # Length of ```json
+                json_end = response_text.find("```", json_start)
+                if json_end != -1:
+                    json_content = response_text[json_start:json_end].strip()
+                else:
+                    json_content = response_text[json_start:].strip()
+            else:
+                # As a fallback, use the entire response
+                json_content = response_text
+        
+        try:
+            # Parse the JSON response
+            rating_results = json.loads(json_content)
+            
+            # Add group information to each result
+            for result in rating_results:
+                result["group_index"] = group_index
+                result["virtualContactObject"] = virtual_contact_name
+                result["virtualSubstrateObject"] = virtual_substrate_name
+                result["expectedHapticFeedback"] = annotation_text
+                
+            return rating_results
+            
+        except json.JSONDecodeError as e:
+            log(f"Error parsing relationship rating JSON for group {group_index}: {e}")
+            log(f"Raw content: {json_content}")
+            
+            # Return a basic result with the error
+            return [{
+                "group_index": group_index,
+                "virtualContactObject": virtual_contact_name,
+                "virtualSubstrateObject": virtual_substrate_name,
+                "error": f"Failed to parse response: {str(e)}",
+                "rawResponse": response_text[:500]  # First 500 chars
+            }]
+            
+    except Exception as e:
+        log(f"Error in relationship rating for group {group_index}: {e}")
+        import traceback
+        log(traceback.format_exc())
+        
+        # Return a basic result with the error
+        return [{
+            "group_index": group_index,
+            "error": f"Processing error: {str(e)}"
+        }]
+
+# Function to run relationship ratings for all relationships in parallel
+async def run_relationship_ratings(haptic_annotation_json, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results):
+    if not haptic_annotation_json:
+        log("No haptic annotation data provided for relationship ratings")
+        return []
+    
+    try:
+        # Parse the haptic annotation JSON
+        haptic_data = json.loads(haptic_annotation_json)
+        relationship_annotations = haptic_data.get("relationshipAnnotations", [])
+        
+        if not relationship_annotations:
+            log("No relationship annotations found in haptic data")
+            return []
+        
+        log(f"Found {len(relationship_annotations)} relationship annotations")
+        
+        # Get all physical objects from the database
+        all_physical_objects = []
+        for image_id, objects in physical_object_database.items():
+            for obj in objects:
+                all_physical_objects.append(obj)
+        
+        log(f"Found {len(all_physical_objects)} total physical objects for relationship rating")
+        
+        # Create rating tasks - for each relationship, create multiple groups
+        # Each group assigns one physical object as contact and rates it against all others as substrate
+        all_tasks = []
+        group_counter = 1
+        
+        for relationship in relationship_annotations:
+            # Create one group for each physical object as the contact object
+            for contact_obj in all_physical_objects:
+                # Get all other objects as substrate candidates
+                substrate_objects = [obj for obj in all_physical_objects 
+                                   if not (obj['object_id'] == contact_obj['object_id'] and 
+                                          obj.get('image_id') == contact_obj.get('image_id'))]
+                
+                if len(substrate_objects) > 0:
+                    task = rate_single_relationship_group(
+                        relationship,
+                        contact_obj,
+                        substrate_objects,
+                        environment_images,
+                        physical_object_database,
+                        object_snapshot_map,
+                        enhanced_virtual_objects,
+                        proxy_matching_results,
+                        group_counter
+                    )
+                    all_tasks.append(task)
+                    group_counter += 1
+        
+        # Run all tasks concurrently
+        log(f"Running {len(all_tasks)} relationship rating tasks concurrently")
+        task_results = await asyncio.gather(*all_tasks, return_exceptions=True)
+        
+        # Process results
+        all_relationship_results = []
+        for i, result in enumerate(task_results):
+            if isinstance(result, Exception):
+                log(f"Error in relationship rating task {i}: {result}")
+                continue
+            else:
+                # Each result is an array of rating results for a single group
+                all_relationship_results.extend(result)
+        
+        # Log summary of results
+        log(f"Completed relationship ratings with {len(all_relationship_results)} total ratings")
+        
+        return all_relationship_results
+        
+    except Exception as e:
+        log(f"Error processing relationship ratings: {e}")
+        import traceback
+        log(traceback.format_exc())
+        return []
+
 # Modify the run_concurrent_tasks function to include proxy matching
 async def run_concurrent_tasks():
     tasks = []
@@ -1446,9 +1802,6 @@ async def run_concurrent_tasks():
         # Add to results
         results["proxy_matching_result"] = proxy_matching_results
         
-        # Run property-based ratings
-        log("Setting up property-based rating tasks")
-        
         # Log sample proxy matching results for debugging
         if len(proxy_matching_results) > 0:
             log("Sample proxy matching result:")
@@ -1459,8 +1812,12 @@ async def run_concurrent_tasks():
             log(f"- utilizationMethod: {proxy_matching_results[0].get('utilizationMethod', 'N/A')}")
         else:
             log("Warning: No proxy matching results available!")
-            
-        property_rating_results = await run_property_ratings(
+        
+        # Run property-based ratings and relationship-based ratings concurrently
+        log("Setting up concurrent property and relationship rating tasks")
+        
+        # Create the rating tasks
+        property_rating_task = run_property_ratings(
             enhanced_virtual_objects,
             environment_image_base64_list,
             physical_object_database,
@@ -1468,8 +1825,25 @@ async def run_concurrent_tasks():
             proxy_matching_results
         )
         
+        relationship_rating_task = run_relationship_ratings(
+            haptic_annotation_json,
+            environment_image_base64_list,
+            physical_object_database,
+            object_snapshot_map,
+            enhanced_virtual_objects,
+            proxy_matching_results
+        )
+        
+        # Run both rating tasks concurrently
+        log("Running property and relationship rating tasks concurrently")
+        property_rating_results, relationship_rating_results = await asyncio.gather(
+            property_rating_task,
+            relationship_rating_task
+        )
+        
         # Add to results
         results["property_rating_result"] = property_rating_results
+        results["relationship_rating_result"] = relationship_rating_results
     
     return results
 
@@ -1685,6 +2059,31 @@ try:
             "count": len(property_rating_results),
             "database_path": property_rating_output_path,
             "rating_results": property_rating_results
+        }
+    
+    # Process relationship rating results if available
+    if environment_image_base64_list and haptic_annotation_json:
+        log("Processing completed relationship rating results")
+        relationship_rating_results = concurrent_results.get("relationship_rating_result", [])
+        
+        # Save relationship rating results
+        output_dir = os.path.join(script_dir, "output")
+        relationship_rating_output_path = os.path.join(output_dir, "relationship_rating_results.json")
+        
+        # Ensure output directory exists
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Save relationship rating results
+        with open(relationship_rating_output_path, 'w') as f:
+            json.dump(relationship_rating_results, f, indent=2)
+        
+        log(f"Relationship rating complete. Generated ratings for {len(relationship_rating_results)} object pairs.")
+        
+        # Add to result
+        result["relationship_rating"] = {
+            "count": len(relationship_rating_results),
+            "database_path": relationship_rating_output_path,
+            "rating_results": relationship_rating_results
         }
     
     # Print final result as JSON
