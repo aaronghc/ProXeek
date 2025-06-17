@@ -4,8 +4,8 @@
     "physicalObject": "black laptop with Apple logo",
     "object_id": 1,
     "image_id": 0,
-    "proxyLocation": "center of the image",
-    "utilizationMethod": "Users can press down on the surface of the laptop to simulate the action of pushing open the chest lid. The flat, solid surface can provide a tactile response similar to the wooden texture of the chest.",
+    "proxyLocation": "center of the image on the desk",
+    "utilizationMethod": "Users can press down on the laptop's lid to simulate the action of tapping the hinged lid of the treasure chest. The smooth surface can provide a momentary tactile feedback, and the weight of the laptop can simulate the resistance felt when lifting the chest lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -28,9 +28,9 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 7.0,
+    "rating_score": 6.833333333333333,
     "property_scores": {
       "interactivity": {
         "mean_rating": 5.0,
@@ -38,19 +38,19 @@
         "weighted_score": 5.0
       },
       "texture": {
-        "mean_rating": 4.0,
+        "mean_rating": 3.6666666666666665,
         "property_value": 0.5,
-        "weighted_score": 2.0
+        "weighted_score": 1.8333333333333333
       }
     }
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "black VR headset with cables",
+    "physicalObject": "black VR headset with straps",
     "object_id": 2,
     "image_id": 0,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can lift the VR headset by its edges, mimicking the action of opening the chest lid. The weight and resistance of the headset can simulate the feeling of a heavy lid.",
+    "proxyLocation": "bottom left of the image on the desk",
+    "utilizationMethod": "Users can press down on the top of the VR headset to mimic the action of tapping the treasure chest lid. The soft padding can provide a different tactile experience, but it can still simulate the initial contact before lifting.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -73,144 +73,9 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 7.5,
-    "property_scores": {
-      "interactivity": {
-        "mean_rating": 6.0,
-        "property_value": 1.0,
-        "weighted_score": 6.0
-      },
-      "texture": {
-        "mean_rating": 3.0,
-        "property_value": 0.5,
-        "weighted_score": 1.5
-      }
-    }
-  },
-  {
-    "virtualObject": "Treasure Chest",
-    "physicalObject": "black speaker",
-    "object_id": 3,
-    "image_id": 0,
-    "proxyLocation": "left side of the image",
-    "utilizationMethod": "Users can press down on the top of the speaker to replicate the action of pushing the chest lid open. The solid surface can provide a tactile sensation similar to wood.",
-    "virtualObjectInfo": {
-      "objectName": "Treasure Chest",
-      "involvementType": "contact",
-      "usage": "A chest for players to store and take treasures",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "its hinged lid could be opened",
-      "outline": "",
-      "texture": "wooden texture on the surface",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 1.0,
-      "outlineValue": 0.0,
-      "textureValue": 0.5,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.62",
-        "y": "0.36",
-        "z": "0.54"
-      },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
-    },
-    "rating_score": 7.166666666666666,
-    "property_scores": {
-      "interactivity": {
-        "mean_rating": 5.0,
-        "property_value": 1.0,
-        "weighted_score": 5.0
-      },
-      "texture": {
-        "mean_rating": 4.333333333333333,
-        "property_value": 0.5,
-        "weighted_score": 2.1666666666666665
-      }
-    }
-  },
-  {
-    "virtualObject": "Treasure Chest",
-    "physicalObject": "green bottle cap",
-    "object_id": 4,
-    "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Users can use the bottle cap to simulate the action of pressing a latch or button to open the chest. The small size allows for fine motor control, similar to manipulating a chest lid.",
-    "virtualObjectInfo": {
-      "objectName": "Treasure Chest",
-      "involvementType": "contact",
-      "usage": "A chest for players to store and take treasures",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "its hinged lid could be opened",
-      "outline": "",
-      "texture": "wooden texture on the surface",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 1.0,
-      "outlineValue": 0.0,
-      "textureValue": 0.5,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.62",
-        "y": "0.36",
-        "z": "0.54"
-      },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
-    },
-    "rating_score": 4.666666666666666,
-    "property_scores": {
-      "interactivity": {
-        "mean_rating": 3.6666666666666665,
-        "property_value": 1.0,
-        "weighted_score": 3.6666666666666665
-      },
-      "texture": {
-        "mean_rating": 2.0,
-        "property_value": 0.5,
-        "weighted_score": 1.0
-      }
-    }
-  },
-  {
-    "virtualObject": "Treasure Chest",
-    "physicalObject": "metal rail",
-    "object_id": 5,
-    "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Users can slide their fingers along the metal rail to simulate the action of opening the chest lid. The smooth texture can provide a different tactile experience, contrasting with the wooden texture.",
-    "virtualObjectInfo": {
-      "objectName": "Treasure Chest",
-      "involvementType": "contact",
-      "usage": "A chest for players to store and take treasures",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "its hinged lid could be opened",
-      "outline": "",
-      "texture": "wooden texture on the surface",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 1.0,
-      "outlineValue": 0.0,
-      "textureValue": 0.5,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.62",
-        "y": "0.36",
-        "z": "0.54"
-      },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
-    },
-    "rating_score": 4.333333333333334,
+    "rating_score": 4.666666666666667,
     "property_scores": {
       "interactivity": {
         "mean_rating": 3.3333333333333335,
@@ -218,9 +83,144 @@
         "weighted_score": 3.3333333333333335
       },
       "texture": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.5,
+        "weighted_score": 1.3333333333333333
+      }
+    }
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "physicalObject": "black speaker or subwoofer",
+    "object_id": 3,
+    "image_id": 0,
+    "proxyLocation": "bottom left corner of the image on the desk",
+    "utilizationMethod": "Users can press down on the top of the speaker to simulate the action of tapping the treasure chest lid. The solid structure can provide a sense of weight and resistance when lifting, similar to the chest's lid.",
+    "virtualObjectInfo": {
+      "objectName": "Treasure Chest",
+      "involvementType": "contact",
+      "usage": "A chest for players to store and take treasures",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "its hinged lid could be opened",
+      "outline": "",
+      "texture": "wooden texture on the surface",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.5,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.62",
+        "y": "0.36",
+        "z": "0.54"
+      },
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
+    },
+    "rating_score": 8.333333333333334,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 6.0,
+        "property_value": 1.0,
+        "weighted_score": 6.0
+      },
+      "texture": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.5,
+        "weighted_score": 2.3333333333333335
+      }
+    }
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "physicalObject": "green plastic bottle cap",
+    "object_id": 4,
+    "image_id": 0,
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Users can use the bottle cap to simulate the action of tapping the treasure chest lid. While it is small, it can provide a quick tactile feedback when pressed, representing the initial interaction before lifting the lid.",
+    "virtualObjectInfo": {
+      "objectName": "Treasure Chest",
+      "involvementType": "contact",
+      "usage": "A chest for players to store and take treasures",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "its hinged lid could be opened",
+      "outline": "",
+      "texture": "wooden texture on the surface",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.5,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.62",
+        "y": "0.36",
+        "z": "0.54"
+      },
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
+    },
+    "rating_score": 3.3333333333333335,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 1.0,
+        "weighted_score": 2.3333333333333335
+      },
+      "texture": {
         "mean_rating": 2.0,
         "property_value": 0.5,
         "weighted_score": 1.0
+      }
+    }
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "physicalObject": "metal rail or bar",
+    "object_id": 5,
+    "image_id": 0,
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Users can press down on the metal rail to simulate the action of tapping the treasure chest lid. The cold, hard surface can provide a different tactile feedback, and the rigidity can simulate the resistance felt when lifting the chest lid.",
+    "virtualObjectInfo": {
+      "objectName": "Treasure Chest",
+      "involvementType": "contact",
+      "usage": "A chest for players to store and take treasures",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "its hinged lid could be opened",
+      "outline": "",
+      "texture": "wooden texture on the surface",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.5,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.62",
+        "y": "0.36",
+        "z": "0.54"
+      },
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
+    },
+    "rating_score": 6.0,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.333333333333333,
+        "property_value": 1.0,
+        "weighted_score": 4.333333333333333
+      },
+      "texture": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.5,
+        "weighted_score": 1.6666666666666667
       }
     }
   },
@@ -229,8 +229,8 @@
     "physicalObject": "various cables",
     "object_id": 6,
     "image_id": 0,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Users can grasp and pull on the cables to simulate the action of lifting the chest lid. The flexibility and resistance can mimic the feeling of a hinged lid.",
+    "proxyLocation": "scattered around the bottom of the image",
+    "utilizationMethod": "Users can bundle the cables together and press down on them to simulate the action of tapping the treasure chest lid. The flexibility of the cables can provide a unique tactile experience, though it may not fully replicate the resistance of the chest lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -253,19 +253,19 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 5.5,
+    "rating_score": 2.8333333333333335,
     "property_scores": {
       "interactivity": {
-        "mean_rating": 4.0,
+        "mean_rating": 2.0,
         "property_value": 1.0,
-        "weighted_score": 4.0
+        "weighted_score": 2.0
       },
       "texture": {
-        "mean_rating": 3.0,
+        "mean_rating": 1.6666666666666667,
         "property_value": 0.5,
-        "weighted_score": 1.5
+        "weighted_score": 0.8333333333333334
       }
     }
   },
@@ -274,8 +274,8 @@
     "physicalObject": "black keyboard",
     "object_id": 1,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can press down on the keys to simulate the action of pushing the chest lid open. The tactile feedback from the keys can provide a similar sensation to the wooden texture.",
+    "proxyLocation": "bottom left of the image on the desk",
+    "utilizationMethod": "Users can press down on the keyboard to simulate the action of tapping the treasure chest lid. The flat surface can provide a momentary tactile feedback, and the weight of the keyboard can simulate the resistance when lifting the lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -298,9 +298,9 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 7.0,
+    "rating_score": 6.833333333333333,
     "property_scores": {
       "interactivity": {
         "mean_rating": 5.0,
@@ -308,9 +308,9 @@
         "weighted_score": 5.0
       },
       "texture": {
-        "mean_rating": 4.0,
+        "mean_rating": 3.6666666666666665,
         "property_value": 0.5,
-        "weighted_score": 2.0
+        "weighted_score": 1.8333333333333333
       }
     }
   },
@@ -319,8 +319,8 @@
     "physicalObject": "white cuboid airpods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Users can open the AirPods case to simulate the action of opening the treasure chest. The hinge mechanism can provide a similar tactile experience.",
+    "proxyLocation": "bottom center of the image on the desk",
+    "utilizationMethod": "Users can press down on the AirPods case to simulate the action of tapping the treasure chest lid. The compact size allows for easy manipulation, providing a quick tactile feedback.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -343,19 +343,19 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 7.5,
+    "rating_score": 4.666666666666667,
     "property_scores": {
       "interactivity": {
-        "mean_rating": 6.0,
+        "mean_rating": 3.3333333333333335,
         "property_value": 1.0,
-        "weighted_score": 6.0
+        "weighted_score": 3.3333333333333335
       },
       "texture": {
-        "mean_rating": 3.0,
+        "mean_rating": 2.6666666666666665,
         "property_value": 0.5,
-        "weighted_score": 1.5
+        "weighted_score": 1.3333333333333333
       }
     }
   },
@@ -365,7 +365,7 @@
     "object_id": 3,
     "image_id": 1,
     "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Users can press down on the mouse to simulate the action of pushing the chest lid open. The smooth surface can provide a tactile sensation.",
+    "utilizationMethod": "Users can press down on the gaming mouse to simulate the action of tapping the treasure chest lid. The smooth surface can provide a tactile feedback, and the weight can simulate the resistance when lifting the lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -388,9 +388,9 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 5.5,
+    "rating_score": 5.833333333333333,
     "property_scores": {
       "interactivity": {
         "mean_rating": 4.0,
@@ -398,9 +398,9 @@
         "weighted_score": 4.0
       },
       "texture": {
-        "mean_rating": 3.0,
+        "mean_rating": 3.6666666666666665,
         "property_value": 0.5,
-        "weighted_score": 1.5
+        "weighted_score": 1.8333333333333333
       }
     }
   },
@@ -409,8 +409,8 @@
     "physicalObject": "silver insulated water bottle",
     "object_id": 4,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Users can lift the water bottle to simulate the action of opening the chest lid. The weight and resistance can mimic the feeling of a heavy lid.",
+    "proxyLocation": "bottom right of the image on the desk",
+    "utilizationMethod": "Users can press down on the top of the water bottle to simulate the action of tapping the treasure chest lid. The solid structure can provide a sense of weight and resistance when lifting, similar to the chest's lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -433,29 +433,29 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 7.666666666666667,
+    "rating_score": 8.333333333333334,
     "property_scores": {
       "interactivity": {
-        "mean_rating": 5.666666666666667,
+        "mean_rating": 6.0,
         "property_value": 1.0,
-        "weighted_score": 5.666666666666667
+        "weighted_score": 6.0
       },
       "texture": {
-        "mean_rating": 4.0,
+        "mean_rating": 4.666666666666667,
         "property_value": 0.5,
-        "weighted_score": 2.0
+        "weighted_score": 2.3333333333333335
       }
     }
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "notepad with blue lines",
+    "physicalObject": "notebook with lined pages",
     "object_id": 5,
     "image_id": 1,
     "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Users can press down on the notepad to simulate the action of pushing the chest lid open. The flat surface can provide a tactile response.",
+    "utilizationMethod": "Users can press down on the notebook to simulate the action of tapping the treasure chest lid. The flat surface can provide a momentary tactile feedback, and the slight thickness can simulate the resistance when lifting the lid.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -478,7 +478,7 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
     "rating_score": 5.5,
     "property_scores": {
@@ -496,11 +496,11 @@
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "green object (possibly a stress ball)",
+    "physicalObject": "green object (possibly a stress ball or similar)",
     "object_id": 6,
     "image_id": 1,
     "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Users can squeeze the stress ball to simulate the action of pushing the chest lid open. The soft texture can provide a different tactile experience.",
+    "utilizationMethod": "Users can press down on the stress ball to simulate the action of tapping the treasure chest lid. The soft texture can provide a different tactile experience, representing the initial contact before lifting.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -523,14 +523,14 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 4.0,
+    "rating_score": 3.3333333333333335,
     "property_scores": {
       "interactivity": {
-        "mean_rating": 3.0,
+        "mean_rating": 2.3333333333333335,
         "property_value": 1.0,
-        "weighted_score": 3.0
+        "weighted_score": 2.3333333333333335
       },
       "texture": {
         "mean_rating": 2.0,
@@ -541,11 +541,11 @@
   },
   {
     "virtualObject": "Treasure Chest",
-    "physicalObject": "pen",
-    "object_id": 9,
+    "physicalObject": "white pen",
+    "object_id": 10,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the notepad",
-    "utilizationMethod": "Users can press the pen down to simulate the action of pushing the chest lid open. The small size allows for fine motor control.",
+    "proxyLocation": "bottom right of the notebook",
+    "utilizationMethod": "Users can press down on the pen to simulate the action of tapping the treasure chest lid. The small size allows for easy manipulation, providing a quick tactile feedback.",
     "virtualObjectInfo": {
       "objectName": "Treasure Chest",
       "involvementType": "contact",
@@ -568,19 +568,109 @@
         "y": "0.36",
         "z": "0.54"
       },
-      "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the hinged lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a palm or fingers. The chest may respond with a slight resistance as the lid is lifted, simulating the weight of a real chest. Users may experience a tactile sensation of the wooden texture as they touch the surface."
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
     },
-    "rating_score": 5.166666666666666,
+    "rating_score": 4.333333333333333,
     "property_scores": {
       "interactivity": {
-        "mean_rating": 3.6666666666666665,
+        "mean_rating": 3.0,
         "property_value": 1.0,
-        "weighted_score": 3.6666666666666665
+        "weighted_score": 3.0
+      },
+      "texture": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.5,
+        "weighted_score": 1.3333333333333333
+      }
+    }
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "physicalObject": "stack of papers",
+    "object_id": 11,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the image, under the right monitor",
+    "utilizationMethod": "Users can press down on the stack of papers to simulate the action of tapping the treasure chest lid. The flat surface can provide a momentary tactile feedback, and the slight thickness can simulate the resistance when lifting the lid.",
+    "virtualObjectInfo": {
+      "objectName": "Treasure Chest",
+      "involvementType": "contact",
+      "usage": "A chest for players to store and take treasures",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "its hinged lid could be opened",
+      "outline": "",
+      "texture": "wooden texture on the surface",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.5,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.62",
+        "y": "0.36",
+        "z": "0.54"
+      },
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
+    },
+    "rating_score": 5.5,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 4.0,
+        "property_value": 1.0,
+        "weighted_score": 4.0
       },
       "texture": {
         "mean_rating": 3.0,
         "property_value": 0.5,
         "weighted_score": 1.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Treasure Chest",
+    "physicalObject": "coin",
+    "object_id": 12,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, near the notebook",
+    "utilizationMethod": "Users can press down on the coin to simulate the action of tapping the treasure chest lid. The small size allows for easy manipulation, providing a quick tactile feedback.",
+    "virtualObjectInfo": {
+      "objectName": "Treasure Chest",
+      "involvementType": "contact",
+      "usage": "A chest for players to store and take treasures",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "its hinged lid could be opened",
+      "outline": "",
+      "texture": "wooden texture on the surface",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 1.0,
+      "outlineValue": 0.0,
+      "textureValue": 0.5,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.62",
+        "y": "0.36",
+        "z": "0.54"
+      },
+      "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
+    },
+    "rating_score": 3.3333333333333335,
+    "property_scores": {
+      "interactivity": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 1.0,
+        "weighted_score": 2.3333333333333335
+      },
+      "texture": {
+        "mean_rating": 2.0,
+        "property_value": 0.5,
+        "weighted_score": 1.0
       }
     }
   },
@@ -590,7 +680,7 @@
     "object_id": 1,
     "image_id": 0,
     "proxyLocation": "center of the image",
-    "utilizationMethod": "Users can simulate the grasp of a key by holding the edge of the laptop, using their fingers to mimic the precision grip. The smooth surface of the laptop can provide a similar tactile experience, although it lacks the turning motion.",
+    "utilizationMethod": "Users can grasp the edge of the laptop with their thumb and index finger, mimicking the precision grip used for a key. They can simulate the turning motion by rotating the laptop slightly as if inserting a key into a lock.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "grasp",
@@ -613,412 +703,7 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 3.699999988079071,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 3.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 2.099999964237213
-      },
-      "texture": {
-        "mean_rating": 4.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 1.600000023841858
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "black VR headset with cables",
-    "object_id": 2,
-    "image_id": 0,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can grasp the strap or side of the VR headset, mimicking the grip of a key. The weight and shape can provide a different experience, but it can still allow for a turning motion if the user pretends to insert it into a lock.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 3.9999999701976776,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 4.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 2.799999952316284
-      },
-      "texture": {
-        "mean_rating": 3.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 1.2000000178813934
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "black speaker",
-    "object_id": 3,
-    "image_id": 0,
-    "proxyLocation": "left side of the image",
-    "utilizationMethod": "Users can hold the speaker in one hand, using their fingers to grip it as they would a key. The smooth surface can replicate the texture, but the size and weight will differ significantly from a key.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 2.5999999940395355,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 2.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 1.399999976158142
-      },
-      "texture": {
-        "mean_rating": 3.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 1.2000000178813934
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "green bottle cap",
-    "object_id": 4,
-    "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Users can hold the bottle cap between their fingers, simulating the precision grip of a key. The small size allows for a similar feel, and they can mimic the turning motion by rotating the cap as if inserting it into a lock.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 6.599999964237213,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 6.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 4.199999928474426
-      },
-      "texture": {
-        "mean_rating": 6.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 2.400000035762787
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "metal rail",
-    "object_id": 5,
-    "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Users can grasp the metal rail with one hand, using their fingers to simulate the grip of a key. The rail's length can allow for a turning motion, although it may not replicate the texture or size of a key.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 3.033333311478297,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 3.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 2.099999964237213
-      },
-      "texture": {
-        "mean_rating": 2.3333333333333335,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.9333333472410839
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "various cables",
-    "object_id": 6,
-    "image_id": 0,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Users can hold a cable in one hand, mimicking the grip of a key. They can simulate the turning motion by twisting the cable, although the texture and weight will differ from a key.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 2.199999988079071,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 2.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 1.399999976158142
-      },
-      "texture": {
-        "mean_rating": 2.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.800000011920929
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "black keyboard",
-    "object_id": 1,
-    "image_id": 1,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can grip the edge of the keyboard, simulating the precision grip of a key. The flat surface can provide a different tactile experience, but it allows for a similar motion when pretending to insert it into a lock.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 3.9333333174387617,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 3.3333333333333335,
-        "property_value": 0.699999988079071,
-        "weighted_score": 2.333333293596904
-      },
-      "texture": {
-        "mean_rating": 4.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 1.600000023841858
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "white cuboid airpods case",
-    "object_id": 2,
-    "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Users can hold the AirPods case between their fingers, mimicking the grip of a key. The smooth texture can replicate the feel, and they can simulate the turning motion by rotating the case as if inserting it into a lock.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 5.499999970197678,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 5.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 3.4999999403953552
-      },
-      "texture": {
-        "mean_rating": 5.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 2.0000000298023224
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "white gaming mouse",
-    "object_id": 3,
-    "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Users can grip the gaming mouse, simulating the precision grip of a key. The shape allows for a similar feel, and they can mimic the turning motion by rotating the mouse as if inserting it into a lock.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
-    },
-    "rating_score": 4.399999976158142,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 4.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 2.799999952316284
-      },
-      "texture": {
-        "mean_rating": 4.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 1.600000023841858
-      }
-    }
-  },
-  {
-    "virtualObject": "key",
-    "physicalObject": "silver insulated water bottle",
-    "object_id": 4,
-    "image_id": 1,
-    "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Users can hold the water bottle in one hand, using their fingers to simulate the grip of a key. The smooth surface can replicate the texture, but the size and weight will differ significantly from a key.",
-    "virtualObjectInfo": {
-      "objectName": "key",
-      "involvementType": "grasp",
-      "usage": "players will use it to open a tresure chest",
-      "engagementLevel": 1,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "a ring-shape holding part ",
-      "texture": "smooth finishing",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.699999988079071,
-      "textureValue": 0.4000000059604645,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.06",
-        "y": "0.05",
-        "z": "0.14"
-      },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
     },
     "rating_score": 3.2999999821186066,
     "property_scores": {
@@ -1036,11 +721,11 @@
   },
   {
     "virtualObject": "key",
-    "physicalObject": "notepad with blue lines",
-    "object_id": 5,
-    "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Users can hold the notepad with one hand, simulating the grip of a key. While it lacks the turning motion, they can pretend to insert it into a lock by tilting the notepad.",
+    "physicalObject": "black VR headset with straps",
+    "object_id": 2,
+    "image_id": 0,
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Users can hold the strap of the VR headset with their thumb and index finger, replicating the grasping motion of a key. They can simulate the turning motion by twisting the strap as if it were a key being turned in a lock.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "grasp",
@@ -1063,7 +748,7 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
     },
     "rating_score": 2.199999988079071,
     "property_scores": {
@@ -1081,11 +766,11 @@
   },
   {
     "virtualObject": "key",
-    "physicalObject": "green object (possibly a stress ball)",
-    "object_id": 6,
-    "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Users can grip the stress ball, mimicking the precision grip of a key. The soft texture can provide a different tactile experience, and they can simulate the turning motion by rotating the ball as if inserting it into a lock.",
+    "physicalObject": "black speaker or subwoofer",
+    "object_id": 3,
+    "image_id": 0,
+    "proxyLocation": "bottom left corner of the image",
+    "utilizationMethod": "Users can grasp the edge of the speaker with their thumb and index finger, simulating the grip of a key. They can mimic the turning motion by rotating the speaker slightly as if inserting a key into a lock.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "grasp",
@@ -1108,14 +793,149 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
     },
-    "rating_score": 2.899999976158142,
+    "rating_score": 3.699999988079071,
     "property_scores": {
       "outline": {
         "mean_rating": 3.0,
         "property_value": 0.699999988079071,
         "weighted_score": 2.099999964237213
+      },
+      "texture": {
+        "mean_rating": 4.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.600000023841858
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "green plastic bottle cap",
+    "object_id": 4,
+    "image_id": 0,
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Users can hold the bottle cap between their thumb and index finger, replicating the precision grip of a key. They can simulate the turning motion by twisting the cap as if it were a key being turned in a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 6.199999958276749,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 6.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 4.199999928474426
+      },
+      "texture": {
+        "mean_rating": 5.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.0000000298023224
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "metal rail or bar",
+    "object_id": 5,
+    "image_id": 0,
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Users can grasp the end of the metal rail with their thumb and index finger, mimicking the grip of a key. They can simulate the turning motion by rotating the rail slightly as if inserting a key into a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 3.899999976158142,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.5666666229565935
+      },
+      "texture": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.3333333532015483
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "various cables",
+    "object_id": 6,
+    "image_id": 0,
+    "proxyLocation": "scattered around the bottom of the image",
+    "utilizationMethod": "Users can hold a cable with their thumb and index finger, simulating the grip of a key. They can mimic the turning motion by twisting the cable as if it were a key being turned in a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 2.6666666467984514,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 2.6666666666666665,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.8666666348775227
       },
       "texture": {
         "mean_rating": 2.0,
@@ -1126,11 +946,11 @@
   },
   {
     "virtualObject": "key",
-    "physicalObject": "pen",
-    "object_id": 9,
+    "physicalObject": "black keyboard",
+    "object_id": 1,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the notepad",
-    "utilizationMethod": "Users can hold the pen between their fingers, simulating the precision grip of a key. The small size allows for a similar feel, and they can mimic the turning motion by rotating the pen as if inserting it into a lock.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Users can grasp the edge of the keyboard with their thumb and index finger, mimicking the precision grip used for a key. They can simulate the turning motion by rotating the keyboard slightly as if inserting a key into a lock.",
     "virtualObjectInfo": {
       "objectName": "key",
       "involvementType": "grasp",
@@ -1153,7 +973,52 @@
         "y": "0.05",
         "z": "0.14"
       },
-      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will be felt during this process, and users may also experience a slight click or resistance when the key engages with the lock mechanism."
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 3.7999999821186066,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.3333333333333335,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.333333293596904
+      },
+      "texture": {
+        "mean_rating": 3.6666666666666665,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.466666688521703
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "white cuboid airpods case",
+    "object_id": 2,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Users can hold the airpods case with their thumb and index finger, replicating the grasping motion of a key. They can simulate the turning motion by twisting the case as if it were a key being turned in a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
     },
     "rating_score": 5.499999970197678,
     "property_scores": {
@@ -1170,57 +1035,282 @@
     }
   },
   {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "black laptop with Apple logo",
-    "object_id": 1,
-    "image_id": 0,
-    "proxyLocation": "center of the image",
-    "utilizationMethod": "Users can grasp the laptop by the edges using a power grip. The weight of the laptop will provide a sense of inertia similar to the hammer dispenser, allowing users to simulate the lifting and swinging motion.",
+    "virtualObject": "key",
+    "physicalObject": "white gaming mouse",
+    "object_id": 3,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image, next to the airpods case",
+    "utilizationMethod": "Users can grasp the mouse with their thumb and index finger, simulating the grip of a key. They can mimic the turning motion by rotating the mouse slightly as if inserting a key into a lock.",
     "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
+      "objectName": "key",
       "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
       "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
       "hardness": "",
       "temperature": "",
-      "inertiaValue": 0.699999988079071,
+      "inertiaValue": 0.0,
       "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
       "hardnessValue": 0.0,
       "temperatureValue": 0.0,
       "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
     },
-    "rating_score": 5.099999964237213,
+    "rating_score": 4.133333305517833,
     "property_scores": {
-      "inertia": {
-        "mean_rating": 5.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 3.4999999403953552
-      },
       "outline": {
         "mean_rating": 4.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.799999952316284
+      },
+      "texture": {
+        "mean_rating": 3.3333333333333335,
         "property_value": 0.4000000059604645,
-        "weighted_score": 1.600000023841858
+        "weighted_score": 1.3333333532015483
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "silver insulated water bottle",
+    "object_id": 4,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "Users can hold the water bottle by its neck with their thumb and index finger, replicating the precision grip of a key. They can simulate the turning motion by twisting the bottle as if it were a key being turned in a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 5.399999976158142,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.266666611035665
+      },
+      "texture": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.133333365122477
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "notebook with lined pages",
+    "object_id": 5,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, above the keyboard",
+    "utilizationMethod": "Users can grasp the edge of the notebook with their thumb and index finger, mimicking the grip of a key. They can simulate the turning motion by rotating the notebook slightly as if inserting a key into a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 3.033333311478297,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
+      },
+      "texture": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.9333333472410839
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "green object (possibly a stress ball or similar)",
+    "object_id": 6,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, near the keyboard",
+    "utilizationMethod": "Users can hold the stress ball with their thumb and index finger, replicating the grasping motion of a key. They can simulate the turning motion by twisting the ball as if it were a key being turned in a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 2.6333333055178323,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
+      },
+      "texture": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.5333333412806193
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "white pen",
+    "object_id": 10,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the notebook",
+    "utilizationMethod": "Users can grasp the pen with their thumb and index finger, mimicking the precision grip used for a key. They can simulate the turning motion by rotating the pen slightly as if inserting a key into a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 5.599999964237213,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.7333332697550454
+      },
+      "texture": {
+        "mean_rating": 4.666666666666667,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.8666666944821677
+      }
+    }
+  },
+  {
+    "virtualObject": "key",
+    "physicalObject": "coin",
+    "object_id": 12,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, near the notebook",
+    "utilizationMethod": "Users can hold the coin between their thumb and index finger, replicating the precision grip of a key. They can simulate the turning motion by twisting the coin as if it were a key being turned in a lock.",
+    "virtualObjectInfo": {
+      "objectName": "key",
+      "involvementType": "grasp",
+      "usage": "players will use it to open a tresure chest",
+      "engagementLevel": 1,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "a ring-shape holding part ",
+      "texture": "smooth finishing",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.699999988079071,
+      "textureValue": 0.4000000059604645,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.06",
+        "y": "0.05",
+        "z": "0.14"
+      },
+      "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    },
+    "rating_score": 6.099999964237213,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 5.666666666666667,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.966666599114736
+      },
+      "texture": {
+        "mean_rating": 5.333333333333333,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.133333365122477
       }
     }
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "black VR headset with cables",
-    "object_id": 2,
+    "physicalObject": "black laptop with Apple logo",
+    "object_id": 1,
     "image_id": 0,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can hold the VR headset by the straps or sides, mimicking the grip of the hammer dispenser. The weight and bulkiness will help replicate the inertia sensation during swinging motions.",
+    "proxyLocation": "center of the image",
+    "utilizationMethod": "Users can grasp the laptop by its edges, simulating the grip of a hammer. They can lift it and swing it downwards to mimic the smashing action, although the feedback will be less substantial due to its flat surface.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "grasp",
@@ -1243,14 +1333,59 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
     },
-    "rating_score": 4.599999964237213,
+    "rating_score": 3.2999999821186066,
     "property_scores": {
       "inertia": {
-        "mean_rating": 4.666666666666667,
+        "mean_rating": 3.0,
         "property_value": 0.699999988079071,
-        "weighted_score": 3.266666611035665
+        "weighted_score": 2.099999964237213
+      },
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 1.2000000178813934
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "black VR headset with straps",
+    "object_id": 2,
+    "image_id": 0,
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Users can hold the headset by the straps, using a power grip. They can lift and swing it downwards, but the headset's weight and shape may not provide the same inertia as a hammer.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 3.4333333174387617,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 3.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 2.099999964237213
       },
       "outline": {
         "mean_rating": 3.3333333333333335,
@@ -1261,11 +1396,11 @@
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "black speaker",
+    "physicalObject": "black speaker or subwoofer",
     "object_id": 3,
     "image_id": 0,
-    "proxyLocation": "left side of the image",
-    "utilizationMethod": "Users can grasp the speaker using a power grip. Its weight and solid structure will provide a realistic inertia sensation, allowing users to simulate the action of swinging a hammer.",
+    "proxyLocation": "bottom left corner of the image",
+    "utilizationMethod": "Users can grasp the speaker with both hands, simulating the weight and inertia of a hammer. They can lift and swing it downwards to create a more impactful smashing sensation.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "grasp",
@@ -1288,104 +1423,14 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
     },
-    "rating_score": 6.199999958276749,
+    "rating_score": 6.599999964237213,
     "property_scores": {
       "inertia": {
         "mean_rating": 6.0,
         "property_value": 0.699999988079071,
         "weighted_score": 4.199999928474426
-      },
-      "outline": {
-        "mean_rating": 5.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 2.0000000298023224
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "green bottle cap",
-    "object_id": 4,
-    "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "While the bottle cap is too light, users can hold it in one hand and simulate the motion of a hammer swing. However, it lacks the necessary weight for a realistic experience.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 2.199999988079071,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 2.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 1.399999976158142
-      },
-      "outline": {
-        "mean_rating": 2.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.800000011920929
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "metal rail",
-    "object_id": 5,
-    "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Users can grasp the metal rail with both hands, utilizing its weight and length to simulate the hammer dispenser's swinging motion effectively.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 6.833333293596903,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 6.333333333333333,
-        "property_value": 0.699999988079071,
-        "weighted_score": 4.433333257834116
       },
       "outline": {
         "mean_rating": 6.0,
@@ -1396,191 +1441,11 @@
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "various cables",
-    "object_id": 6,
-    "image_id": 0,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Cables are not suitable for simulating the hammer dispenser due to their light weight and lack of solid structure. They cannot provide the necessary inertia or grip.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 1.0999999940395355,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 1.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 0.699999988079071
-      },
-      "outline": {
-        "mean_rating": 1.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.4000000059604645
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "black keyboard",
-    "object_id": 1,
-    "image_id": 1,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Users can hold the keyboard by its edges, but it is too light and flat to effectively simulate the weight and inertia of the hammer dispenser.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 2.199999988079071,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 2.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 1.399999976158142
-      },
-      "outline": {
-        "mean_rating": 2.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.800000011920929
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "white cuboid airpods case",
-    "object_id": 2,
-    "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "The airpods case is too small and light to replicate the hammer dispenser's weight and swinging motion effectively.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 1.0999999940395355,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 1.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 0.699999988079071
-      },
-      "outline": {
-        "mean_rating": 1.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.4000000059604645
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "white gaming mouse",
-    "object_id": 3,
-    "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "The gaming mouse is not suitable for simulating the hammer dispenser due to its small size and light weight, lacking the necessary inertia.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 1.0999999940395355,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 1.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 0.699999988079071
-      },
-      "outline": {
-        "mean_rating": 1.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.4000000059604645
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "silver insulated water bottle",
+    "physicalObject": "green plastic bottle cap",
     "object_id": 4,
-    "image_id": 1,
-    "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Users can grasp the water bottle by the body, utilizing its weight to simulate the hammer dispenser's inertia during swinging motions.",
+    "image_id": 0,
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Users can hold the cap in one hand and simulate a light hammering action by tapping it against a surface. However, it lacks the necessary weight and inertia for a true hammer experience.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "grasp",
@@ -1603,97 +1468,7 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 5.733333299557367,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 5.333333333333333,
-        "property_value": 0.699999988079071,
-        "weighted_score": 3.7333332697550454
-      },
-      "outline": {
-        "mean_rating": 5.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 2.0000000298023224
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "notepad with blue lines",
-    "object_id": 5,
-    "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "The notepad is too light and flat to effectively simulate the hammer dispenser's weight and swinging motion.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
-    },
-    "rating_score": 1.0999999940395355,
-    "property_scores": {
-      "inertia": {
-        "mean_rating": 1.0,
-        "property_value": 0.699999988079071,
-        "weighted_score": 0.699999988079071
-      },
-      "outline": {
-        "mean_rating": 1.0,
-        "property_value": 0.4000000059604645,
-        "weighted_score": 0.4000000059604645
-      }
-    }
-  },
-  {
-    "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "green object (possibly a stress ball)",
-    "object_id": 6,
-    "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "While users can grip the stress ball, it lacks the necessary weight and structure to effectively simulate the hammer dispenser's inertia.",
-    "virtualObjectInfo": {
-      "objectName": "Hammer Dispenser 2",
-      "involvementType": "grasp",
-      "usage": "players will use it to smash things",
-      "engagementLevel": 2,
-      "inertia": "relatively heavy with the center of mass concentrated at one end",
-      "interactivity": "",
-      "outline": "round handle",
-      "texture": "",
-      "hardness": "",
-      "temperature": "",
-      "inertiaValue": 0.699999988079071,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.4000000059604645,
-      "textureValue": 0.0,
-      "hardnessValue": 0.0,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "0.25",
-        "y": "0.42",
-        "z": "0.17"
-      },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
     },
     "rating_score": 1.5,
     "property_scores": {
@@ -1711,11 +1486,11 @@
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "two computer monitors",
-    "object_id": 7,
-    "image_id": 1,
-    "proxyLocation": "top of the image",
-    "utilizationMethod": "Monitors cannot be used as haptic proxies due to their fixed position and inability to be grasped or swung.",
+    "physicalObject": "metal rail or bar",
+    "object_id": 5,
+    "image_id": 0,
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Users can grasp the metal rail with both hands, utilizing its weight and length to simulate the hammer's heft. They can lift and swing it downwards, providing a strong haptic feedback upon impact.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "grasp",
@@ -1738,7 +1513,52 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 7.699999958276749,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 7.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 4.899999916553497
+      },
+      "outline": {
+        "mean_rating": 7.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.8000000417232513
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "various cables",
+    "object_id": 6,
+    "image_id": 0,
+    "proxyLocation": "scattered around the bottom of the image",
+    "utilizationMethod": "Users can grasp a bundle of cables, but they will not provide the necessary weight or inertia. They can simulate a light swinging motion, but the experience will be significantly diminished.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
     },
     "rating_score": 1.0999999940395355,
     "property_scores": {
@@ -1756,11 +1576,11 @@
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "papers with text",
-    "object_id": 8,
+    "physicalObject": "black keyboard",
+    "object_id": 1,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitor",
-    "utilizationMethod": "Papers are too light and flat to effectively simulate the hammer dispenser's weight and swinging motion.",
+    "proxyLocation": "bottom left of the image",
+    "utilizationMethod": "Users can hold the keyboard by its edges and simulate a hammering action. However, the flat design and lighter weight will not replicate the inertia of a hammer effectively.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "grasp",
@@ -1783,7 +1603,232 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 2.333333323399226,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "outline": {
+        "mean_rating": 2.3333333333333335,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.9333333472410839
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "white cuboid airpods case",
+    "object_id": 2,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image",
+    "utilizationMethod": "Users can hold the AirPods case in one hand and simulate a light tapping action. It lacks the necessary weight and shape for a true hammer experience.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 1.2333333293596902,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.5333333412806193
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "white gaming mouse",
+    "object_id": 3,
+    "image_id": 1,
+    "proxyLocation": "bottom center of the image, next to the airpods case",
+    "utilizationMethod": "Users can hold the gaming mouse and simulate a light hammering action, but it will not provide the necessary weight or inertia to replicate the hammer experience.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 1.2333333293596902,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 1.3333333333333333,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.5333333412806193
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "silver insulated water bottle",
+    "object_id": 4,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the image",
+    "utilizationMethod": "Users can grasp the water bottle by its body, utilizing its weight to simulate the hammer's heft. They can lift and swing it downwards, providing a more substantial haptic feedback upon impact.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 5.899999976158142,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 5.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 3.4999999403953552
+      },
+      "outline": {
+        "mean_rating": 6.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 2.400000035762787
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "notebook with lined pages",
+    "object_id": 5,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, above the keyboard",
+    "utilizationMethod": "Users can hold the notebook with one hand and simulate a light hammering action, but it lacks the necessary weight and inertia for a true hammer experience.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 2.199999988079071,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 2.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 1.399999976158142
+      },
+      "outline": {
+        "mean_rating": 2.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.800000011920929
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "green object (possibly a stress ball or similar)",
+    "object_id": 6,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, near the keyboard",
+    "utilizationMethod": "Users can squeeze and hold the stress ball, but it will not provide the necessary weight or inertia for a hammer experience. It can simulate a light tapping action.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
     },
     "rating_score": 1.0999999940395355,
     "property_scores": {
@@ -1801,11 +1846,11 @@
   },
   {
     "virtualObject": "Hammer Dispenser 2",
-    "physicalObject": "pen",
-    "object_id": 9,
+    "physicalObject": "white pen",
+    "object_id": 10,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the notepad",
-    "utilizationMethod": "The pen is too small and light to replicate the hammer dispenser's weight and swinging motion effectively.",
+    "proxyLocation": "bottom right of the notebook",
+    "utilizationMethod": "Users can hold the pen and simulate a light tapping action, but it lacks the necessary weight and inertia to replicate the hammer experience.",
     "virtualObjectInfo": {
       "objectName": "Hammer Dispenser 2",
       "involvementType": "grasp",
@@ -1828,7 +1873,97 @@
         "y": "0.42",
         "z": "0.17"
       },
-      "interactionDeduction": "Users will grasp the hammer dispenser using a power grip, holding it firmly by the round handle. The interaction will involve lifting and swinging motions to smash objects. The hammer's relatively heavy weight, with the center of mass concentrated at one end, will provide a realistic inertia sensation as users swing it. The handle's outline will guide users in gripping it securely."
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 1.0999999940395355,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.4000000059604645
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "stack of papers",
+    "object_id": 11,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the image, under the right monitor",
+    "utilizationMethod": "Users can hold a stack of papers and simulate a light hammering action, but it will not provide the necessary weight or inertia for a true hammer experience.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    },
+    "rating_score": 1.0999999940395355,
+    "property_scores": {
+      "inertia": {
+        "mean_rating": 1.0,
+        "property_value": 0.699999988079071,
+        "weighted_score": 0.699999988079071
+      },
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.4000000059604645,
+        "weighted_score": 0.4000000059604645
+      }
+    }
+  },
+  {
+    "virtualObject": "Hammer Dispenser 2",
+    "physicalObject": "coin",
+    "object_id": 12,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, near the notebook",
+    "utilizationMethod": "Users can hold the coin and simulate a light tapping action, but it lacks the necessary weight and inertia to replicate the hammer experience.",
+    "virtualObjectInfo": {
+      "objectName": "Hammer Dispenser 2",
+      "involvementType": "grasp",
+      "usage": "players will use it to smash things",
+      "engagementLevel": 2,
+      "inertia": "relatively heavy with the center of mass concentrated at one end",
+      "interactivity": "",
+      "outline": "round handle",
+      "texture": "",
+      "hardness": "",
+      "temperature": "",
+      "inertiaValue": 0.699999988079071,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.4000000059604645,
+      "textureValue": 0.0,
+      "hardnessValue": 0.0,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "0.25",
+        "y": "0.42",
+        "z": "0.17"
+      },
+      "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
     },
     "rating_score": 1.0999999940395355,
     "property_scores": {
@@ -1849,8 +1984,8 @@
     "physicalObject": "black laptop with Apple logo",
     "object_id": 1,
     "image_id": 0,
-    "proxyLocation": "center of the image",
-    "utilizationMethod": "Place the laptop on a stable surface and encourage users to punch the laptop's surface gently. The laptop's solid structure will provide resistance, while the soft padding around it can simulate a slight cushioning effect.",
+    "proxyLocation": "center of the image on the desk",
+    "utilizationMethod": "Place a soft cloth or padding on top of the laptop to create a forgiving surface. Users can then punch the padded laptop, simulating the soft impact of the punching bag while ensuring the laptop is protected.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -1873,59 +2008,59 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 4.366666595141093,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 3.0,
-        "property_value": 0.8999999761581421,
-        "weighted_score": 2.6999999284744263
-      },
-      "hardness": {
-        "mean_rating": 3.3333333333333335,
-        "property_value": 0.5,
-        "weighted_score": 1.6666666666666667
-      }
-    }
-  },
-  {
-    "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "black VR headset with cables",
-    "object_id": 2,
-    "image_id": 0,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Position the VR headset on a flat surface and allow users to punch the padded areas of the headset. The soft materials can mimic the feeling of a punching bag, providing a slight give upon impact.",
-    "virtualObjectInfo": {
-      "objectName": "Scarecrow punching bag",
-      "involvementType": "contact",
-      "usage": "players will punch it for blowing off steam",
-      "engagementLevel": 0,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
-      "texture": "",
-      "hardness": "feeling a little bit soft while punching",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.8999999761581421,
-      "textureValue": 0.0,
-      "hardnessValue": 0.5,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "1.02",
-        "y": "1.64",
-        "z": "0.70"
-      },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
-    },
-    "rating_score": 6.099999904632568,
+    "rating_score": 5.599999904632568,
     "property_scores": {
       "outline": {
         "mean_rating": 4.0,
         "property_value": 0.8999999761581421,
         "weighted_score": 3.5999999046325684
+      },
+      "hardness": {
+        "mean_rating": 4.0,
+        "property_value": 0.5,
+        "weighted_score": 2.0
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "black VR headset with straps",
+    "object_id": 2,
+    "image_id": 0,
+    "proxyLocation": "bottom left of the image on the desk",
+    "utilizationMethod": "Use the VR headset as a target for punches by placing it on a soft surface or a cushion. Users can punch the headset, which will provide a soft resistance due to its padding, mimicking the feel of the punching bag.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 6.9999998807907104,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 4.4999998807907104
       },
       "hardness": {
         "mean_rating": 5.0,
@@ -1936,11 +2071,11 @@
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "black speaker",
+    "physicalObject": "black speaker or subwoofer",
     "object_id": 3,
     "image_id": 0,
-    "proxyLocation": "left side of the image",
-    "utilizationMethod": "Use the speaker as a punching target by placing it on a stable surface. Users can punch the speaker's surface, which will provide a firm resistance, simulating the impact of a punching bag.",
+    "proxyLocation": "bottom left corner of the image on the desk",
+    "utilizationMethod": "Cover the speaker with a soft material to create a punching surface. Users can strike the covered speaker, which will give a slight give upon impact, similar to the softness of the punching bag.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -1963,29 +2098,29 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 4.466666579246521,
+    "rating_score": 6.9999998807907104,
     "property_scores": {
       "outline": {
-        "mean_rating": 3.6666666666666665,
+        "mean_rating": 5.0,
         "property_value": 0.8999999761581421,
-        "weighted_score": 3.299999912579854
+        "weighted_score": 4.4999998807907104
       },
       "hardness": {
-        "mean_rating": 2.3333333333333335,
+        "mean_rating": 5.0,
         "property_value": 0.5,
-        "weighted_score": 1.1666666666666667
+        "weighted_score": 2.5
       }
     }
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "green bottle cap",
+    "physicalObject": "green plastic bottle cap",
     "object_id": 4,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Utilize the bottle cap as a small target for light punches. Users can practice their punches by hitting the cap, which will provide minimal resistance, simulating a softer impact.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "While the bottle cap is too small to punch directly, it can be used as a target for a light tap or flick with the fingers, simulating a quick strike. This interaction can help users practice their punches in a more controlled manner.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2008,9 +2143,9 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 3.466666618982951,
+    "rating_score": 2.799999952316284,
     "property_scores": {
       "outline": {
         "mean_rating": 2.0,
@@ -2018,19 +2153,19 @@
         "weighted_score": 1.7999999523162842
       },
       "hardness": {
-        "mean_rating": 3.3333333333333335,
+        "mean_rating": 2.0,
         "property_value": 0.5,
-        "weighted_score": 1.6666666666666667
+        "weighted_score": 1.0
       }
     }
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "metal rail",
+    "physicalObject": "metal rail or bar",
     "object_id": 5,
     "image_id": 0,
-    "proxyLocation": "top right of the image",
-    "utilizationMethod": "Position the metal rail horizontally and allow users to punch it. The firm surface will provide a strong resistance, but caution should be taken to avoid injury due to its hardness.",
+    "proxyLocation": "top right of the laptop",
+    "utilizationMethod": "Wrap the metal rail with a soft material to create a punching surface. Users can then punch the rail, which will provide a firm resistance while still allowing for a soft feel due to the padding.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2053,7 +2188,52 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 4.199999928474426,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 3.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 2.6999999284744263
+      },
+      "hardness": {
+        "mean_rating": 3.0,
+        "property_value": 0.5,
+        "weighted_score": 1.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "various cables",
+    "object_id": 6,
+    "image_id": 0,
+    "proxyLocation": "scattered around the bottom of the image",
+    "utilizationMethod": "While not ideal for punching, users can use the cables to practice their punches by lightly tapping or brushing against them, simulating the action of striking without the need for a solid target.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
     "rating_score": 1.399999976158142,
     "property_scores": {
@@ -2071,56 +2251,11 @@
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "various cables",
-    "object_id": 6,
-    "image_id": 0,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Bundle the cables together and secure them to create a soft, flexible target. Users can punch the bundle, which will provide a slight give, simulating the softness of a punching bag.",
-    "virtualObjectInfo": {
-      "objectName": "Scarecrow punching bag",
-      "involvementType": "contact",
-      "usage": "players will punch it for blowing off steam",
-      "engagementLevel": 0,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
-      "texture": "",
-      "hardness": "feeling a little bit soft while punching",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.8999999761581421,
-      "textureValue": 0.0,
-      "hardnessValue": 0.5,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "1.02",
-        "y": "1.64",
-        "z": "0.70"
-      },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
-    },
-    "rating_score": 5.999999920527141,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 3.3333333333333335,
-        "property_value": 0.8999999761581421,
-        "weighted_score": 2.9999999205271406
-      },
-      "hardness": {
-        "mean_rating": 6.0,
-        "property_value": 0.5,
-        "weighted_score": 3.0
-      }
-    }
-  },
-  {
-    "virtualObject": "Scarecrow punching bag",
     "physicalObject": "black keyboard",
     "object_id": 1,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image",
-    "utilizationMethod": "Encourage users to punch the keyboard gently. The keys will provide a soft resistance, simulating the feeling of a punching bag, while the overall structure remains stable.",
+    "proxyLocation": "bottom left of the image on the desk",
+    "utilizationMethod": "Place a soft cloth over the keyboard to create a punching surface. Users can then punch the cloth-covered keyboard, which will provide a soft resistance, mimicking the feel of the punching bag.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2143,19 +2278,19 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 5.499999920527141,
+    "rating_score": 5.599999904632568,
     "property_scores": {
       "outline": {
-        "mean_rating": 3.3333333333333335,
+        "mean_rating": 4.0,
         "property_value": 0.8999999761581421,
-        "weighted_score": 2.9999999205271406
+        "weighted_score": 3.5999999046325684
       },
       "hardness": {
-        "mean_rating": 5.0,
+        "mean_rating": 4.0,
         "property_value": 0.5,
-        "weighted_score": 2.5
+        "weighted_score": 2.0
       }
     }
   },
@@ -2164,8 +2299,8 @@
     "physicalObject": "white cuboid airpods case",
     "object_id": 2,
     "image_id": 1,
-    "proxyLocation": "bottom center of the image",
-    "utilizationMethod": "Use the AirPods case as a small target for light punches. Users can practice their punches by hitting the case, which will provide minimal resistance, simulating a softer impact.",
+    "proxyLocation": "bottom center of the image on the desk",
+    "utilizationMethod": "Use the AirPods case as a target for light punches or taps. While small, it can simulate the action of striking, allowing users to practice their punches in a more controlled manner.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2188,104 +2323,14 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 3.633333285649617,
+    "rating_score": 2.799999952316284,
     "property_scores": {
       "outline": {
         "mean_rating": 2.0,
         "property_value": 0.8999999761581421,
         "weighted_score": 1.7999999523162842
-      },
-      "hardness": {
-        "mean_rating": 3.6666666666666665,
-        "property_value": 0.5,
-        "weighted_score": 1.8333333333333333
-      }
-    }
-  },
-  {
-    "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "white gaming mouse",
-    "object_id": 3,
-    "image_id": 1,
-    "proxyLocation": "bottom center of the image, next to the airpods case",
-    "utilizationMethod": "Encourage users to punch the mouse lightly. The mouse's surface will provide a slight give, simulating the softness of a punching bag.",
-    "virtualObjectInfo": {
-      "objectName": "Scarecrow punching bag",
-      "involvementType": "contact",
-      "usage": "players will punch it for blowing off steam",
-      "engagementLevel": 0,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
-      "texture": "",
-      "hardness": "feeling a little bit soft while punching",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.8999999761581421,
-      "textureValue": 0.0,
-      "hardnessValue": 0.5,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "1.02",
-        "y": "1.64",
-        "z": "0.70"
-      },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
-    },
-    "rating_score": 5.03333326180776,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 3.0,
-        "property_value": 0.8999999761581421,
-        "weighted_score": 2.6999999284744263
-      },
-      "hardness": {
-        "mean_rating": 4.666666666666667,
-        "property_value": 0.5,
-        "weighted_score": 2.3333333333333335
-      }
-    }
-  },
-  {
-    "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "silver insulated water bottle",
-    "object_id": 4,
-    "image_id": 1,
-    "proxyLocation": "bottom right of the image",
-    "utilizationMethod": "Position the water bottle upright and allow users to punch it. The firm surface will provide a strong resistance, simulating the impact of a punching bag.",
-    "virtualObjectInfo": {
-      "objectName": "Scarecrow punching bag",
-      "involvementType": "contact",
-      "usage": "players will punch it for blowing off steam",
-      "engagementLevel": 0,
-      "inertia": "",
-      "interactivity": "",
-      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
-      "texture": "",
-      "hardness": "feeling a little bit soft while punching",
-      "temperature": "",
-      "inertiaValue": 0.0,
-      "interactivityValue": 0.0,
-      "outlineValue": 0.8999999761581421,
-      "textureValue": 0.0,
-      "hardnessValue": 0.5,
-      "temperatureValue": 0.0,
-      "dimensions_meters": {
-        "x": "1.02",
-        "y": "1.64",
-        "z": "0.70"
-      },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
-    },
-    "rating_score": 4.899999896685282,
-    "property_scores": {
-      "outline": {
-        "mean_rating": 4.333333333333333,
-        "property_value": 0.8999999761581421,
-        "weighted_score": 3.8999998966852822
       },
       "hardness": {
         "mean_rating": 2.0,
@@ -2296,11 +2341,11 @@
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "notepad with blue lines",
-    "object_id": 5,
+    "physicalObject": "white gaming mouse",
+    "object_id": 3,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, above the keyboard",
-    "utilizationMethod": "Stack the notepad and encourage users to punch it. The pages will provide a soft resistance, simulating the feeling of a punching bag.",
+    "proxyLocation": "bottom center of the image, next to the airpods case",
+    "utilizationMethod": "While not suitable for punching, users can tap or flick the mouse lightly to simulate a quick strike, allowing for practice without needing a larger target.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2323,14 +2368,104 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 5.499999920527141,
+    "rating_score": 1.399999976158142,
     "property_scores": {
       "outline": {
-        "mean_rating": 3.3333333333333335,
+        "mean_rating": 1.0,
         "property_value": 0.8999999761581421,
-        "weighted_score": 2.9999999205271406
+        "weighted_score": 0.8999999761581421
+      },
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 0.5,
+        "weighted_score": 0.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "silver insulated water bottle",
+    "object_id": 4,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the image on the desk",
+    "utilizationMethod": "Users can punch the insulated water bottle, which has a firm surface but can be padded with a cloth to create a softer impact, simulating the feel of the punching bag.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 6.4999998807907104,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 5.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 4.4999998807907104
+      },
+      "hardness": {
+        "mean_rating": 4.0,
+        "property_value": 0.5,
+        "weighted_score": 2.0
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "notebook with lined pages",
+    "object_id": 5,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, above the keyboard",
+    "utilizationMethod": "Users can place the notebook on a soft surface and punch it, which will provide a slight give due to the pages, simulating the softness of the punching bag.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 6.099999904632568,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 4.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 3.5999999046325684
       },
       "hardness": {
         "mean_rating": 5.0,
@@ -2341,11 +2476,11 @@
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "green object (possibly a stress ball)",
+    "physicalObject": "green object (possibly a stress ball or similar)",
     "object_id": 6,
     "image_id": 1,
     "proxyLocation": "bottom left of the image, near the keyboard",
-    "utilizationMethod": "Use the stress ball as a direct punching target. Users can punch the stress ball, which will provide a soft and cushioned impact, closely mimicking the feel of a punching bag.",
+    "utilizationMethod": "Users can punch the stress ball directly, which will provide a soft and forgiving surface, closely mimicking the feel of the punching bag.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2368,14 +2503,14 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 8.599999864896139,
+    "rating_score": 9.499999841054281,
     "property_scores": {
       "outline": {
-        "mean_rating": 5.666666666666667,
+        "mean_rating": 6.666666666666667,
         "property_value": 0.8999999761581421,
-        "weighted_score": 5.099999864896139
+        "weighted_score": 5.999999841054281
       },
       "hardness": {
         "mean_rating": 7.0,
@@ -2390,7 +2525,7 @@
     "object_id": 7,
     "image_id": 1,
     "proxyLocation": "top of the image",
-    "utilizationMethod": "Encourage users to punch the area around the monitors (not the screens directly). The sturdy structure will provide resistance, simulating the impact of a punching bag.",
+    "utilizationMethod": "While not suitable for punching, users can practice their punches in the air near the monitors, simulating the action of striking without a physical target.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2413,29 +2548,29 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 3.4333332777023315,
+    "rating_score": 1.399999976158142,
     "property_scores": {
       "outline": {
-        "mean_rating": 2.3333333333333335,
+        "mean_rating": 1.0,
         "property_value": 0.8999999761581421,
-        "weighted_score": 2.0999999443689985
+        "weighted_score": 0.8999999761581421
       },
       "hardness": {
-        "mean_rating": 2.6666666666666665,
+        "mean_rating": 1.0,
         "property_value": 0.5,
-        "weighted_score": 1.3333333333333333
+        "weighted_score": 0.5
       }
     }
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "papers with text",
+    "physicalObject": "computer screen displaying code",
     "object_id": 8,
     "image_id": 1,
-    "proxyLocation": "bottom right of the image, under the monitor",
-    "utilizationMethod": "Stack the papers and allow users to punch them. The papers will provide minimal resistance, simulating a softer impact.",
+    "proxyLocation": "right monitor, top right of the image",
+    "utilizationMethod": "Users can practice their punches in the air near the screen, simulating the action of striking without a physical target.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2458,29 +2593,29 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 4.0999999443689985,
+    "rating_score": 1.399999976158142,
     "property_scores": {
       "outline": {
-        "mean_rating": 2.3333333333333335,
+        "mean_rating": 1.0,
         "property_value": 0.8999999761581421,
-        "weighted_score": 2.0999999443689985
+        "weighted_score": 0.8999999761581421
       },
       "hardness": {
-        "mean_rating": 4.0,
+        "mean_rating": 1.0,
         "property_value": 0.5,
-        "weighted_score": 2.0
+        "weighted_score": 0.5
       }
     }
   },
   {
     "virtualObject": "Scarecrow punching bag",
-    "physicalObject": "pen",
+    "physicalObject": "computer screen displaying text",
     "object_id": 9,
     "image_id": 1,
-    "proxyLocation": "bottom left of the image, near the notepad",
-    "utilizationMethod": "Use the pen as a target for very light punches. Users can practice their punches by hitting the pen, which will provide minimal resistance.",
+    "proxyLocation": "left monitor, top left of the image",
+    "utilizationMethod": "Users can practice their punches in the air near the screen, simulating the action of striking without a physical target.",
     "virtualObjectInfo": {
       "objectName": "Scarecrow punching bag",
       "involvementType": "contact",
@@ -2503,19 +2638,154 @@
         "y": "1.64",
         "z": "0.70"
       },
-      "interactionDeduction": "Users will make contact with the scarecrow punching bag using their fists or palms. The interaction will involve a striking motion, where users punch the bag to release tension. The bag will feel slightly soft upon impact, providing a cushioning effect. Users may experience a brief moment of resistance before the bag absorbs the punch, simulating a real punching experience."
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
     },
-    "rating_score": 2.3666666348775225,
+    "rating_score": 1.399999976158142,
     "property_scores": {
       "outline": {
-        "mean_rating": 1.3333333333333333,
+        "mean_rating": 1.0,
         "property_value": 0.8999999761581421,
-        "weighted_score": 1.199999968210856
+        "weighted_score": 0.8999999761581421
       },
       "hardness": {
-        "mean_rating": 2.3333333333333335,
+        "mean_rating": 1.0,
         "property_value": 0.5,
-        "weighted_score": 1.1666666666666667
+        "weighted_score": 0.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "white pen",
+    "object_id": 10,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the notebook",
+    "utilizationMethod": "While not suitable for punching, users can tap or flick the pen lightly to simulate a quick strike, allowing for practice without needing a larger target.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 1.399999976158142,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 0.8999999761581421
+      },
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 0.5,
+        "weighted_score": 0.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "stack of papers",
+    "object_id": 11,
+    "image_id": 1,
+    "proxyLocation": "bottom right of the image, under the right monitor",
+    "utilizationMethod": "Users can punch the stack of papers, which will provide a slight give upon impact, simulating the softness of the punching bag.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 6.099999904632568,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 4.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 3.5999999046325684
+      },
+      "hardness": {
+        "mean_rating": 5.0,
+        "property_value": 0.5,
+        "weighted_score": 2.5
+      }
+    }
+  },
+  {
+    "virtualObject": "Scarecrow punching bag",
+    "physicalObject": "coin",
+    "object_id": 12,
+    "image_id": 1,
+    "proxyLocation": "bottom left of the image, near the notebook",
+    "utilizationMethod": "While too small for punching, users can flick or tap the coin lightly to simulate a quick strike, allowing for practice without needing a larger target.",
+    "virtualObjectInfo": {
+      "objectName": "Scarecrow punching bag",
+      "involvementType": "contact",
+      "usage": "players will punch it for blowing off steam",
+      "engagementLevel": 0,
+      "inertia": "",
+      "interactivity": "",
+      "outline": "the punching bag is positioned on the ground. make sure a proxy's volume covers this punching bag",
+      "texture": "",
+      "hardness": "feeling a little bit soft while punching",
+      "temperature": "",
+      "inertiaValue": 0.0,
+      "interactivityValue": 0.0,
+      "outlineValue": 0.8999999761581421,
+      "textureValue": 0.0,
+      "hardnessValue": 0.5,
+      "temperatureValue": 0.0,
+      "dimensions_meters": {
+        "x": "1.02",
+        "y": "1.64",
+        "z": "0.70"
+      },
+      "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    },
+    "rating_score": 1.399999976158142,
+    "property_scores": {
+      "outline": {
+        "mean_rating": 1.0,
+        "property_value": 0.8999999761581421,
+        "weighted_score": 0.8999999761581421
+      },
+      "hardness": {
+        "mean_rating": 1.0,
+        "property_value": 0.5,
+        "weighted_score": 0.5
       }
     }
   }

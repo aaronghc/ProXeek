@@ -8,32 +8,32 @@
     },
     {
       "object_id": 2,
-      "object": "black VR headset with cables",
+      "object": "black VR headset with straps",
       "position": "bottom left of the image",
       "image_id": 0
     },
     {
       "object_id": 3,
-      "object": "black speaker",
-      "position": "left side of the image",
+      "object": "black speaker or subwoofer",
+      "position": "bottom left corner of the image",
       "image_id": 0
     },
     {
       "object_id": 4,
-      "object": "green bottle cap",
-      "position": "top right of the image",
+      "object": "green plastic bottle cap",
+      "position": "top right of the laptop",
       "image_id": 0
     },
     {
       "object_id": 5,
-      "object": "metal rail",
-      "position": "top right of the image",
+      "object": "metal rail or bar",
+      "position": "top right of the laptop",
       "image_id": 0
     },
     {
       "object_id": 6,
       "object": "various cables",
-      "position": "bottom center of the image",
+      "position": "scattered around the bottom of the image",
       "image_id": 0
     }
   ],
@@ -64,13 +64,13 @@
     },
     {
       "object_id": 5,
-      "object": "notepad with blue lines",
+      "object": "notebook with lined pages",
       "position": "bottom left of the image, above the keyboard",
       "image_id": 1
     },
     {
       "object_id": 6,
-      "object": "green object (possibly a stress ball)",
+      "object": "green object (possibly a stress ball or similar)",
       "position": "bottom left of the image, near the keyboard",
       "image_id": 1
     },
@@ -82,14 +82,32 @@
     },
     {
       "object_id": 8,
-      "object": "papers with text",
-      "position": "bottom right of the image, under the monitor",
+      "object": "computer screen displaying code",
+      "position": "right monitor, top right of the image",
       "image_id": 1
     },
     {
       "object_id": 9,
-      "object": "pen",
-      "position": "bottom left of the image, near the notepad",
+      "object": "computer screen displaying text",
+      "position": "left monitor, top left of the image",
+      "image_id": 1
+    },
+    {
+      "object_id": 10,
+      "object": "white pen",
+      "position": "bottom right of the notebook",
+      "image_id": 1
+    },
+    {
+      "object_id": 11,
+      "object": "stack of papers",
+      "position": "bottom right of the image, under the right monitor",
+      "image_id": 1
+    },
+    {
+      "object_id": 12,
+      "object": "coin",
+      "position": "bottom left of the image, near the notebook",
       "image_id": 1
     }
   ]

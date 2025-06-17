@@ -353,7 +353,16 @@ Make sure to include ALL physical objects in your evaluation, even those with lo
 relationship_rating_system_prompt = """
 You are an expert in haptic design who specializes in evaluating how well pairs of physical objects can simulate the expected haptic feedback when two virtual objects interact with each other in VR.
 
-Your task is to evaluate how well each pair of physical objects (one as contact object, one as substrate object) can deliver the expected haptic feedback described for the virtual object relationship.
+Your task involves two steps:
+
+**Step 1: Substrate Utilization Planning**
+For each physical substrate object, determine how it should be utilized to simulate the virtual substrate object. Consider:
+- The expected haptic feedback described for the virtual relationship
+- How the physical contact object's utilization method would interact with this substrate
+- What positioning, orientation, or preparation of the substrate would best support the intended interaction
+
+**Step 2: Critical Evaluation**
+Evaluate how well each contact-substrate pair can deliver the expected haptic feedback, considering both the contact object's utilization method and your planned substrate utilization method.
 
 Rate each physical object pair on a 7-point Likert scale for the following three aspects:
 1 - Strongly Disagree 
@@ -365,9 +374,44 @@ Rate each physical object pair on a 7-point Likert scale for the following three
 7 - Strongly Agree
 
 Evaluate each pair based on these three questions:
-1. "I felt the haptic feedback was well coordinated with visual feedback" - Harmony: How well the physical interaction would align with what users see visually
-2. "I felt the haptic feedback changed depending on how things changed in the system" - Expressivity: How well the physical objects can provide dynamic feedback that changes during interaction
-3. "I felt the generated haptic feedback while two physical objects interacting closely mimicked the experiences I would expect" - Realism: How well the overall interaction matches the expected haptic experience
+1. "I felt the haptic feedback was well coordinated with visual feedback" - Harmony: Focus on the synchronization of contact-substrate contact
+2. "I felt the contact object effectively conveyed substrate properties and interaction variations through my hand" - Expressivity: How well substrate properties are conveyed through the contact object
+3. "I felt using this physical contact object on this physical substrate closely simulated the intended haptic feedback"- Realism: How well the overall contact-substrate interaction matches the expected haptic experience
+
+Use the following rubrics to guide your evaluation:
+
+**Harmony Dimension**
+
+Score 1 - Strongly Disagree:
+- Physical contact happens noticeably before visual contact or visual contact occurs with no physical sensation
+- Force direction contradicts visual motion
+- Visual substrate responses don't match felt impact intensity
+
+Score 7 - Strongly Agree:
+- Physical and visual contact perfectly synchronized
+- Every visual contact event has corresponding haptic feedback
+- Force vectors align naturally with visual physics
+- Substrate visual behavior matches haptic intensity
+
+**Expressivity Dimension**
+
+Score 1 - Strongly Disagree:
+- Single uniform feedback regardless of interaction parameters
+- No variation with impact speed, angle, or force
+
+Score 7 - Strongly Agree:
+- Rich feedback variations convey substrate properties clearly
+- Natural variations in speed, angle, and force produce different haptic responses
+
+**Realism Dimension**
+
+Score 1 - Strongly Disagree:
+- The interaction feels fundamentally wrong (e.g., soft bouncy feedback when hammering should feel solid)
+- Missing essential haptic elements that define in the expected haptic feedback
+
+Score 7 - Strongly Agree:
+- All characteristic sensations of the real interaction are present (impacts, resistance, texture transmission, etc.)
+- The physical pairing naturally affords the same manipulation techniques as the virtual scenario
 
 FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
 ```json
@@ -381,18 +425,20 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
     "contactImage_id": 0,
     "substrateObject_id": 2,
     "substrateImage_id": 1,
+    "contactUtilizationMethod": "utilization method for the contact object",
+    "substrateUtilizationMethod": "your planned utilization method for the substrate object",
     "harmony_rating": 5,
-    "harmony_explanation": "Brief explanation for harmony rating",
+    "harmony_explanation": "Brief explanation for harmony rating considering both utilization methods",
     "expressivity_rating": 4,
-    "expressivity_explanation": "Brief explanation for expressivity rating", 
+    "expressivity_explanation": "Brief explanation for expressivity rating considering both utilization methods", 
     "realism_rating": 6,
-    "realism_explanation": "Brief explanation for realism rating"
+    "realism_explanation": "Brief explanation for realism rating considering both utilization methods"
   },
   ...
 ]
 ```
 
-Include ALL possible pairs in your evaluation.
+Include EVERY pair in your evaluation.
 """
 
 # Function to process a single image and recognize objects
@@ -1462,6 +1508,8 @@ async def rate_single_relationship_group(relationship_annotation, contact_object
                 virtual_substrate_obj = vobj
         
         contact_interaction_deduction = virtual_contact_obj.get("interactionDeduction", "No interaction deduction available") if virtual_contact_obj else "No interaction deduction available"
+        contact_dimensions = virtual_contact_obj.get("dimensions_meters", {}) if virtual_contact_obj else {}
+        substrate_dimensions = virtual_substrate_obj.get("dimensions_meters", {}) if virtual_substrate_obj else {}
         
         # Get utilization method for the physical contact object
         contact_utilization_method = "No utilization method available"
@@ -1472,6 +1520,12 @@ async def rate_single_relationship_group(relationship_annotation, contact_object
                 contact_utilization_method = proxy_result.get("utilizationMethod", "No utilization method available")
                 break
         
+        # Format dimensions for display
+        def format_dimensions(dims):
+            if not dims:
+                return "No dimensions available"
+            return f"Width: {dims.get('x', 'N/A')}m, Height: {dims.get('y', 'N/A')}m, Depth: {dims.get('z', 'N/A')}m"
+        
         relationship_text = f"""# Relationship Rating Task (Group {group_index})
 
 ## Virtual Object Relationship
@@ -1479,8 +1533,12 @@ async def rate_single_relationship_group(relationship_annotation, contact_object
 - **Substrate Object**: {virtual_substrate_name}
 - **Expected Haptic Feedback**: {annotation_text}
 
-## Virtual Contact Object Interaction
+## Virtual Contact Object Details
 - **Interaction Deduction**: {contact_interaction_deduction}
+- **Dimensions**: {format_dimensions(contact_dimensions)}
+
+## Virtual Substrate Object Details
+- **Dimensions**: {format_dimensions(substrate_dimensions)}
 
 ## Physical Object Assignment
 - **Contact Object**: {contact_object.get('object', 'Unknown')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
@@ -1496,7 +1554,12 @@ Please rate how well each pair (contact + substrate) can simulate the expected h
         
         # 2. Add virtual object snapshots if available
         # Add virtual contact object snapshot
+        contact_snapshot_found = False
+        normalized_contact_name = normalize_name(virtual_contact_name)
+        
+        # Try direct match first
         if virtual_contact_name in object_snapshot_map:
+            log(f"Found snapshot for contact object: {virtual_contact_name} (direct match)")
             human_message_content.append({
                 "type": "text",
                 "text": f"\n## Virtual Contact Object: {virtual_contact_name}\n"
@@ -1508,9 +1571,54 @@ Please rate how well each pair (contact + substrate) can simulate the expected h
                     "detail": "high"
                 }
             })
+            contact_snapshot_found = True
+        # Then try normalized match
+        elif normalized_contact_name in object_snapshot_map:
+            log(f"Found snapshot for contact object: {virtual_contact_name} (normalized as {normalized_contact_name})")
+            human_message_content.append({
+                "type": "text",
+                "text": f"\n## Virtual Contact Object: {virtual_contact_name}\n"
+            })
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[normalized_contact_name]}", 
+                    "detail": "high"
+                }
+            })
+            contact_snapshot_found = True
+        # Finally try fuzzy match
+        else:
+            # Try to find partial matches
+            potential_matches = [name for name in object_snapshot_map.keys() 
+                               if normalized_contact_name in normalize_name(name) or normalize_name(name) in normalized_contact_name]
+            
+            if potential_matches:
+                best_match = potential_matches[0]  # Take the first match
+                log(f"Found snapshot for contact object: {virtual_contact_name} (fuzzy match: {best_match})")
+                human_message_content.append({
+                    "type": "text",
+                    "text": f"\n## Virtual Contact Object: {virtual_contact_name}\n"
+                })
+                human_message_content.append({
+                    "type": "image_url", 
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{object_snapshot_map[best_match]}", 
+                        "detail": "high"
+                    }
+                })
+                contact_snapshot_found = True
+        
+        if not contact_snapshot_found:
+            log(f"No snapshot found for contact object: {virtual_contact_name} (normalized: {normalized_contact_name})")
         
         # Add virtual substrate object snapshot
+        substrate_snapshot_found = False
+        normalized_substrate_name = normalize_name(virtual_substrate_name)
+        
+        # Try direct match first
         if virtual_substrate_name in object_snapshot_map:
+            log(f"Found snapshot for substrate object: {virtual_substrate_name} (direct match)")
             human_message_content.append({
                 "type": "text",
                 "text": f"\n## Virtual Substrate Object: {virtual_substrate_name}\n"
@@ -1522,6 +1630,46 @@ Please rate how well each pair (contact + substrate) can simulate the expected h
                     "detail": "high"
                 }
             })
+            substrate_snapshot_found = True
+        # Then try normalized match
+        elif normalized_substrate_name in object_snapshot_map:
+            log(f"Found snapshot for substrate object: {virtual_substrate_name} (normalized as {normalized_substrate_name})")
+            human_message_content.append({
+                "type": "text",
+                "text": f"\n## Virtual Substrate Object: {virtual_substrate_name}\n"
+            })
+            human_message_content.append({
+                "type": "image_url", 
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{object_snapshot_map[normalized_substrate_name]}", 
+                    "detail": "high"
+                }
+            })
+            substrate_snapshot_found = True
+        # Finally try fuzzy match
+        else:
+            # Try to find partial matches
+            potential_matches = [name for name in object_snapshot_map.keys() 
+                               if normalized_substrate_name in normalize_name(name) or normalize_name(name) in normalized_substrate_name]
+            
+            if potential_matches:
+                best_match = potential_matches[0]  # Take the first match
+                log(f"Found snapshot for substrate object: {virtual_substrate_name} (fuzzy match: {best_match})")
+                human_message_content.append({
+                    "type": "text",
+                    "text": f"\n## Virtual Substrate Object: {virtual_substrate_name}\n"
+                })
+                human_message_content.append({
+                    "type": "image_url", 
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{object_snapshot_map[best_match]}", 
+                        "detail": "high"
+                    }
+                })
+                substrate_snapshot_found = True
+        
+        if not substrate_snapshot_found:
+            log(f"No snapshot found for substrate object: {virtual_substrate_name} (normalized: {normalized_substrate_name})")
         
         # 3. Add environment snapshots with their detected objects
         for i, image_base64 in enumerate(environment_images):
@@ -1577,16 +1725,28 @@ Please rate how well each pair (contact + substrate) can simulate the expected h
             "text": f"""
 # Your Task
 
-Rate each pair where the **contact object** is "{contact_object.get('object')}" and each **substrate object** is one of the other physical objects.
+**Step 1: Plan Substrate Utilization**
+For each physical substrate object, determine how it should be utilized to simulate the virtual substrate object "{virtual_substrate_name}". Consider:
+- The expected haptic feedback: {annotation_text}
+- How the contact object utilization method: "{contact_utilization_method}" would interact with each substrate
+- What positioning, orientation, or preparation of each substrate would best support the intended interaction
+
+**Step 2: Evaluate Each Pair**
+Rate each pair where the **contact object** is "{contact_object.get('object')}" (using the utilization method above) and each **substrate object** is one of the other physical objects (using your planned substrate utilization method).
 
 For each pair, rate on a 7-point Likert scale:
 1. **Harmony**: "I felt the haptic feedback was well coordinated with visual feedback"
-2. **Expressivity**: "I felt the haptic feedback changed depending on how things changed in the system"  
-3. **Realism**: "I felt the generated haptic feedback while two physical objects interacting closely mimicked the experiences I would expect"
+2. **Expressivity**: "I felt the contact object effectively conveyed substrate properties and interaction variations through my hand"  
+3. **Realism**: "I felt using this physical contact object on this physical substrate closely simulated the intended haptic feedback"
+
+**Critical Evaluation Guidelines:**
+- Consider both the contact object's utilization method AND your planned substrate utilization method
+- Rate based on how well the combined utilization methods would deliver the expected haptic feedback
+- Be critical in your assessment using the provided rubrics
 
 Expected interaction: {annotation_text}
 
-FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt.
+FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, including both contactUtilizationMethod and your planned substrateUtilizationMethod for each pair.
 """
         })
         
