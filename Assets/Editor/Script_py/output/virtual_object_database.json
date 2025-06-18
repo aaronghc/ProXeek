@@ -21,7 +21,7 @@
       "y": "0.36",
       "z": "0.54"
     },
-    "interactionDeduction": "Users will approach the treasure chest and use their hands to press down on the hinged lid to open it. The interaction will likely involve a momentary tap to initiate the opening mechanism, followed by a sustained contact as they lift the lid. The wooden texture will provide a tactile feedback, and users may feel a slight resistance when lifting the lid, simulating the weight of the chest."
+    "interactionDeduction": "Users will approach the treasure chest and use their hands to make contact with the lid. The interaction will likely involve a pressing motion to push the lid open, utilizing a sustained contact method with their palms. The chest's wooden texture will provide a tactile feedback as users feel the surface while opening it. The hinged lid will respond by swinging open, allowing users to access the treasures inside."
   },
   {
     "objectName": "key",
@@ -45,7 +45,7 @@
       "y": "0.05",
       "z": "0.14"
     },
-    "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their thumb and index finger. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth finish of the key will provide a comfortable tactile experience, and users will feel the outline of the ring-shaped holding part as they manipulate it."
+    "interactionDeduction": "Users will grasp the key using a precision grip, holding it between their fingers. The interaction will involve a turning motion as they insert the key into the lock of the treasure chest. The smooth texture of the key will provide a pleasant tactile sensation, while the ring-shaped holding part allows for easy manipulation. Users will likely twist the key to unlock the chest, feeling a slight resistance as they engage the lock mechanism."
   },
   {
     "objectName": "Hammer Dispenser 2",
@@ -69,7 +69,7 @@
       "y": "0.42",
       "z": "0.17"
     },
-    "interactionDeduction": "Users will grasp the hammer using a power grip, wrapping their fingers around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy design with a concentrated center of mass will provide significant inertia, making the hammer feel substantial in the user's hands. Users will experience a strong haptic feedback upon impact, simulating the force of a real hammer."
+    "interactionDeduction": "Users will grasp the Hammer Dispenser 2 using a power grip, wrapping their hand around the round handle. The interaction will involve lifting the hammer and swinging it downwards to smash objects. The relatively heavy weight, with the center of mass concentrated at one end, will provide a strong inertia that users will feel as they lift and swing it. The hammer will respond to the user's actions with a solid impact against the target, simulating a realistic smashing experience."
   },
   {
     "objectName": "Scarecrow punching bag",
@@ -93,6 +93,6 @@
       "y": "1.64",
       "z": "0.70"
     },
-    "interactionDeduction": "Users will approach the scarecrow punching bag and use their fists to strike it, employing a contact method of punching. The interaction will involve a momentary contact as they hit the bag, with the soft feeling of the punching bag providing a forgiving surface. Users may feel a slight give upon impact, simulating the softness of the bag, and they may engage in repeated strikes to blow off steam."
+    "interactionDeduction": "Users will approach the Scarecrow punching bag and use their fists to make contact with it. The interaction will involve a striking motion, where users will punch the bag to blow off steam. The punching bag's soft feel will provide a cushioning effect upon impact, allowing users to feel a slight give as they strike it. The interaction will likely be momentary, with users delivering quick punches, feeling the resistance and rebound of the bag as they engage in this physical activity."
   }
 ]
