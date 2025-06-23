@@ -8,13 +8,47 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from PIL import Image
 import asyncio
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional, Union
+from pydantic import SecretStr
 
+# =============================================================================
+# CONFIGURATION PARAMETERS - Easy to find and modify
+# =============================================================================
+
+# Substrate Utilization Process - Overlapping Batch Configuration
+SUBSTRATE_BATCH_SIZE = 4        # Number of tasks per batch
+SUBSTRATE_BATCH_INTERVAL = 3  # Seconds between starting new batches
+
+# Property Rating Process - Overlapping Batch Configuration
+PROPERTY_RATING_BATCH_SIZE = 2  # Number of tasks per batch
+PROPERTY_RATING_BATCH_INTERVAL = 3  # Seconds between starting new batches
+
+# Future: Add other process configurations here as needed
+# RELATIONSHIP_RATING_BATCH_SIZE = 4
+
+# =============================================================================
 
 # Set up logging to help debug
 def log(message):
     print(f"LOG: {message}")
     sys.stdout.flush()
+
+# Helper function to extract text content from LLM response
+def extract_response_text(response_content) -> str:
+    """Extract text content from LLM response, handling different response formats"""
+    if isinstance(response_content, list):
+        # If it's a list, join the elements or take the first string element
+        text_content = ""
+        for item in response_content:
+            if isinstance(item, str):
+                text_content += item
+            elif isinstance(item, dict) and 'text' in item:
+                text_content += item['text']
+        return text_content
+    elif isinstance(response_content, str):
+        return response_content
+    else:
+        return str(response_content)
 
 
 log("Script started")
@@ -23,6 +57,35 @@ log("Script started")
 def normalize_name(name):
     # Convert to lowercase, replace spaces with underscores, remove special characters
     return name.lower().replace(" ", "_").replace("-", "_")
+
+# Helper function to retry async operations with exponential backoff and timeout
+async def retry_with_backoff(async_func, max_retries=3, base_delay=1.0, backoff_factor=2.0, timeout_seconds=300):
+    """Retry an async function with exponential backoff and timeout"""
+    for attempt in range(max_retries):
+        try:
+            # Add timeout to each attempt
+            result = await asyncio.wait_for(async_func(), timeout=timeout_seconds)
+            return result
+        except asyncio.TimeoutError as e:
+            if attempt == max_retries - 1:
+                log(f"Final retry attempt timed out after {timeout_seconds} seconds")
+                raise e
+            
+            delay = base_delay * (backoff_factor ** attempt)
+            log(f"Attempt {attempt + 1} timed out after {timeout_seconds} seconds. Retrying in {delay:.1f} seconds...")
+            await asyncio.sleep(delay)
+        except Exception as e:
+            if attempt == max_retries - 1:
+                # Last attempt failed, re-raise the exception
+                log(f"Final retry attempt failed: {e}")
+                raise e
+            
+            delay = base_delay * (backoff_factor ** attempt)
+            log(f"Attempt {attempt + 1} failed: {e}. Retrying in {delay:.1f} seconds...")
+            await asyncio.sleep(delay)
+    
+    # This should never be reached, but just in case
+    raise Exception("Max retries exceeded")
 
 # Check if we're running from Unity or from the server
 if len(sys.argv) > 1:
@@ -113,7 +176,7 @@ physical_object_recognition_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
-    api_key=api_key
+    api_key=SecretStr(api_key) if api_key else None
 )
 
 # Initialize the virtual object processing LLM
@@ -121,7 +184,7 @@ virtual_object_processor_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
-    api_key=api_key
+    api_key=SecretStr(api_key) if api_key else None
 )
 
 # Initialize the proxy matching LLM
@@ -129,7 +192,7 @@ proxy_matching_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
-    api_key=api_key
+    api_key=SecretStr(api_key) if api_key else None
 )
 
 # Initialize the property rating LLM
@@ -137,7 +200,7 @@ property_rating_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
-    api_key=api_key
+    api_key=SecretStr(api_key) if api_key else None
 )
 
 # Initialize the relationship rating LLM
@@ -145,7 +208,7 @@ relationship_rating_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
-    api_key=api_key
+    api_key=SecretStr(api_key) if api_key else None
 )
 log("Initialized relationship_rating_llm for LangSmith tracing")
 
@@ -154,7 +217,15 @@ substrate_utilization_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
     base_url="https://api.nuwaapi.com/v1",
-    api_key=api_key
+    api_key=SecretStr(api_key) if api_key else None
+)
+
+# Initialize the greeting test LLM
+greeting_test_llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0.1,
+    base_url="https://api.nuwaapi.com/v1",
+    api_key=SecretStr(api_key) if api_key else None
 )
 
 # System prompt for object recognition
@@ -249,6 +320,8 @@ For each physical object, propose a specific method to utilize it as a haptic pr
 Focus on matching the most important haptic properties of the virtual object (those with higher importance values), but always ensure your proxy method enables the user to perform the same type of interaction as described in the interaction deduction.
 
 Make sure to include the object_id and image_id for each physical object exactly as they appear in the detected objects list.
+
+CRITICAL REQUIREMENT: You MUST evaluate and generate a utilization method for EVERY SINGLE physical object shown in list (Detected Objects in this Snapshot). Do not skip any objects. Even if an object seems unsuitable, you must still propose a utilization method and explain how it could potentially be used as a proxy.
 
 IMPORTANT: Image IDs begin at 0 (not 1). The first image has image_id=0, the second has image_id=1, etc.
 """
@@ -361,13 +434,17 @@ Make sure to include ALL physical objects in your evaluation, even those with lo
     full_prompt = base_prompt + rubrics.get(property_type.lower(), "") + output_format
     return full_prompt
 
-# System prompt for relationship rating
-relationship_rating_system_prompt = """
+# Function to generate relationship dimension-specific system prompt
+def get_relationship_rating_system_prompt(dimension_name):
+    dimension_type = dimension_name.lower()
+    
+    # Base prompt
+    base_prompt = f"""
 You are an expert in haptic design who specializes in evaluating how well pairs of physical objects can simulate the expected haptic feedback when two virtual objects interact with each other in VR.
 
 You will be provided with pre-generated substrate utilization methods for each contact-substrate pair. Your task is to critically evaluate how well each pair can deliver the expected haptic feedback, considering both the contact object's utilization method and the provided substrate utilization method.
 
-Rate each physical object pair on a 7-point Likert scale for the following three aspects:
+Rate each physical object pair on a 7-point Likert scale for {dimension_name}:
 1 - Strongly Disagree 
 2 - Disagree
 3 - Somewhat Disagree
@@ -376,14 +453,15 @@ Rate each physical object pair on a 7-point Likert scale for the following three
 6 - Agree
 7 - Strongly Agree
 
-Evaluate each pair based on these three questions:
-1. "I felt the haptic feedback was well coordinated with visual feedback" - Harmony: Focus on the synchronization of contact-substrate contact
-2. "I felt the contact object effectively conveyed substrate properties and interaction variations through my hand" - Expressivity: How well substrate properties are conveyed through the contact object
-3. "I felt using this physical contact object on this physical substrate closely simulated the intended haptic feedback"- Realism: How well the overall contact-substrate interaction matches the expected haptic experience
+Focus specifically on the {dimension_name} dimension:
+"""
 
-Use the following rubrics to guide your evaluation:
+    # Dimension-specific rubrics
+    rubrics = {
+        "harmony": """
+**Harmony Dimension**: "I felt the haptic feedback was well coordinated with visual feedback"
 
-**Harmony Dimension**
+Focus on the synchronization of contact-substrate contact:
 
 Score 1 - Strongly Disagree:
 - Physical contact happens noticeably before visual contact or visual contact occurs with no physical sensation
@@ -395,72 +473,116 @@ Score 7 - Strongly Agree:
 - Every visual contact event has corresponding haptic feedback
 - Force vectors align naturally with visual physics
 - Substrate visual behavior matches haptic intensity
+""",
+        "expressivity": """
+**Expressivity Dimension**: "I felt the contact object effectively conveyed substrate properties and interaction variations through my hand"
 
-**Expressivity Dimension**
+Focus on how well substrate properties are conveyed through the contact object:
 
 Score 1 - Strongly Disagree:
 - Single uniform feedback regardless of interaction parameters
 - No variation with impact speed, angle, or force
+- Contact object fails to transmit any substrate characteristics
 
 Score 7 - Strongly Agree:
 - Rich feedback variations convey substrate properties clearly
 - Natural variations in speed, angle, and force produce different haptic responses
+- Contact object effectively transmits substrate material properties and surface characteristics
+""",
+        "realism": """
+**Realism Dimension**: "I felt using this physical contact object on this physical substrate closely simulated the intended haptic feedback"
 
-**Realism Dimension**
+Focus on how well the overall contact-substrate interaction matches the expected haptic experience:
 
 Score 1 - Strongly Disagree:
 - The interaction feels fundamentally wrong (e.g., soft bouncy feedback when hammering should feel solid)
-- Missing essential haptic elements that define in the expected haptic feedback
+- Missing essential haptic elements that define the expected haptic feedback
+- Overall experience contradicts the virtual interaction expectations
 
 Score 7 - Strongly Agree:
 - All characteristic sensations of the real interaction are present (impacts, resistance, texture transmission, etc.)
 - The physical pairing naturally affords the same manipulation techniques as the virtual scenario
-
+- The combined utilization methods deliver the essential haptic elements described in the expected feedback
+"""
+    }
+    
+    # Output format
+    output_format = f"""
 FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
 ```json
 [
-  {
-    "virtualContactObject": "name of virtual contact object",
-    "virtualSubstrateObject": "name of virtual substrate object", 
-    "physicalContactObject": "name of physical contact object",
-    "physicalSubstrateObject": "name of physical substrate object",
+  {{
+    "virtualContactObject": "FULL name of virtual contact object",
+    "virtualSubstrateObject": "FULL name of virtual substrate object", 
+    "physicalContactObject": "FULL name of physical contact object",
+    "physicalSubstrateObject": "FULL name of physical substrate object",
     "contactObject_id": 1,
     "contactImage_id": 0,
     "substrateObject_id": 2,
     "substrateImage_id": 1,
     "contactUtilizationMethod": "utilization method for the contact object",
     "substrateUtilizationMethod": "your planned utilization method for the substrate object",
-    "harmony_rating": 5,
-    "harmony_explanation": "Brief explanation for harmony rating considering both utilization methods",
-    "expressivity_rating": 4,
-    "expressivity_explanation": "Brief explanation for expressivity rating considering both utilization methods", 
-    "realism_rating": 6,
-    "realism_explanation": "Brief explanation for realism rating considering both utilization methods"
-  },
+    "{dimension_type}_rating": 5,
+    "{dimension_type}_explanation": "Brief explanation for {dimension_type} rating considering both utilization methods"
+  }},
   ...
 ]
 ```
 
 Include EVERY pair in your evaluation.
 """
+    
+    # Construct the complete prompt with only the relevant dimension rubric
+    full_prompt = base_prompt + rubrics.get(dimension_type, "") + output_format
+    return full_prompt
 
-# System prompt for substrate utilization method generation
-substrate_utilization_system_prompt = """
-You are an expert in haptic design who specializes in determining how physical objects can be utilized as substrates to simulate virtual substrate objects in VR.
 
-Your task is to analyze ONE specific virtual contact-substrate relationship and determine how each physical object in the environment could be utilized as a substrate to work with a specific physical contact object.
+
+# Function to generate substrate-type-specific system prompt
+def get_substrate_utilization_system_prompt(substrate_type):
+    # Base prompt components
+    base_intro = """You are an expert in haptic design who specializes in determining how physical objects can be utilized as substrates to simulate virtual substrate objects in VR.
+
+Your task is to analyze ONE specific virtual contact-substrate relationship and determine how each physical object in the environment could be utilized as a substrate to work with a specific physical contact object."""
+    
+    # Type-specific context and instructions
+    if substrate_type == "pure":
+        context_section = """
+**Context**: The virtual substrate object is a PURE SUBSTRATE (involvementType = "substrate") that users do not directly interact with, but rather interact with indirectly through other objects.
 
 You will be given:
 1. A virtual contact object and its corresponding physical contact object with its utilization method
-2. A virtual substrate object and the expected haptic feedback for their interaction
+2. A virtual substrate object (pure substrate) and the expected haptic feedback for their interaction
 3. All physical objects in the environment as potential substrate candidates
 
 For each physical substrate candidate, determine:
-- How it should be positioned, oriented, or prepared
+- How it should be positioned, oriented, or prepared to serve as a substrate
 - What specific properties or features should be utilized
 - How it would interact with the given physical contact object's utilization method
-- What modifications or setup might be needed
+- What modifications or setup might be needed"""
+    else:  # dual-role
+        context_section = """
+**Important Context**: The virtual substrate object is a DUAL-ROLE object that:
+1. Serves as a contact object that users directly interact with (already has proxy matching results)
+2. Also serves as a substrate object in relationships with other contact objects
 
+You will be given:
+1. A virtual contact object and its corresponding physical contact object with its utilization method
+2. A virtual substrate object (dual-role) that ALSO has existing utilization methods from proxy matching
+3. All physical objects in the environment as potential substrate candidates
+4. Existing utilization methods for physical objects when used as proxies for the dual-role virtual substrate object
+
+For each physical substrate candidate, consider:
+- Its existing utilization method as a proxy for the virtual substrate object (if any)
+- How this existing method can be adapted or enhanced for substrate use
+- How it should be positioned/oriented to work with the contact object's utilization method
+- How to combine its contact-proxy role with its substrate role
+- What additional setup or modifications might be needed
+
+**Key Consideration**: When a physical object already has a utilization method for the virtual substrate object from proxy matching, build upon that existing method rather than completely replacing it. The substrate utilization should complement and work with the existing contact utilization."""
+    
+    # Common evaluation guidelines
+    guidelines_section = """
 Use the following evaluation guidelines when planning substrate utilization methods:
 
 **Harmony Considerations:**
@@ -476,10 +598,10 @@ Use the following evaluation guidelines when planning substrate utilization meth
 **Realism Considerations:**
 - Focus on substrate utilization that delivers the essential haptic sensations described in the expected feedback
 - Ensure the substrate setup naturally affords the intended manipulation techniques
-- Consider how well the substrate can simulate the virtual substrate's key properties
-
-Important: Consider the specific physical contact object's utilization method when planning how each substrate should be utilized. The substrate utilization should work harmoniously with the contact object's intended use.
-
+- Consider how well the substrate can simulate the virtual substrate's key properties"""
+    
+    # Common output format
+    output_format = """
 FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
 ```json
 [
@@ -500,8 +622,11 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY with the following structure:
 ]
 ```
 
-Include ALL physical objects as potential substrate candidates in your evaluation.
-"""
+Include ALL physical objects as potential substrate candidates in your evaluation."""
+    
+    # Combine all sections
+    full_prompt = base_intro + context_section + guidelines_section + output_format
+    return full_prompt
 
 # Function to process a single image and recognize objects
 async def process_single_image(image_base64: str, image_id: int) -> Dict[str, Any]:
@@ -524,7 +649,8 @@ async def process_single_image(image_base64: str, image_id: int) -> Dict[str, An
         log(f"Received response for image {image_id}")
         
         # Extract JSON from response
-        response_text = response.content
+        response_text = extract_response_text(response.content)
+        
         # Find JSON content between ```json and ```
         json_start = response_text.find("```json")
         if json_start != -1:
@@ -583,7 +709,7 @@ async def process_multiple_images(environment_images: List[str]) -> Dict[int, Li
     return object_database
 
 # Function to save object database to JSON file
-def save_object_database(object_db: Dict[int, List[Dict]], output_path: str) -> str:
+def save_object_database(object_db: Dict[int, List[Dict]], output_path: str) -> Optional[str]:
     try:
         # Convert to serializable format
         serializable_db = {str(k): v for k, v in object_db.items()}
@@ -744,7 +870,7 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
         log("Received haptic feedback descriptions")
         
         # Extract JSON from response using a more robust approach
-        response_text = response.content
+        response_text = extract_response_text(response.content)
         
         # First try to find JSON between code blocks
         json_start = response_text.find("```json")
@@ -887,11 +1013,8 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
                     objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
                     objects_text += f"  Image ID: {i}\n"
                     
-                    # Add all utilization methods for this physical object (from all virtual objects)
-                    util_methods_added = False
-                    # Debug logging
-                    log(f"Checking utilization methods for obj_id: {obj['object_id']}, img_id: {i}")
-                    log(f"Number of proxy results to check: {len(proxy_matching_results)}")
+                    # Collect all utilization methods for this specific physical object
+                    utilization_methods = []
                     
                     # Convert object_id to both string and int for flexible comparison
                     obj_id_int = obj['object_id']
@@ -924,14 +1047,20 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
                             matched_virtual = proxy_result.get("virtualObject", "Unknown")
                             if util_method:
                                 log(f"Found utilization method for {matched_virtual}, obj_id: {proxy_obj_id}, img_id: {proxy_img_id}")
-                                objects_text += f"  Utilization Method for {matched_virtual}: {util_method}\n"
-                                util_methods_added = True
+                                utilization_methods.append(f"    • {matched_virtual}: {util_method}")
                             else:
                                 log(f"Found proxy result for {matched_virtual} but no utilization method")
                     
-                    if not util_methods_added:
+                    # Add all utilization methods for this object in an organized way
+                    if utilization_methods:
+                        objects_text += f"  Available Utilization Methods:\n"
+                        for method in utilization_methods:
+                            objects_text += f"{method}\n"
+                    else:
                         objects_text += f"  No utilization methods available for this object\n"
                         log(f"No utilization methods found for obj_id: {obj['object_id']}, img_id: {i}")
+                    
+                    objects_text += f"\n"  # Add spacing between objects
             else:
                 # Check if we should look for objects in a different format (in case image_id is stored as integer keys)
                 objects_in_snapshot = physical_object_database.get(i, [])
@@ -940,19 +1069,6 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
                         objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
                         # Also display the correct image_id to ensure consistency
                         objects_text += f"  Image ID: {i}\n"
-                else:
-                    # Last attempt - try to find objects that have this image_id in their properties
-                    matching_objects = []
-                    for img_id, objects_list in physical_object_database.items():
-                        for obj in objects_list:
-                            if obj.get("image_id") == i:
-                                matching_objects.append(obj)
-                    
-                    if matching_objects:
-                        for obj in matching_objects:
-                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
-                            # Also display the correct image_id to ensure consistency
-                            objects_text += f"  Image ID: {i}\n"
                     else:
                         objects_text += "- No objects detected in this snapshot\n"
                 
@@ -970,6 +1086,12 @@ async def match_single_virtual_object(virtual_object, environment_images, physic
 1. Evaluate EACH physical object as a potential haptic proxy for the virtual object.
 2. For EACH physical object, propose a specific method to utilize it as a haptic proxy.
 
+CRITICAL REQUIREMENTS:
+- You MUST include EVERY SINGLE physical object listed above in your response
+- Do NOT skip any objects, even if they seem unsuitable
+- Generate a utilization method for each object, explaining how it could be used as a proxy
+- Count the total number of physical objects shown and ensure your JSON array has the same number of entries
+
 FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure:
 
 ```json
@@ -986,8 +1108,10 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY with objects having the following structure
 ]
 ```
 
-IMPORTANT: Make sure to use the EXACT image_id values shown above for each object.
-Include ALL physical objects in your evaluation.
+IMPORTANT: 
+- Make sure to use the EXACT image_id values shown above for each object
+- Include ALL physical objects in your evaluation - no exceptions
+- Your JSON array length must match the total number of physical objects shown
 """
         })
         
@@ -1003,7 +1127,7 @@ Include ALL physical objects in your evaluation.
         log(f"Received method proposals for {virtual_object_name}")
         
         # Extract JSON from response
-        response_text = response.content
+        response_text = extract_response_text(response.content)
         
         # Try to find JSON array
         json_start = response_text.find("[")
@@ -1027,80 +1151,83 @@ Include ALL physical objects in your evaluation.
         try:
             # Parse the JSON response
             matching_results = json.loads(json_content)
+            if not isinstance(matching_results, list):
+                matching_results = []
             
             # Convert any "imageId" keys to "image_id" right away
             matching_results = rename_key_in_json(matching_results, "imageId", "image_id")
             
             # Add the original virtual object info to each result
             for result in matching_results:
-                result["virtualObjectInfo"] = virtual_object
-                
-                # Make sure we have object_id and image_id in the result
-                if "object_id" not in result:
-                    log(f"Missing object_id in result for {result.get('physicalObject', 'unknown object')}")
-                    # Try to find the object in the database
+                if isinstance(result, dict):
+                    result["virtualObjectInfo"] = virtual_object
+                    
+                    # Make sure we have object_id and image_id in the result
+                    if "object_id" not in result:
+                        log(f"Missing object_id in result for {result.get('physicalObject', 'unknown object')}")
+                        # Try to find the object in the database
+                        img_id = result.get("image_id")
+                        phys_obj = result.get("physicalObject")
+                        if img_id is not None and phys_obj:
+                            img_id_str = str(img_id)
+                            objects_in_img = physical_object_database.get(img_id_str, [])
+                            for obj in objects_in_img:
+                                if obj["object"] == phys_obj:
+                                    result["object_id"] = obj["object_id"]
+                                    log(f"Found object_id {obj['object_id']} for {phys_obj}")
+                                    break
+                    
+                    # Ensure consistent property types
+                    if "object_id" in result and isinstance(result["object_id"], str):
+                        try:
+                            result["object_id"] = int(result["object_id"])
+                        except ValueError:
+                            pass
+                    
+                    if "image_id" in result and isinstance(result["image_id"], str):
+                        try:
+                            result["image_id"] = int(result["image_id"])
+                        except ValueError:
+                            pass
+                    
+                    # Double check that image_id matches the database - fix any +1 offset
                     img_id = result.get("image_id")
-                    phys_obj = result.get("physicalObject")
-                    if img_id is not None and phys_obj:
+                    if img_id is not None and isinstance(img_id, int) and img_id > 0:
+                        obj_id = result.get("object_id")
+                        phys_obj = result.get("physicalObject")
+                        
+                        # Check if this is incorrectly offset
+                        correct_img_id = img_id - 1
+                        img_id_str = str(correct_img_id)
+                        
+                        # Look in the database for a matching object at the offset-fixed image_id
+                        found_match = False
+                        if img_id_str in physical_object_database:
+                            for obj in physical_object_database[img_id_str]:
+                                if (obj_id is not None and obj.get("object_id") == obj_id) or obj.get("object") == phys_obj:
+                                    # Set the correct image_id
+                                    result["image_id"] = correct_img_id
+                                    log(f"Fixed image_id offset: was {img_id}, now {correct_img_id}")
+                                    found_match = True
+                                    break
+                        
+                        # If no matching object was found with the offset, leave the image_id as is
+                        if not found_match:
+                            log(f"Could not find matching object for offset correction: {phys_obj} (ID: {obj_id}, Image: {img_id})")
+                    
+                    # Make sure the physical object properties are from the database
+                    img_id = result.get("image_id")
+                    obj_id = result.get("object_id")
+                    
+                    if img_id is not None and obj_id is not None:
                         img_id_str = str(img_id)
                         objects_in_img = physical_object_database.get(img_id_str, [])
                         for obj in objects_in_img:
-                            if obj["object"] == phys_obj:
-                                result["object_id"] = obj["object_id"]
-                                log(f"Found object_id {obj['object_id']} for {phys_obj}")
+                            if obj.get("object_id") == obj_id:
+                                # Use the database values for consistency
+                                result["physicalObject"] = obj["object"]
+                                result["proxyLocation"] = obj["position"]
                                 break
-                
-                # Ensure consistent property types
-                if "object_id" in result and isinstance(result["object_id"], str):
-                    try:
-                        result["object_id"] = int(result["object_id"])
-                    except ValueError:
-                        pass
-                
-                if "image_id" in result and isinstance(result["image_id"], str):
-                    try:
-                        result["image_id"] = int(result["image_id"])
-                    except ValueError:
-                        pass
-                
-                # Double check that image_id matches the database - fix any +1 offset
-                img_id = result.get("image_id")
-                if img_id is not None and isinstance(img_id, int) and img_id > 0:
-                    obj_id = result.get("object_id")
-                    phys_obj = result.get("physicalObject")
-                    
-                    # Check if this is incorrectly offset
-                    correct_img_id = img_id - 1
-                    img_id_str = str(correct_img_id)
-                    
-                    # Look in the database for a matching object at the offset-fixed image_id
-                    found_match = False
-                    if img_id_str in physical_object_database:
-                        for obj in physical_object_database[img_id_str]:
-                            if (obj_id is not None and obj.get("object_id") == obj_id) or obj.get("object") == phys_obj:
-                                # Set the correct image_id
-                                result["image_id"] = correct_img_id
-                                log(f"Fixed image_id offset: was {img_id}, now {correct_img_id}")
-                                found_match = True
-                                break
-                    
-                    # If no matching object was found with the offset, leave the image_id as is
-                    if not found_match:
-                        log(f"Could not find matching object for offset correction: {phys_obj} (ID: {obj_id}, Image: {img_id})")
-                
-                # Make sure the physical object properties are from the database
-                img_id = result.get("image_id")
-                obj_id = result.get("object_id")
-                
-                if img_id is not None and obj_id is not None:
-                    img_id_str = str(img_id)
-                    objects_in_img = physical_object_database.get(img_id_str, [])
-                    for obj in objects_in_img:
-                        if obj.get("object_id") == obj_id:
-                            # Use the database values for consistency
-                            result["physicalObject"] = obj["object"]
-                            result["proxyLocation"] = obj["position"]
-                            break
             
             return matching_results
             
@@ -1152,7 +1279,7 @@ async def run_proxy_matching(virtual_objects, environment_images, physical_objec
                 "error": f"Task error: {str(result)}"
             }
             all_matching_results.append(fallback_entry)
-        else:
+        elif isinstance(result, list):
             # Each result is an array of matching results for a single virtual object
             all_matching_results.extend(result)
     
@@ -1374,7 +1501,7 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
         log(f"Received property ratings for {property_name} of {virtual_object_name} (run {run_index})")
         
         # Extract JSON from response
-        response_text = response.content
+        response_text = extract_response_text(response.content)
         
         # Try to find JSON array
         json_start = response_text.find("[")
@@ -1443,7 +1570,7 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
             "error": f"Processing error: {str(e)}"
         }]
 
-# Function to run property ratings for all virtual objects in parallel
+# Function to run property ratings for all virtual objects with overlapping batch approach
 async def run_property_ratings(virtual_objects, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
     log(f"run_property_ratings received {len(proxy_matching_results)} proxy matching results")
     
@@ -1454,23 +1581,24 @@ async def run_property_ratings(virtual_objects, environment_images, physical_obj
         if 'utilizationMethod' in sample:
             log(f"Sample utilization method: {sample['utilizationMethod'][:50]}...")
     
-    all_tasks = []
     property_names = ["inertiaValue", "interactivityValue", "outlineValue", "textureValue", "hardnessValue", "temperatureValue"]
     
-    # Create tasks for each virtual object and its highlighted properties
+    # Create all property rating tasks (same as before)
+    all_tasks = []
+    
     for virtual_object in virtual_objects:
         virtual_object_name = virtual_object.get("objectName", "Unknown Object")
         
-        # For each property with value > 0, create a rating task
+        # For each property with value > 0, create 3 tasks (one for each run)
         for property_name in property_names:
             property_value = virtual_object.get(property_name, 0.0)
             
             # Only rate properties that are highlighted (value > 0)
             if property_value > 0:
-                log(f"Adding rating tasks for {property_name} of {virtual_object_name} (value: {property_value})")
+                log(f"Creating 3 property rating tasks for {property_name} of {virtual_object_name} (value: {property_value})")
                 
-                # Run each property rating 3 times for reliability
-                for run_index in range(1, 4):
+                # Create 3 tasks per property for statistical reliability
+                for run_index in range(1, 4):  # Run 1, 2, 3
                     task = rate_single_property(
                         virtual_object,
                         property_name,
@@ -1480,81 +1608,110 @@ async def run_property_ratings(virtual_objects, environment_images, physical_obj
                         proxy_matching_results,
                         run_index
                     )
-                    all_tasks.append((virtual_object_name, property_name, run_index, task))
+                    all_tasks.append(task)
     
-    # Run all tasks concurrently
-    log(f"Running {len(all_tasks)} property rating tasks concurrently (including multiple runs)")
-    task_results = await asyncio.gather(*[task[3] for task in all_tasks], return_exceptions=True)
+    # Run tasks with overlapping batches for maximum throughput (same approach as substrate utilization)
+    log(f"Running {len(all_tasks)} property rating tasks with overlapping batches (size: {PROPERTY_RATING_BATCH_SIZE}, interval: {PROPERTY_RATING_BATCH_INTERVAL}s)")
     
-    # Process results
-    all_rating_results = []
-    rating_map = {}  # To track and combine multiple runs
-    
-    # Process each result and organize by virtual object, property, and physical object
-    for i, result in enumerate(task_results):
-        if isinstance(result, Exception):
-            log(f"Error in property rating task {i}: {result}")
-            continue
-        else:
-            task_info = all_tasks[i]
-            virtual_object_name = task_info[0]
-            property_name = task_info[1]
-            run_index = task_info[2]
-            
-            # Process each rating result in this batch
-            for rating in result:
-                if isinstance(rating, dict) and "error" not in rating:
-                    # Create a unique key based on object_id and image_id instead of physicalObject name
-                    virt_obj = rating.get("virtualObject", "unknown")
-                    prop = rating.get("property", "unknown")
-                    obj_id = rating.get("object_id", -1)
-                    img_id = rating.get("image_id", -1)
-                    
-                    # Create a unique identifier using only IDs, not names
-                    obj_key = f"{virt_obj}:{prop}:{obj_id}:{img_id}"
-                    
-                    # Get the rating value from this run
-                    rating_key = f"rating_{run_index}"
-                    rating_value = rating.get(rating_key, 0)
-                    
-                    if obj_key not in rating_map:
-                        # First time seeing this object, create a new entry
-                        rating_map[obj_key] = rating.copy()
-                    else:
-                        # Update existing entry with this run's rating
-                        rating_map[obj_key][rating_key] = rating_value
-                        
-                        # Keep the physical object name from the first occurrence
-                        # This prevents inconsistent names from affecting the results
-                        if run_index > 1 and "physicalObject" in rating:
-                            # We don't update the physicalObject name, keep the original one
-                            pass
-                else:
-                    log(f"Skipping invalid rating result: {rating}")
-    
-    # Convert the rating map back to a list
-    for obj_key, combined_rating in rating_map.items():
-        # Make sure all three ratings exist
-        for i in range(1, 4):
-            rating_key = f"rating_{i}"
-            if rating_key not in combined_rating:
-                combined_rating[rating_key] = 0  # Use 0 or None for missing ratings
+    # Create all batch tasks without waiting for them to complete
+    batch_tasks = []
+    for i in range(0, len(all_tasks), PROPERTY_RATING_BATCH_SIZE):
+        batch = all_tasks[i:i + PROPERTY_RATING_BATCH_SIZE]
+        batch_num = i // PROPERTY_RATING_BATCH_SIZE + 1
+        total_batches = (len(all_tasks) + PROPERTY_RATING_BATCH_SIZE - 1) // PROPERTY_RATING_BATCH_SIZE
         
-        all_rating_results.append(combined_rating)
+        log(f"Starting property batch {batch_num}/{total_batches}: {len(batch)} tasks")
+        
+        # Create a task for this batch
+        batch_task = asyncio.create_task(
+            _run_single_property_batch(batch, batch_num)
+        )
+        batch_tasks.append(batch_task)
+        
+        # Wait before starting the next batch (except for the last one)
+        if i + PROPERTY_RATING_BATCH_SIZE < len(all_tasks):
+            await asyncio.sleep(PROPERTY_RATING_BATCH_INTERVAL)
+    
+    # Now wait for all batches to complete
+    log(f"All {len(batch_tasks)} property batches started. Waiting for completion...")
+    batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+    
+    # Process all batch results
+    all_rating_results = []
+    successful_batches = 0
+    
+    for batch_num, batch_result in enumerate(batch_results, 1):
+        if isinstance(batch_result, Exception):
+            log(f"Error in property batch {batch_num}: {batch_result}")
+            continue
+        elif isinstance(batch_result, list):
+            all_rating_results.extend(batch_result)
+            successful_batches += 1
+        else:
+            log(f"Property batch {batch_num} returned unexpected result type: {type(batch_result)}")
+    
+    log(f"Overlapping property batch execution completed: {successful_batches}/{len(batch_tasks)} batches successful")
+    
+    # Now combine multiple runs for the same property-object pairs (same logic as before)
+    combined_results = {}
+    
+    for rating in all_rating_results:
+        if "error" in rating:
+            continue
+            
+        # Create a key for this property-object pair
+        virt_obj = rating.get("virtualObject", "unknown")
+        property_name = rating.get("property", "unknown")
+        obj_id = rating.get("object_id", -1)
+        img_id = rating.get("image_id", -1)
+                    
+        pair_key = f"{virt_obj}:{property_name}:{obj_id}:{img_id}"
+        
+        # Initialize the combined entry if it doesn't exist
+        if pair_key not in combined_results:
+            combined_results[pair_key] = {
+                "virtualObject": virt_obj,
+                "property": property_name,
+                "physicalObject": rating.get("physicalObject", "unknown"),
+                "object_id": obj_id,
+                "image_id": img_id,
+                "propertyValue": rating.get("propertyValue", 0.0),
+                "explanation": rating.get("explanation", "")
+            }
+        
+        # Add the rating for this run
+        if "rating_1" in rating:
+            combined_results[pair_key]["rating_1"] = rating["rating_1"]
+        elif "rating_2" in rating:
+            combined_results[pair_key]["rating_2"] = rating["rating_2"]  
+        elif "rating_3" in rating:
+            combined_results[pair_key]["rating_3"] = rating["rating_3"]
+        else:
+            # Handle the case where the rating field doesn't have a run suffix
+            # Determine which run this is based on existing data
+            if "rating_1" not in combined_results[pair_key]:
+                combined_results[pair_key]["rating_1"] = rating.get("rating", 0)
+            elif "rating_2" not in combined_results[pair_key]:
+                combined_results[pair_key]["rating_2"] = rating.get("rating", 0)
+            elif "rating_3" not in combined_results[pair_key]:
+                combined_results[pair_key]["rating_3"] = rating.get("rating", 0)
+    
+    # Convert back to list
+    final_results = list(combined_results.values())
     
     # Log summary of results
-    log(f"Completed property ratings with {len(all_rating_results)} total combined ratings")
+    log(f"Completed property ratings with {len(all_rating_results)} individual ratings combined into {len(final_results)} final results")
     
-    return all_rating_results
+    return final_results
 
-# Function to rate a single relationship interaction group
-async def rate_single_relationship_group(relationship_annotation, contact_object, substrate_objects, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, substrate_utilization_results, group_index=1):
+# Function to rate a single dimension for relationship rating
+async def rate_single_relationship_dimension(relationship_annotation, contact_object, substrate_objects, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, substrate_utilization_results, dimension_name, group_index=1):
     try:
         virtual_contact_name = relationship_annotation.get("contactObject", "Unknown Contact Object")
         virtual_substrate_name = relationship_annotation.get("substrateObject", "Unknown Substrate Object")
         annotation_text = relationship_annotation.get("annotationText", "No annotation available")
         
-        log(f"Rating relationship group {group_index}: {virtual_contact_name} -> {virtual_substrate_name}")
+        log(f"Rating {dimension_name} for relationship group {group_index}: {virtual_contact_name} -> {virtual_substrate_name}")
         
         # Get pre-generated substrate utilization methods for this contact object
         relevant_substrate_methods = []
@@ -1575,6 +1732,12 @@ async def rate_single_relationship_group(relationship_annotation, contact_object
                 proxy_result.get('virtualObject') == virtual_contact_name):
                 contact_utilization_method = proxy_result.get("utilizationMethod", "No utilization method available")
                 break
+        
+        # Check if contact object has a valid utilization method
+        has_valid_contact_method = contact_utilization_method != 'No utilization method available'
+        
+        # Get dimension-specific system prompt
+        dimension_system_prompt = get_relationship_rating_system_prompt(dimension_name)
         
         # Build the human message content
         human_message_content = []
@@ -1599,7 +1762,7 @@ async def rate_single_relationship_group(relationship_annotation, contact_object
                 return "No dimensions available"
             return f"Width: {dims.get('x', 'N/A')}m, Height: {dims.get('y', 'N/A')}m, Depth: {dims.get('z', 'N/A')}m"
         
-        relationship_text = f"""# Relationship Rating Task (Group {group_index})
+        relationship_text = f"""# Relationship {dimension_name.title()} Rating Task (Group {group_index})
 
 ## Virtual Object Relationship
 - **Contact Object**: {virtual_contact_name}
@@ -1615,10 +1778,12 @@ async def rate_single_relationship_group(relationship_annotation, contact_object
 
 ## Physical Object Assignment
 - **Contact Object**: {contact_object.get('object', 'Unknown')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
-- **Utilization Method**: {contact_utilization_method}
+- **Contact Utilization Method**: {contact_utilization_method}
+- **Contact Method Available**: {'Yes - this object can serve as a proxy for the virtual contact object' if has_valid_contact_method else 'No - this object cannot serve as a proxy for the virtual contact object, but evaluate it anyway for comprehensive coverage'}
 - **Substrate Objects**: All other physical objects listed below
 
-Please rate how well each pair (contact + substrate) can simulate the expected haptic feedback described above.
+Please rate how well each pair (contact + substrate) can deliver the expected {dimension_name} aspect of the haptic feedback described above.
+{"Note: Since this contact object lacks a proper utilization method for the virtual contact object, the ratings may be lower, but this ensures comprehensive coverage of all possible pairs." if not has_valid_contact_method else ""}
 """
         human_message_content.append({
             "type": "text", 
@@ -1807,50 +1972,79 @@ Please rate how well each pair (contact + substrate) can simulate the expected h
                 "text": substrate_methods_text
             })
         
-        # 5. Add final instructions
+        # 5. Add final instructions with explicit object ID mapping
+        
+        # Create a clear object ID mapping table
+        object_mapping_text = f"""
+# CRITICAL: Object ID Mapping Table
+
+**Contact Object (MUST use these exact IDs):**
+- Object ID: {contact_object.get('object_id')}
+- Image ID: {contact_object.get('image_id')}  
+- Name: {contact_object.get('object')}
+
+**Substrate Objects (MUST use these exact IDs for each substrate):**
+"""
+        
+        # Add all substrate objects with their exact IDs from the database
+        for i, image_base64 in enumerate(environment_images):
+            img_key = str(i)
+            if img_key in physical_object_database:
+                objects_in_img = physical_object_database[img_key]
+                for obj in objects_in_img:
+                    # Skip the contact object itself
+                    if not (obj['object_id'] == contact_object.get('object_id') and 
+                           obj.get('image_id') == contact_object.get('image_id')):
+                        object_mapping_text += f"- Object ID: {obj['object_id']}, Image ID: {obj.get('image_id', i)}, Name: {obj['object']}\n"
+        
+        human_message_content.append({
+            "type": "text", 
+            "text": object_mapping_text
+        })
+        
         human_message_content.append({
             "type": "text", 
             "text": f"""
 # Your Task
 
-You have been provided with pre-generated substrate utilization methods above. Your task is to evaluate how well each contact-substrate pair can deliver the expected haptic feedback.
+You have been provided with pre-generated substrate utilization methods above. Your task is to evaluate how well each contact-substrate pair can deliver the expected {dimension_name} aspect of the haptic feedback.
 
-**Contact Object**: {contact_object.get('object')} (using utilization method: {contact_utilization_method})
+**Contact Object**: {contact_object.get('object')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
+**Contact Utilization Method**: {contact_utilization_method}
 
-For each substrate object and its corresponding utilization method, rate the pair on a 7-point Likert scale for:
-1. **Harmony**: "I felt the haptic feedback was well coordinated with visual feedback"
-2. **Expressivity**: "I felt the contact object effectively conveyed substrate properties and interaction variations through my hand"  
-3. **Realism**: "I felt using this physical contact object on this physical substrate closely simulated the intended haptic feedback"
+For each substrate object and its corresponding utilization method, rate the pair on the {dimension_name} dimension using the 7-point Likert scale provided in the system prompt.
 
-**Critical Evaluation Guidelines:**
-- Consider both the contact object's utilization method AND the provided substrate utilization method
-- Rate based on how well the combined utilization methods would deliver the expected haptic feedback: "{annotation_text}"
-- Be critical in your assessment using the provided rubrics
+**CRITICAL REQUIREMENTS:**
+1. Use ONLY the Object IDs and Image IDs from the mapping table above
+2. Do NOT make up or guess any object IDs  
+3. The contactObject_id MUST be {contact_object.get('object_id')} and contactImage_id MUST be {contact_object.get('image_id')}
+4. For each substrate, use the EXACT object_id and image_id from the mapping table
+5. Consider both the contact object's utilization method AND the provided substrate utilization method
+6. Rate based on how well the combined utilization methods would deliver the {dimension_name} aspect of the expected haptic feedback: "{annotation_text}"
 
-FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, including both contactUtilizationMethod and the provided substrateUtilizationMethod for each pair.
+FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, using the EXACT object IDs from the mapping table above.
 """
         })
         
         # Create the messages
         messages = [
-            SystemMessage(content=relationship_rating_system_prompt),
+            SystemMessage(content=dimension_system_prompt),
             HumanMessage(content=human_message_content)
         ]
         
-        # Get response from the model
-        log(f"Sending relationship rating request for group {group_index}")
-        log(f"LangSmith tracing status: LANGCHAIN_TRACING_V2={os.environ.get('LANGCHAIN_TRACING_V2', 'Not set')}")
-        log(f"LangSmith API key status: {'Set' if os.environ.get('LANGCHAIN_API_KEY') else 'Not set'}")
+        # Get response from the model with retry logic
+        log(f"Sending {dimension_name} rating request for group {group_index}")
         
         try:
+            # Make direct LLM call to maintain LangSmith tracing context
             response = await relationship_rating_llm.ainvoke(messages)
-            log(f"Successfully received relationship ratings for group {group_index}")
+            log(f"Successfully received {dimension_name} ratings for group {group_index}")
         except Exception as e:
-            log(f"Error during relationship rating LLM call for group {group_index}: {e}")
+            log(f"Error during {dimension_name} rating LLM call for group {group_index}: {e}")
             raise
         
         # Extract JSON from response
-        response_text = response.content
+        response_text = extract_response_text(response.content)
         
         # Try to find JSON array
         json_start = response_text.find("[")
@@ -1875,28 +2069,94 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, includin
             # Parse the JSON response
             rating_results = json.loads(json_content)
             
-            # Add group information to each result
-            for result in rating_results:
+            # VALIDATION DISABLED: Using raw results to debug validation issues
+            # validated_results = validate_and_normalize_relationship_response(
+            #     rating_results, dimension_name, group_index, physical_object_database
+            # )
+            validated_results = rating_results  # Use raw results without validation
+            
+            log(f"Using raw {dimension_name} results for group {group_index}: {len(validated_results)} ratings")
+            
+            # Add group information and dimension to each result
+            for result in validated_results:
                 result["group_index"] = group_index
+                result["dimension"] = dimension_name
                 result["virtualContactObject"] = virtual_contact_name
                 result["virtualSubstrateObject"] = virtual_substrate_name
                 result["expectedHapticFeedback"] = annotation_text
                 
-            return rating_results
+            return validated_results
             
         except json.JSONDecodeError as e:
-            log(f"Error parsing relationship rating JSON for group {group_index}: {e}")
+            log(f"Error parsing {dimension_name} rating JSON for group {group_index}: {e}")
             log(f"Raw content: {json_content}")
             
             # Return a basic result with the error
             return [{
                 "group_index": group_index,
+                "dimension": dimension_name,
                 "virtualContactObject": virtual_contact_name,
                 "virtualSubstrateObject": virtual_substrate_name,
                 "error": f"Failed to parse response: {str(e)}",
                 "rawResponse": response_text[:500]  # First 500 chars
             }]
             
+    except Exception as e:
+        log(f"Error in {dimension_name} rating for group {group_index}: {e}")
+        import traceback
+        log(traceback.format_exc())
+        
+        # Return a basic result with the error
+        return [{
+            "group_index": group_index,
+            "error": f"Processing error: {str(e)}"
+        }]
+
+# Function to rate a single relationship dimension (simplified to avoid nested concurrency)
+async def rate_single_relationship_group_simple(relationship_annotation, contact_object, substrate_objects, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, substrate_utilization_results, group_index=1):
+    try:
+        virtual_contact_name = relationship_annotation.get("contactObject", "Unknown Contact Object")
+        virtual_substrate_name = relationship_annotation.get("substrateObject", "Unknown Substrate Object")
+        
+        log(f"Rating relationship group {group_index}: {virtual_contact_name} -> {virtual_substrate_name} with simplified single dimension")
+        
+        # Use only one dimension (harmony) to simplify the structure like working processes
+        dimension = "harmony"
+        
+        log(f"Creating single {dimension} rating for group {group_index}")
+        
+        # Call the dimension rating function directly (no nested async)
+        dimension_result = await rate_single_relationship_dimension(
+            relationship_annotation,
+            contact_object,
+            substrate_objects,
+            environment_images,
+            physical_object_database,
+            object_snapshot_map,
+            enhanced_virtual_objects,
+            proxy_matching_results,
+            substrate_utilization_results,
+            dimension,
+            group_index
+        )
+        
+        # Process the single dimension result (simplified)
+        if isinstance(dimension_result, Exception):
+            log(f"Failed {dimension} rating for group {group_index}: {dimension_result}")
+            return [{
+                "group_index": group_index,
+                "error": f"Dimension rating error: {str(dimension_result)}"
+            }]
+        elif isinstance(dimension_result, list):
+            log(f"Completed {dimension} rating for group {group_index} with {len(dimension_result)} results")
+            return dimension_result
+        else:
+            log(f"Invalid result type for {dimension} in group {group_index}: {type(dimension_result)}")
+            return [{
+                "group_index": group_index,
+                "error": f"Invalid result type: {type(dimension_result)}"
+            }]
+        
     except Exception as e:
         log(f"Error in relationship rating for group {group_index}: {e}")
         import traceback
@@ -1906,7 +2166,7 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, includin
         return [{
             "group_index": group_index,
             "error": f"Processing error: {str(e)}"
-        }]
+        }], {}
 
 # Function to run relationship ratings for all relationships in parallel
 async def run_relationship_ratings(haptic_annotation_json, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, substrate_utilization_results):
@@ -1933,23 +2193,44 @@ async def run_relationship_ratings(haptic_annotation_json, environment_images, p
         
         log(f"Found {len(all_physical_objects)} total physical objects for relationship rating")
         
-        # Create rating tasks - for each relationship, create multiple groups
-        # Each group assigns one physical object as contact and rates it against all others as substrate
+        # Create rating tasks - Each group assigns one physical object as contact and rates it against all others as substrate
+        # This ensures comprehensive coverage of all possible pairs
         all_tasks = []
         group_counter = 1
         
         for relationship in relationship_annotations:
+            virtual_contact_name = relationship.get("contactObject", "")
+            virtual_substrate_name = relationship.get("substrateObject", "")
+            
+            log(f"Processing relationship: {virtual_contact_name} -> {virtual_substrate_name}")
+            
             # Create one group for each physical object as the contact object
             for contact_obj in all_physical_objects:
+                # Get the contact object's utilization method from proxy matching results (if available)
+                contact_utilization_method = "No utilization method available"
+                for proxy_result in proxy_matching_results:
+                    if (proxy_result.get('object_id') == contact_obj.get('object_id') and 
+                        proxy_result.get('image_id') == contact_obj.get('image_id') and
+                        proxy_result.get('virtualObject') == virtual_contact_name):
+                        contact_utilization_method = proxy_result.get('utilizationMethod', 'No utilization method available')
+                        break
+                
+                # Add utilization method to the contact object
+                contact_obj_with_method = contact_obj.copy()
+                contact_obj_with_method['utilizationMethod'] = contact_utilization_method
+                
                 # Get all other objects as substrate candidates
                 substrate_objects = [obj for obj in all_physical_objects 
                                    if not (obj['object_id'] == contact_obj['object_id'] and 
                                           obj.get('image_id') == contact_obj.get('image_id'))]
                 
                 if len(substrate_objects) > 0:
-                    task = rate_single_relationship_group(
+                    log(f"Creating group {group_counter} for contact object: {contact_obj.get('object')} (ID: {contact_obj.get('object_id')}, Image: {contact_obj.get('image_id')}) with {len(substrate_objects)} substrate candidates")
+                    log(f"  Contact utilization method available: {'Yes' if contact_utilization_method != 'No utilization method available' else 'No'}")
+                    
+                    task = rate_single_relationship_group_simple(
                         relationship,
-                        contact_obj,
+                        contact_obj_with_method,
                         substrate_objects,
                         environment_images,
                         physical_object_database,
@@ -1961,19 +2242,22 @@ async def run_relationship_ratings(haptic_annotation_json, environment_images, p
                     )
                     all_tasks.append(task)
                     group_counter += 1
+                else:
+                    log(f"Warning: No substrate candidates found for contact object: {contact_obj.get('object')}")
         
         # Run all tasks concurrently
         log(f"Running {len(all_tasks)} relationship rating tasks concurrently")
         task_results = await asyncio.gather(*all_tasks, return_exceptions=True)
         
-        # Process results
+        # Process results with simplified structure
         all_relationship_results = []
+        
         for i, result in enumerate(task_results):
             if isinstance(result, Exception):
                 log(f"Error in relationship rating task {i}: {result}")
                 continue
-            else:
-                # Each result is an array of rating results for a single group
+            elif isinstance(result, list):
+                # Each result is a list of rating results for a single relationship group
                 all_relationship_results.extend(result)
         
         # Log summary of results
@@ -2062,11 +2346,30 @@ async def run_concurrent_tasks():
         else:
             log("Warning: No proxy matching results available!")
         
-        # Run property rating and substrate utilization method generation concurrently
-        log("Setting up concurrent property rating and substrate utilization method generation tasks")
+        # Run substrate utilization first, then property rating and greeting test concurrently
+        log("Starting sequential execution: substrate utilization first, then property rating + greeting test concurrently")
         
-        # Create the concurrent tasks
-        property_rating_task = run_property_ratings(
+        # Step 1: Run substrate utilization first
+        log("Step 1: Starting substrate utilization")
+        try:
+            substrate_utilization_results = await run_substrate_utilization_methods(
+                haptic_annotation_json,
+                environment_image_base64_list,
+                physical_object_database,
+                object_snapshot_map,
+                enhanced_virtual_objects,
+                proxy_matching_results
+            )
+            log(f"Step 1 complete: Substrate utilization finished with {len(substrate_utilization_results) if isinstance(substrate_utilization_results, (list, tuple)) else 0} results")
+        except Exception as e:
+            log(f"Step 1 error: Substrate utilization failed: {e}")
+            substrate_utilization_results = []
+        
+        # Step 2: Run property rating and greeting test concurrently after substrate utilization completes
+        log("Step 2: Starting property rating and greeting test concurrently (after substrate utilization completion)")
+        
+        # Create tasks for concurrent execution
+        property_task = run_property_ratings(
             enhanced_virtual_objects,
             environment_image_base64_list,
             physical_object_database,
@@ -2074,61 +2377,47 @@ async def run_concurrent_tasks():
             proxy_matching_results
         )
         
-        substrate_utilization_task = run_substrate_utilization_methods(
-            haptic_annotation_json,
-            environment_image_base64_list,
-            physical_object_database,
-            object_snapshot_map,
-            enhanced_virtual_objects,
-            proxy_matching_results
-        )
+        greeting_task = run_simple_greeting_test()
         
-        # Run both tasks concurrently
-        log("Running property rating and substrate utilization method generation concurrently")
-        property_rating_results, substrate_utilization_results = await asyncio.gather(
-            property_rating_task,
-            substrate_utilization_task
-        )
+        # Run both tasks concurrently using asyncio.gather()
+        try:
+            concurrent_results = await asyncio.gather(property_task, greeting_task, return_exceptions=True)
+            
+            # Process property rating result (first result)
+            if isinstance(concurrent_results[0], Exception):
+                log(f"Step 2 error: Property rating failed: {concurrent_results[0]}")
+                property_rating_results = []
+            else:
+                property_rating_results = concurrent_results[0]
+                log(f"Step 2 complete: Property rating finished with {len(property_rating_results) if isinstance(property_rating_results, (list, tuple)) else 0} results")
+            
+            # Process greeting test result (second result)
+            if isinstance(concurrent_results[1], Exception):
+                log(f"Step 2 error: Greeting test failed: {concurrent_results[1]}")
+                greeting_test_results = []
+            else:
+                greeting_test_results = concurrent_results[1]
+                log(f"Step 2 complete: Greeting test finished with {len(greeting_test_results) if isinstance(greeting_test_results, (list, tuple)) else 0} results")
+                
+        except Exception as e:
+            log(f"Step 2 error: Concurrent execution failed: {e}")
+            property_rating_results = []
+            greeting_test_results = []
         
-        # Add to results
-        results["substrate_utilization_result"] = substrate_utilization_results
-        
-        # Log sample substrate utilization results for debugging
-        if len(substrate_utilization_results) > 0:
-            log("Sample substrate utilization result:")
-            log(f"- virtualContactObject: {substrate_utilization_results[0].get('virtualContactObject', 'N/A')}")
-            log(f"- virtualSubstrateObject: {substrate_utilization_results[0].get('virtualSubstrateObject', 'N/A')}")
-            log(f"- physicalContactObject: {substrate_utilization_results[0].get('physicalContactObject', 'N/A')}")
-            log(f"- physicalSubstrateObject: {substrate_utilization_results[0].get('physicalSubstrateObject', 'N/A')}")
-            log(f"- substrateUtilizationMethod: {substrate_utilization_results[0].get('substrateUtilizationMethod', 'N/A')[:50]}...")
-        else:
-            log("Warning: No substrate utilization results available!")
-        
-        # Run relationship rating after substrate utilization is complete
-        log("Setting up relationship rating task")
-        log(f"Available data for relationship rating:")
-        log(f"- haptic_annotation_json: {'Available' if haptic_annotation_json else 'None'}")
-        log(f"- environment_images: {len(environment_image_base64_list) if environment_image_base64_list else 0}")
-        log(f"- proxy_matching_results: {len(proxy_matching_results) if proxy_matching_results else 0}")
-        log(f"- substrate_utilization_results: {len(substrate_utilization_results) if substrate_utilization_results else 0}")
-        
-        relationship_rating_results = await run_relationship_ratings(
-            haptic_annotation_json,
-            environment_image_base64_list,
-            physical_object_database,
-            object_snapshot_map,
-            enhanced_virtual_objects,
-            proxy_matching_results,
-            substrate_utilization_results
-        )
-        
-        log(f"Relationship rating completed with {len(relationship_rating_results) if relationship_rating_results else 0} results")
+        log("Sequential execution complete: substrate utilization first, then property rating + greeting test concurrent")
         
         # Add to results
         results["property_rating_result"] = property_rating_results
-        results["relationship_rating_result"] = relationship_rating_results
+        results["greeting_test_result"] = greeting_test_results
+        results["substrate_utilization_result"] = substrate_utilization_results
     
     return results
+
+# Add a utility function to validate and normalize relationship rating responses
+def validate_and_normalize_relationship_response(rating_results, dimension, group_index, physical_object_database):
+    """Validate and normalize relationship rating responses to ensure consistency - CURRENTLY DISABLED"""
+    log(f"VALIDATION DISABLED - returning raw results: {len(rating_results) if rating_results else 0} {dimension} ratings for group {group_index}")
+    return rating_results  # Return raw results without validation
 
 # Add a utility function to handle key renaming in JSON structures
 def rename_key_in_json(data, old_key, new_key):
@@ -2230,14 +2519,44 @@ async def generate_substrate_utilization_for_contact(relationship_annotation, co
         
         log(f"Generating substrate utilization methods for {virtual_contact_name} -> {virtual_substrate_name}")
         
-        # Get the contact object's utilization method
-        contact_utilization_method = "No utilization method available"
+        # Determine the type of virtual substrate object
+        virtual_substrate_obj = None
+        for vobj in enhanced_virtual_objects:
+            if vobj.get("objectName") == virtual_substrate_name:
+                virtual_substrate_obj = vobj
+                break
+        
+        # Check if the virtual substrate object is dual-role (both contact and substrate)
+        is_dual_role = False
+        if virtual_substrate_obj and virtual_substrate_obj.get("involvementType") in ["grasp", "contact"]:
+            is_dual_role = True
+            log(f"Virtual substrate object '{virtual_substrate_name}' is dual-role (involvementType: {virtual_substrate_obj.get('involvementType')})")
+        else:
+            log(f"Virtual substrate object '{virtual_substrate_name}' is pure substrate")
+        
+        # Get existing proxy utilization methods for the virtual substrate object (if dual-role)
+        substrate_proxy_methods = []
+        if is_dual_role:
+            for proxy_result in proxy_matching_results:
+                if proxy_result.get('virtualObject') == virtual_substrate_name:
+                    substrate_proxy_methods.append(proxy_result)
+            log(f"Found {len(substrate_proxy_methods)} existing proxy methods for dual-role substrate object")
+        
+        # Get the contact object's utilization method from proxy matching results
+        contact_utilization_method = 'No utilization method available'
         for proxy_result in proxy_matching_results:
             if (proxy_result.get('object_id') == contact_object.get('object_id') and 
                 proxy_result.get('image_id') == contact_object.get('image_id') and
                 proxy_result.get('virtualObject') == virtual_contact_name):
-                contact_utilization_method = proxy_result.get("utilizationMethod", "No utilization method available")
+                contact_utilization_method = proxy_result.get('utilizationMethod', 'No utilization method available')
                 break
+        
+        has_valid_contact_method = contact_utilization_method != 'No utilization method available'
+        
+        # If no valid contact method, log warning and skip this task
+        if not has_valid_contact_method:
+            log(f"WARNING: Contact object {contact_object.get('object')} (ID: {contact_object.get('object_id')}) has no utilization method for {virtual_contact_name}. This should not happen!")
+            return []  # Return empty list to skip this invalid task
         
         # Build the human message content
         human_message_content = []
@@ -2262,18 +2581,45 @@ async def generate_substrate_utilization_for_contact(relationship_annotation, co
                 return "No dimensions available"
             return f"Width: {dims.get('x', 'N/A')}m, Height: {dims.get('y', 'N/A')}m, Depth: {dims.get('z', 'N/A')}m"
         
-        relationship_text = f"""# Substrate Utilization Method Generation
+        # Select the appropriate system prompt and build content based on substrate object type
+        if is_dual_role:
+            substrate_type = "dual_role"
+            relationship_text = f"""# Substrate Utilization Method Generation
 
 ## Virtual Object Relationship
 - **Contact Object**: {virtual_contact_name}
-- **Substrate Object**: {virtual_substrate_name}
+- **Substrate Object**: {virtual_substrate_name} (DUAL-ROLE: also a contact object)
 - **Expected Haptic Feedback**: {annotation_text}
 
 ## Virtual Contact Object Details
 - **Interaction Deduction**: {contact_interaction_deduction}
 - **Dimensions**: {format_dimensions(contact_dimensions)}
 
-## Virtual Substrate Object Details
+## Virtual Substrate Object Details (Dual-Role)
+- **Involvement Type**: {virtual_substrate_obj.get('involvementType', 'Unknown') if virtual_substrate_obj else 'Unknown'}
+- **Dimensions**: {format_dimensions(substrate_dimensions)}
+- **Interaction Deduction**: {virtual_substrate_obj.get('interactionDeduction', 'No interaction deduction available') if virtual_substrate_obj else 'No interaction deduction available'}
+
+## Physical Contact Object Assignment
+- **Contact Object**: {contact_object.get('object', 'Unknown')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
+- **Contact Utilization Method**: {contact_utilization_method}
+
+Your task is to determine how each physical object in the environment can be utilized as a substrate to work with this specific physical contact object and its utilization method.
+"""
+        else:
+            substrate_type = "pure"
+            relationship_text = f"""# Substrate Utilization Method Generation
+
+## Virtual Object Relationship
+- **Contact Object**: {virtual_contact_name}
+- **Substrate Object**: {virtual_substrate_name} (PURE SUBSTRATE)
+- **Expected Haptic Feedback**: {annotation_text}
+
+## Virtual Contact Object Details
+- **Interaction Deduction**: {contact_interaction_deduction}
+- **Dimensions**: {format_dimensions(contact_dimensions)}
+
+## Virtual Substrate Object Details (Pure Substrate)
 - **Dimensions**: {format_dimensions(substrate_dimensions)}
 
 ## Physical Contact Object Assignment
@@ -2282,6 +2628,10 @@ async def generate_substrate_utilization_for_contact(relationship_annotation, co
 
 Your task is to determine how each physical object in the environment can be utilized as a substrate to work with this specific physical contact object and its utilization method.
 """
+        
+        # Get the appropriate system prompt using the dynamic function
+        selected_system_prompt = get_substrate_utilization_system_prompt(substrate_type)
+        
         human_message_content.append({
             "type": "text", 
             "text": relationship_text
@@ -2424,43 +2774,120 @@ Your task is to determine how each physical object in the environment can be uti
             
             # Add the detected objects for this snapshot
             objects_in_snapshot = physical_object_database.get(str(i), [])
+            if not objects_in_snapshot:
+                # Check if we should look for objects in a different format (integer key)
+                objects_in_snapshot = physical_object_database.get(i, [])
+            
             objects_text = "\n### Physical Objects in this Snapshot\n"
             
             if objects_in_snapshot:
                 for obj in objects_in_snapshot:
+                    obj_id = obj.get('object_id', 'Unknown')
+                    obj_name = obj.get('object', 'Unknown object')
+                    obj_position = obj.get('position', 'Unknown position')
+                    
                     # Highlight the contact object
                     if (obj['object_id'] == contact_object.get('object_id') and 
-                        obj.get('image_id') == contact_object.get('image_id')):
-                        objects_text += f"- **CONTACT OBJECT** - Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                        i == contact_object.get('image_id')):  # Use i for consistent comparison
+                        objects_text += f"- **CONTACT OBJECT** - Object ID: {obj_id} - {obj_name} ({obj_position})\n"
+                        objects_text += f"  Contact Utilization Method: {contact_utilization_method}\n"
+                        objects_text += f"  Image ID: {i}\n\n"
                     else:
-                        objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']}) - *Substrate candidate*\n"
-                    objects_text += f"  Image ID: {i}\n"
-            else:
-                # Check if we should look for objects in a different format
-                objects_in_snapshot = physical_object_database.get(i, [])
-                if objects_in_snapshot:
-                    for obj in objects_in_snapshot:
-                        if (obj['object_id'] == contact_object.get('object_id') and 
-                            obj.get('image_id') == contact_object.get('image_id')):
-                            objects_text += f"- **CONTACT OBJECT** - Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                        objects_text += f"- Object ID: {obj_id} - {obj_name} ({obj_position}) - *Substrate candidate*\n"
+                        
+                        # Search for all utilization methods for this physical object when used as proxy for the virtual substrate object
+                        substrate_utilization_methods = []
+                        for proxy_result in proxy_matching_results:
+                            # Match by object_id and image_id
+                            proxy_obj_id = proxy_result.get('object_id')
+                            proxy_img_id = proxy_result.get('image_id')
+                            proxy_virtual_obj = proxy_result.get('virtualObject', '')
+                            
+                            # Convert types for flexible comparison
+                            if isinstance(proxy_obj_id, str):
+                                try:
+                                    proxy_obj_id = int(proxy_obj_id)
+                                except ValueError:
+                                    pass
+                            if isinstance(proxy_img_id, str):
+                                try:
+                                    proxy_img_id = int(proxy_img_id)
+                                except ValueError:
+                                    pass
+                            
+                            # Check if this matches our current physical object and virtual substrate object
+                            if (proxy_obj_id == obj_id and 
+                                proxy_img_id == i and
+                                proxy_virtual_obj == virtual_substrate_name):
+                                util_method = proxy_result.get("utilizationMethod", "")
+                                if util_method:
+                                    substrate_utilization_methods.append(util_method)
+                        
+                        # Display utilization methods
+                        if substrate_utilization_methods:
+                            objects_text += f"  **Proxy Utilization Method as {virtual_substrate_name}**:\n"
+                            for method in substrate_utilization_methods:
+                                # Format the method text with proper indentation
+                                objects_text += f"    {method}\n"
                         else:
-                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']}) - *Substrate candidate*\n"
-                        objects_text += f"  Image ID: {i}\n"
-                else:
-                    objects_text += "- No objects detected in this snapshot\n"
+                            objects_text += f"  No proxy utilization method available as {virtual_substrate_name}\n"
+                        
+                        objects_text += f"  Image ID: {i}\n\n"
+            else:
+                objects_text += "- No objects detected in this snapshot\n"
                 
             human_message_content.append({
                 "type": "text", 
                 "text": objects_text
             })
         
-        # 4. Add final instructions
+        # 4. Add final instructions with explicit object ID mapping
+        
+        # Create a clear object ID mapping table
+        object_mapping_text = f"""
+# CRITICAL: Object ID Mapping Table
+
+**Contact Object (MUST use these exact IDs):**
+- Object ID: {contact_object.get('object_id')}
+- Image ID: {contact_object.get('image_id')}  
+- Name: {contact_object.get('object')}
+
+**Substrate Objects (MUST use these exact IDs for each substrate):**
+"""
+        
+        # Add all substrate objects with their exact IDs from the database
+        for i, image_base64 in enumerate(environment_images):
+            img_key = str(i)
+            if img_key in physical_object_database:
+                objects_in_img = physical_object_database[img_key]
+                for obj in objects_in_img:
+                    # Skip the contact object itself
+                    if not (obj['object_id'] == contact_object.get('object_id') and 
+                           i == contact_object.get('image_id')):  # Use i (the actual image index) for comparison
+                        object_mapping_text += f"- Object ID: {obj['object_id']}, Image ID: {i}, Name: {obj['object']}\n"
+            # Also check if objects are stored with integer keys
+            elif i in physical_object_database:
+                objects_in_img = physical_object_database[i]
+                for obj in objects_in_img:
+                    # Skip the contact object itself
+                    if not (obj['object_id'] == contact_object.get('object_id') and 
+                           i == contact_object.get('image_id')):  # Use i (the actual image index) for comparison
+                        object_mapping_text += f"- Object ID: {obj['object_id']}, Image ID: {i}, Name: {obj['object']}\n"
+        
+        human_message_content.append({
+            "type": "text", 
+            "text": object_mapping_text
+        })
+        
         human_message_content.append({
             "type": "text", 
             "text": f"""
 # Your Task
 
 For each physical object in the environment (except the contact object itself), determine how it could be utilized as a substrate to work with the physical contact object "{contact_object.get('object')}" using its utilization method: "{contact_utilization_method}"
+
+**Contact Object**: {contact_object.get('object')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
+**Contact Utilization Method**: {contact_utilization_method}
 
 Consider:
 - The expected haptic feedback: "{annotation_text}"
@@ -2471,13 +2898,19 @@ Consider:
 
 Focus on creating substrate utilization methods that would enable the delivery of the expected haptic feedback: "{annotation_text}"
 
-FORMAT YOUR RESPONSE as specified in the system prompt, including detailed substrate utilization methods for ALL physical objects as potential substrates.
+**CRITICAL REQUIREMENTS:**
+1. Use ONLY the Object IDs and Image IDs from the mapping table above
+2. Do NOT make up or guess any object IDs  
+3. The contactObject_id MUST be {contact_object.get('object_id')} and contactImage_id MUST be {contact_object.get('image_id')}
+4. For each substrate, use the EXACT object_id and image_id from the mapping table
+
+FORMAT YOUR RESPONSE as specified in the system prompt, using the EXACT object IDs from the mapping table above.
 """
         })
         
         # Create the messages
         messages = [
-            SystemMessage(content=substrate_utilization_system_prompt),
+            SystemMessage(content=selected_system_prompt),
             HumanMessage(content=human_message_content)
         ]
         
@@ -2487,7 +2920,7 @@ FORMAT YOUR RESPONSE as specified in the system prompt, including detailed subst
         log(f"Received substrate utilization methods for {virtual_contact_name} -> {virtual_substrate_name}")
         
         # Extract JSON from response
-        response_text = response.content
+        response_text = extract_response_text(response.content)
         
         # Try to find JSON array
         json_start = response_text.find("[")
@@ -2543,6 +2976,64 @@ FORMAT YOUR RESPONSE as specified in the system prompt, including detailed subst
             "error": f"Processing error: {str(e)}"
         }]
 
+# Helper function to run a single batch of substrate utilization tasks
+async def _run_single_substrate_batch(batch_tasks, batch_num):
+    """Run a single batch of substrate utilization tasks and return results"""
+    try:
+        log(f"Executing substrate batch {batch_num}: {len(batch_tasks)} tasks")
+        batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+        
+        # Process batch results
+        batch_utilization_results = []
+        batch_success_count = 0
+        
+        for j, result in enumerate(batch_results):
+            if isinstance(result, Exception):
+                log(f"Error in substrate batch {batch_num}, task {j+1}: {result}")
+                continue
+            elif isinstance(result, list):
+                # Each result is an array of utilization results for a single contact-substrate relationship
+                batch_utilization_results.extend(result)
+                batch_success_count += 1
+            else:
+                log(f"Substrate batch {batch_num}, task {j+1} returned unexpected result type: {type(result)}")
+        
+        log(f"Substrate batch {batch_num} completed: {batch_success_count}/{len(batch_tasks)} tasks successful")
+        return batch_utilization_results
+        
+    except Exception as e:
+        log(f"Error processing substrate batch {batch_num}: {e}")
+        return []
+
+# Helper function to run a single batch of property rating tasks
+async def _run_single_property_batch(batch_tasks, batch_num):
+    """Run a single batch of property rating tasks and return results"""
+    try:
+        log(f"Executing property batch {batch_num}: {len(batch_tasks)} tasks")
+        batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+        
+        # Process batch results
+        batch_property_results = []
+        batch_success_count = 0
+        
+        for j, result in enumerate(batch_results):
+            if isinstance(result, Exception):
+                log(f"Error in property batch {batch_num}, task {j+1}: {result}")
+                continue
+            elif isinstance(result, list):
+                # Each result is an array of property rating results for a single property rating task
+                batch_property_results.extend(result)
+                batch_success_count += 1
+            else:
+                log(f"Property batch {batch_num}, task {j+1} returned unexpected result type: {type(result)}")
+        
+        log(f"Property batch {batch_num} completed: {batch_success_count}/{len(batch_tasks)} tasks successful")
+        return batch_property_results
+        
+    except Exception as e:
+        log(f"Error processing property batch {batch_num}: {e}")
+        return []
+
 # Function to run substrate utilization methods generation for all relationships
 async def run_substrate_utilization_methods(haptic_annotation_json, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results):
     if not haptic_annotation_json:
@@ -2579,16 +3070,19 @@ async def run_substrate_utilization_methods(haptic_annotation_json, environment_
             for contact_obj in all_physical_objects:
                 # Check if this physical object has a utilization method for the virtual contact object
                 has_contact_utilization = False
+                contact_utilization_method = None
                 for proxy_result in proxy_matching_results:
                     if (proxy_result.get('object_id') == contact_obj.get('object_id') and 
                         proxy_result.get('image_id') == contact_obj.get('image_id') and
                         proxy_result.get('virtualObject') == virtual_contact_name):
                         has_contact_utilization = True
+                        contact_utilization_method = proxy_result.get('utilizationMethod', 'No utilization method available')
                         break
                 
                 # Only create a task if this physical object can serve as the contact object
                 if has_contact_utilization:
                     log(f"Creating substrate utilization task for {virtual_contact_name} -> {virtual_substrate_name} with contact object {contact_obj.get('object')} (ID: {contact_obj.get('object_id')})")
+                    log(f"  Contact utilization method: {contact_utilization_method[:50]}..." if contact_utilization_method else "  No utilization method")
                     
                     task = generate_substrate_utilization_for_contact(
                         relationship,
@@ -2600,20 +3094,50 @@ async def run_substrate_utilization_methods(haptic_annotation_json, environment_
                         proxy_matching_results
                     )
                     all_tasks.append(task)
+                else:
+                    log(f"Skipping contact object {contact_obj.get('object')} (ID: {contact_obj.get('object_id')}) - no utilization method for {virtual_contact_name}")
         
-        # Run all tasks concurrently
-        log(f"Running {len(all_tasks)} substrate utilization tasks concurrently")
-        task_results = await asyncio.gather(*all_tasks, return_exceptions=True)
+        # Run tasks with overlapping batches for maximum throughput
+        log(f"Running {len(all_tasks)} substrate utilization tasks with overlapping batches (size: {SUBSTRATE_BATCH_SIZE}, interval: {SUBSTRATE_BATCH_INTERVAL}s)")
         
-        # Process results
+        # Create all batch tasks without waiting for them to complete
+        batch_tasks = []
+        for i in range(0, len(all_tasks), SUBSTRATE_BATCH_SIZE):
+            batch = all_tasks[i:i + SUBSTRATE_BATCH_SIZE]
+            batch_num = i // SUBSTRATE_BATCH_SIZE + 1
+            total_batches = (len(all_tasks) + SUBSTRATE_BATCH_SIZE - 1) // SUBSTRATE_BATCH_SIZE
+            
+            log(f"Starting batch {batch_num}/{total_batches}: {len(batch)} tasks")
+            
+            # Create a task for this batch
+            batch_task = asyncio.create_task(
+                _run_single_substrate_batch(batch, batch_num)
+            )
+            batch_tasks.append(batch_task)
+            
+            # Wait before starting the next batch (except for the last one)
+            if i + SUBSTRATE_BATCH_SIZE < len(all_tasks):
+                await asyncio.sleep(SUBSTRATE_BATCH_INTERVAL)
+        
+        # Now wait for all batches to complete
+        log(f"All {len(batch_tasks)} batches started. Waiting for completion...")
+        batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+        
+        # Process all batch results
         all_substrate_utilization_results = []
-        for i, result in enumerate(task_results):
-            if isinstance(result, Exception):
-                log(f"Error in substrate utilization task {i}: {result}")
+        successful_batches = 0
+        
+        for batch_num, batch_result in enumerate(batch_results, 1):
+            if isinstance(batch_result, Exception):
+                log(f"Error in batch {batch_num}: {batch_result}")
                 continue
+            elif isinstance(batch_result, list):
+                all_substrate_utilization_results.extend(batch_result)
+                successful_batches += 1
             else:
-                # Each result is an array of utilization results for a single contact-substrate relationship
-                all_substrate_utilization_results.extend(result)
+                log(f"Batch {batch_num} returned unexpected result type: {type(batch_result)}")
+        
+        log(f"Overlapping batch execution completed: {successful_batches}/{len(batch_tasks)} batches successful")
         
         # Log summary of results
         log(f"Completed substrate utilization method generation with {len(all_substrate_utilization_results)} total utilization methods")
@@ -2626,9 +3150,69 @@ async def run_substrate_utilization_methods(haptic_annotation_json, environment_
         log(traceback.format_exc())
         return []
 
+# Simple test function to replace relationship rating for debugging LangSmith tracing
+async def run_simple_greeting_test():
+    """Send a few simple concurrent greeting queries to test LangSmith tracing"""
+    log("Starting simple greeting test with few concurrent queries")
+    
+    # Create simple greeting tasks
+    async def send_greeting(greeting_id):
+        try:
+            log(f"Sending greeting {greeting_id}")
+            messages = [
+                SystemMessage(content="You are a friendly assistant. Respond with a brief greeting."),
+                HumanMessage(content=f"Hello! This is test greeting number {greeting_id}.")
+            ]
+            
+            response = await greeting_test_llm.ainvoke(messages)
+            response_text = extract_response_text(response.content)
+            
+            log(f"Received greeting response {greeting_id}: {response_text[:50]}...")
+            
+            return {
+                "greeting_id": greeting_id,
+                "response": response_text,
+                "status": "success"
+            }
+            
+        except Exception as e:
+            log(f"Error in greeting {greeting_id}: {e}")
+            return {
+                "greeting_id": greeting_id,
+                "error": str(e),
+                "status": "error"
+            }
+    
+    # Create just 5 simple concurrent tasks (much fewer than relationship rating)
+    tasks = []
+    for i in range(1, 6):  # Just 5 greetings
+        task = send_greeting(i)
+        tasks.append(task)
+    
+    log(f"Running {len(tasks)} simple greeting tasks concurrently with asyncio.gather")
+    
+    # Use the same pattern as working processes
+    task_results = await asyncio.gather(*tasks, return_exceptions=True)
+    
+    # Process results
+    greeting_results = []
+    for i, result in enumerate(task_results):
+        if isinstance(result, Exception):
+            log(f"Error in greeting task {i}: {result}")
+            greeting_results.append({
+                "greeting_id": i + 1,
+                "error": str(result),
+                "status": "error"
+            })
+        else:
+            greeting_results.append(result)
+    
+    log(f"Completed simple greeting test with {len(greeting_results)} results")
+    return greeting_results
+
 try:
     # Create a variable to store the processing results
-    result = {"status": "success", "message": "Processing complete"}
+    result: Dict[str, Any] = {"status": "success", "message": "Processing complete"}
     
     # Run all tasks concurrently in a single event loop
     concurrent_results = asyncio.run(run_concurrent_tasks())
@@ -2749,29 +3333,37 @@ try:
             "rating_results": property_rating_results
         }
     
-    # Process relationship rating results if available
+    # Process greeting test results if available
     if environment_image_base64_list and haptic_annotation_json:
-        log("Processing completed relationship rating results")
-        relationship_rating_results = concurrent_results.get("relationship_rating_result", [])
+        log("Processing completed greeting test results")
+        greeting_test_results = concurrent_results.get("greeting_test_result", [])
         
-        # Save relationship rating results
+        # Save greeting test results
         output_dir = os.path.join(script_dir, "output")
-        relationship_rating_output_path = os.path.join(output_dir, "relationship_rating_results.json")
+        greeting_test_output_path = os.path.join(output_dir, "greeting_test_results.json")
         
         # Ensure output directory exists
         os.makedirs(output_dir, exist_ok=True)
         
-        # Save relationship rating results
-        with open(relationship_rating_output_path, 'w') as f:
-            json.dump(relationship_rating_results, f, indent=2)
+        # Save greeting test results
+        with open(greeting_test_output_path, 'w') as f:
+            json.dump(greeting_test_results, f, indent=2)
         
-        log(f"Relationship rating complete. Generated ratings for {len(relationship_rating_results)} object pairs.")
+        log(f"Greeting test complete. Generated {len(greeting_test_results)} greeting responses.")
         
         # Add to result
-        result["relationship_rating"] = {
-            "count": len(relationship_rating_results),
-            "database_path": relationship_rating_output_path,
-            "rating_results": relationship_rating_results
+        result["greeting_test"] = {
+            "count": len(greeting_test_results),
+            "database_path": greeting_test_output_path,
+            "test_results": greeting_test_results
+        }
+    else:
+        log("No data available for greeting test")
+        result["greeting_test"] = {
+            "status": "no_data", 
+            "message": "No environment images or haptic annotation data provided",
+            "count": 0,
+            "test_results": []
         }
     
     # Process substrate utilization results if available
@@ -2800,10 +3392,11 @@ try:
         }
     
     # Print final result as JSON
-    print(json.dumps(result, indent=2))
+    # print(json.dumps(result, indent=2))
         
 except Exception as e:
     log(f"Error in processing: {e}")
     import traceback
     log(traceback.format_exc())
     print(json.dumps({"status": "error", "message": str(e)}))
+

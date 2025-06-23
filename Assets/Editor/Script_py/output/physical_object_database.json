@@ -20,20 +20,20 @@
     },
     {
       "object_id": 4,
-      "object": "black speaker or subwoofer",
+      "object": "black speaker",
       "position": "bottom left corner of the image",
       "image_id": 0
     },
     {
       "object_id": 5,
-      "object": "various cables and wires",
-      "position": "sprawled across the bottom of the image",
+      "object": "metallic ruler",
+      "position": "top right of the laptop",
       "image_id": 0
     },
     {
       "object_id": 6,
-      "object": "metal rail or bar",
-      "position": "top right of the laptop",
+      "object": "various cables",
+      "position": "scattered around the bottom of the image",
       "image_id": 0
     }
   ],
@@ -41,37 +41,37 @@
     {
       "object_id": 1,
       "object": "black keyboard",
-      "position": "bottom center of the image",
+      "position": "bottom left of the image",
       "image_id": 1
     },
     {
       "object_id": 2,
       "object": "white cuboid airpods case",
-      "position": "bottom right of the image",
+      "position": "bottom center of the image",
       "image_id": 1
     },
     {
       "object_id": 3,
       "object": "white gaming mouse",
-      "position": "bottom center of the image, slightly to the right of the keyboard",
+      "position": "bottom center of the image, next to the airpods case",
       "image_id": 1
     },
     {
       "object_id": 4,
-      "object": "silver insulated tumbler",
-      "position": "bottom right of the image, next to the airpods case",
+      "object": "silver insulated water bottle",
+      "position": "bottom right of the image",
       "image_id": 1
     },
     {
       "object_id": 5,
       "object": "notebook with a grid pattern",
-      "position": "bottom left of the image",
+      "position": "bottom left of the image, above the keyboard",
       "image_id": 1
     },
     {
       "object_id": 6,
       "object": "green object (possibly a stress ball)",
-      "position": "bottom left of the image, next to the notebook",
+      "position": "bottom left of the image, next to the keyboard",
       "image_id": 1
     },
     {
@@ -83,19 +83,13 @@
     {
       "object_id": 8,
       "object": "computer screen displaying code",
-      "position": "top right of the image",
+      "position": "right monitor, top right of the image",
       "image_id": 1
     },
     {
       "object_id": 9,
-      "object": "stack of papers",
-      "position": "bottom right of the image, behind the airpods case",
-      "image_id": 1
-    },
-    {
-      "object_id": 10,
-      "object": "pen",
-      "position": "bottom left of the image, next to the notebook",
+      "object": "papers with handwritten notes",
+      "position": "bottom right of the image, under the right monitor",
       "image_id": 1
     }
   ]
