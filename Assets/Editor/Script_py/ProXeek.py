@@ -10,21 +10,29 @@ from PIL import Image
 import asyncio
 from typing import List, Dict, Any, Optional, Union
 from pydantic import SecretStr
+from langsmith import traceable
+from langsmith.wrappers import wrap_openai
+import uuid
 
 # =============================================================================
 # CONFIGURATION PARAMETERS - Easy to find and modify
 # =============================================================================
 
 # Substrate Utilization Process - Overlapping Batch Configuration
-SUBSTRATE_BATCH_SIZE = 4        # Number of tasks per batch
-SUBSTRATE_BATCH_INTERVAL = 3  # Seconds between starting new batches
+SUBSTRATE_BATCH_SIZE = 10        # Number of tasks per batch
+SUBSTRATE_BATCH_INTERVAL = 1.5  # Seconds between starting new batches
 
 # Property Rating Process - Overlapping Batch Configuration
-PROPERTY_RATING_BATCH_SIZE = 2  # Number of tasks per batch
-PROPERTY_RATING_BATCH_INTERVAL = 3  # Seconds between starting new batches
+PROPERTY_RATING_BATCH_SIZE = 5  # Number of tasks per batch
+PROPERTY_RATING_BATCH_INTERVAL = 2  # Seconds between starting new batches
 
-# Future: Add other process configurations here as needed
-# RELATIONSHIP_RATING_BATCH_SIZE = 4
+# Relationship Rating Process - Overlapping Batch Configuration
+RELATIONSHIP_RATING_BATCH_SIZE = 5  # Number of tasks per batch
+RELATIONSHIP_RATING_BATCH_INTERVAL = 1  # Seconds between starting new batches
+
+# Process Activation Switches
+ENABLE_RELATIONSHIP_RATING = True   # Set to True to enable relationship rating, False for greeting test
+ENABLE_GREETING_TEST = False        # Set to True to enable greeting test, False for relationship rating
 
 # =============================================================================
 
@@ -49,6 +57,9 @@ def extract_response_text(response_content) -> str:
         return response_content
     else:
         return str(response_content)
+
+# Note: LangChain ChatOpenAI automatically handles LangSmith tracing when environment variables are set
+# No need for manual run IDs or langsmith_extra parameters
 
 
 log("Script started")
@@ -162,16 +173,30 @@ if not api_key or not langchain_api_key:
     except Exception as e:
         log(f"Error reading .env file directly: {e}")
 
-# Set up LangChain tracing
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
+# Set up LangSmith tracing (using LANGSMITH_* variables as per best practices)
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "ProXeek-Haptic-System"  # Set project name for better organization
+
 if langchain_api_key:
+    os.environ["LANGSMITH_API_KEY"] = langchain_api_key
+    # Also set LANGCHAIN_* for backward compatibility
     os.environ["LANGCHAIN_API_KEY"] = langchain_api_key
-    log("LangSmith tracing enabled with API key")
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    log("LangSmith tracing enabled with API key and project: ProXeek-Haptic-System")
+    
+    # Verify tracing setup
+    try:
+        from langsmith import Client
+        ls_client = Client()
+        log("LangSmith client initialized successfully")
+    except Exception as e:
+        log(f"Warning: LangSmith client initialization failed: {e}")
 else:
     log("Warning: LangSmith API key not found - tracing may not work properly")
 
 # o4-mini-2025-04-16
 # Initialize the physical object recognition LLM
+# Note: LangChain ChatOpenAI has built-in LangSmith integration - no need for wrap_openai()
 physical_object_recognition_llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0.1,
@@ -629,6 +654,7 @@ Include ALL physical objects as potential substrate candidates in your evaluatio
     return full_prompt
 
 # Function to process a single image and recognize objects
+@traceable(run_type="llm", metadata={"process": "physical_object_extraction"})
 async def process_single_image(image_base64: str, image_id: int) -> Dict[str, Any]:
     try:
         # Create the human message with image content
@@ -645,6 +671,7 @@ async def process_single_image(image_base64: str, image_id: int) -> Dict[str, An
         
         # Get response from the model
         log(f"Sending image {image_id} to object recognition model")
+        # LangChain ChatOpenAI has built-in LangSmith tracing - no extra config needed
         response = await physical_object_recognition_llm.ainvoke(messages)
         log(f"Received response for image {image_id}")
         
@@ -689,6 +716,7 @@ async def process_single_image(image_base64: str, image_id: int) -> Dict[str, An
         return {"image_id": image_id, "objects": [], "status": "error", "error": str(e)}
 
 # Process multiple images concurrently
+@traceable(run_type="chain", metadata={"process": "physical_object_extraction_batch"})
 async def process_multiple_images(environment_images: List[str]) -> Dict[int, List[Dict]]:
     tasks = []
     for i, image_base64 in enumerate(environment_images):
@@ -728,6 +756,7 @@ def save_object_database(object_db: Dict[int, List[Dict]], output_path: str) -> 
         return None
 
 # New function to process virtual objects and generate deduced interaction patterns
+@traceable(run_type="llm", metadata={"process": "virtual_object_processing"})
 async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
     if not haptic_annotation_json:
         log("No haptic annotation data provided")
@@ -866,6 +895,7 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
         
         # Get response from the model
         log("Sending virtual object data to LLM for haptic feedback processing")
+        # LangChain ChatOpenAI has built-in LangSmith tracing - no extra config needed
         response = await virtual_object_processor_llm.ainvoke(messages)
         log("Received haptic feedback descriptions")
         
@@ -931,6 +961,7 @@ async def process_virtual_objects(haptic_annotation_json: str) -> List[Dict]:
         return []
 
 # Function to match a single virtual object with physical objects
+@traceable(run_type="llm", metadata={"process": "proxy_matching"})
 async def match_single_virtual_object(virtual_object, environment_images, physical_object_database, object_snapshot_map):
     try:
         virtual_object_name = virtual_object.get("objectName", "Unknown Object")
@@ -1123,6 +1154,7 @@ IMPORTANT:
         
         # Get response from the model
         log(f"Sending proxy matching request for {virtual_object_name}")
+        # LangChain ChatOpenAI has built-in LangSmith tracing - no extra config needed
         response = await proxy_matching_llm.ainvoke(messages)
         log(f"Received method proposals for {virtual_object_name}")
         
@@ -1254,6 +1286,7 @@ IMPORTANT:
         }]
 
 # Function to run proxy matching for all virtual objects in parallel
+@traceable(run_type="chain", metadata={"process": "proxy_matching_batch"})
 async def run_proxy_matching(virtual_objects, environment_images, physical_object_database, object_snapshot_map):
     tasks = []
     for virtual_object in virtual_objects:
@@ -1289,6 +1322,7 @@ async def run_proxy_matching(virtual_objects, environment_images, physical_objec
     return all_matching_results
 
 # Function to rate a single property of a virtual object against all physical objects
+@traceable(run_type="llm", metadata={"process": "property_rating"})
 async def rate_single_property(virtual_object, property_name, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results, run_index=1):
     # Log information about the proxy matching results
     log(f"Property rating for {property_name} (run {run_index}) with {len(proxy_matching_results)} proxy matching results")
@@ -1497,6 +1531,7 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
         
         # Get response from the model
         log(f"Sending property rating request for {property_name} of {virtual_object_name} (run {run_index})")
+        # LangChain ChatOpenAI has built-in LangSmith tracing - no extra config needed
         response = await property_rating_llm.ainvoke(messages)
         log(f"Received property ratings for {property_name} of {virtual_object_name} (run {run_index})")
         
@@ -1571,6 +1606,7 @@ IMPORTANT: Include ALL physical objects in your evaluation, even those with low 
         }]
 
 # Function to run property ratings for all virtual objects with overlapping batch approach
+@traceable(run_type="chain", metadata={"process": "property_rating_batch"})
 async def run_property_ratings(virtual_objects, environment_images, physical_object_database, object_snapshot_map, proxy_matching_results):
     log(f"run_property_ratings received {len(proxy_matching_results)} proxy matching results")
     
@@ -1931,24 +1967,92 @@ Please rate how well each pair (contact + substrate) can deliver the expected {d
             
             if objects_in_snapshot:
                 for obj in objects_in_snapshot:
+                    obj_id = obj['object_id']
+                    obj_name = obj['object']
+                    obj_position = obj['position']
+                    
                     # Highlight the contact object
-                    if (obj['object_id'] == contact_object.get('object_id') and 
+                    if (obj_id == contact_object.get('object_id') and 
                         obj.get('image_id') == contact_object.get('image_id')):
-                        objects_text += f"- **CONTACT OBJECT** - Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                        objects_text += f"- **CONTACT OBJECT** - Object ID {obj_id}: {obj_name} ({obj_position})\n"
+                        objects_text += f"  Contact Utilization Method: {contact_utilization_method}\n"
                     else:
-                        objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']}) - *Substrate candidate*\n"
-                    objects_text += f"  Image ID: {i}\n"
+                        objects_text += f"- Object ID {obj_id}: {obj_name} ({obj_position}) - *Substrate candidate*\n"
+                        
+                        # Find and attach the substrate utilization method for this object
+                        substrate_method_found = False
+                        for method in relevant_substrate_methods:
+                            method_obj_id = method.get('substrateObject_id')
+                            method_img_id = method.get('substrateImage_id')
+                            
+                            # Convert to int for comparison if needed
+                            if isinstance(method_obj_id, str):
+                                try:
+                                    method_obj_id = int(method_obj_id)
+                                except ValueError:
+                                    pass
+                            if isinstance(method_img_id, str):
+                                try:
+                                    method_img_id = int(method_img_id)
+                                except ValueError:
+                                    pass
+                            
+                            # Check if this method matches the current object
+                            if method_obj_id == obj_id and method_img_id == i:
+                                substrate_method = method.get('substrateUtilizationMethod', 'No method available')
+                                objects_text += f"  **Substrate Utilization Method**: {substrate_method}\n"
+                                substrate_method_found = True
+                                break
+                        
+                        if not substrate_method_found:
+                            objects_text += f"  **Substrate Utilization Method**: No method available for this object\n"
+                    
+                    objects_text += f"  Image ID: {i}\n\n"
             else:
                 # Check if we should look for objects in a different format
                 objects_in_snapshot = physical_object_database.get(i, [])
                 if objects_in_snapshot:
                     for obj in objects_in_snapshot:
-                        if (obj['object_id'] == contact_object.get('object_id') and 
+                        obj_id = obj['object_id']
+                        obj_name = obj['object']
+                        obj_position = obj['position']
+                        
+                        if (obj_id == contact_object.get('object_id') and 
                             obj.get('image_id') == contact_object.get('image_id')):
-                            objects_text += f"- **CONTACT OBJECT** - Object ID {obj['object_id']}: {obj['object']} ({obj['position']})\n"
+                            objects_text += f"- **CONTACT OBJECT** - Object ID {obj_id}: {obj_name} ({obj_position})\n"
+                            objects_text += f"  Contact Utilization Method: {contact_utilization_method}\n"
                         else:
-                            objects_text += f"- Object ID {obj['object_id']}: {obj['object']} ({obj['position']}) - *Substrate candidate*\n"
-                        objects_text += f"  Image ID: {i}\n"
+                            objects_text += f"- Object ID {obj_id}: {obj_name} ({obj_position}) - *Substrate candidate*\n"
+                            
+                            # Find and attach the substrate utilization method for this object
+                            substrate_method_found = False
+                            for method in relevant_substrate_methods:
+                                method_obj_id = method.get('substrateObject_id')
+                                method_img_id = method.get('substrateImage_id')
+                                
+                                # Convert to int for comparison if needed
+                                if isinstance(method_obj_id, str):
+                                    try:
+                                        method_obj_id = int(method_obj_id)
+                                    except ValueError:
+                                        pass
+                                if isinstance(method_img_id, str):
+                                    try:
+                                        method_img_id = int(method_img_id)
+                                    except ValueError:
+                                        pass
+                                
+                                # Check if this method matches the current object
+                                if method_obj_id == obj_id and method_img_id == i:
+                                    substrate_method = method.get('substrateUtilizationMethod', 'No method available')
+                                    objects_text += f"  **Substrate Utilization Method**: {substrate_method}\n"
+                                    substrate_method_found = True
+                                    break
+                            
+                            if not substrate_method_found:
+                                objects_text += f"  **Substrate Utilization Method**: No method available for this object\n"
+                        
+                        objects_text += f"  Image ID: {i}\n\n"
                 else:
                     objects_text += "- No objects detected in this snapshot\n"
                 
@@ -1957,20 +2061,7 @@ Please rate how well each pair (contact + substrate) can deliver the expected {d
                 "text": objects_text
             })
         
-        # 4. Add pre-generated substrate utilization methods
-        if relevant_substrate_methods:
-            substrate_methods_text = "\n# Pre-generated Substrate Utilization Methods\n"
-            substrate_methods_text += f"For contact object: {contact_object.get('object')} (using method: {contact_utilization_method})\n\n"
-            
-            for method in relevant_substrate_methods:
-                substrate_obj_name = method.get('physicalSubstrateObject', 'Unknown')
-                substrate_method = method.get('substrateUtilizationMethod', 'No method available')
-                substrate_methods_text += f"**{substrate_obj_name}**: {substrate_method}\n\n"
-            
-            human_message_content.append({
-                "type": "text", 
-                "text": substrate_methods_text
-            })
+        # 4. Substrate utilization methods are now integrated with each object above
         
         # 5. Add final instructions with explicit object ID mapping
         
@@ -2007,19 +2098,19 @@ Please rate how well each pair (contact + substrate) can deliver the expected {d
             "text": f"""
 # Your Task
 
-You have been provided with pre-generated substrate utilization methods above. Your task is to evaluate how well each contact-substrate pair can deliver the expected {dimension_name} aspect of the haptic feedback.
+Each substrate candidate above has been provided with its corresponding substrate utilization method. Your task is to evaluate how well each contact-substrate pair can deliver the expected {dimension_name} aspect of the haptic feedback.
 
 **Contact Object**: {contact_object.get('object')} (ID: {contact_object.get('object_id')}, Image: {contact_object.get('image_id')})
 **Contact Utilization Method**: {contact_utilization_method}
 
-For each substrate object and its corresponding utilization method, rate the pair on the {dimension_name} dimension using the 7-point Likert scale provided in the system prompt.
+For each substrate object and its corresponding substrate utilization method listed above, rate the pair on the {dimension_name} dimension using the 7-point Likert scale provided in the system prompt.
 
 **CRITICAL REQUIREMENTS:**
 1. Use ONLY the Object IDs and Image IDs from the mapping table above
 2. Do NOT make up or guess any object IDs  
 3. The contactObject_id MUST be {contact_object.get('object_id')} and contactImage_id MUST be {contact_object.get('image_id')}
 4. For each substrate, use the EXACT object_id and image_id from the mapping table
-5. Consider both the contact object's utilization method AND the provided substrate utilization method
+5. Consider both the contact object's utilization method AND the substrate utilization method listed with each object
 6. Rate based on how well the combined utilization methods would deliver the {dimension_name} aspect of the expected haptic feedback: "{annotation_text}"
 
 FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, using the EXACT object IDs from the mapping table above.
@@ -2112,49 +2203,101 @@ FORMAT YOUR RESPONSE AS A JSON ARRAY as specified in the system prompt, using th
             "error": f"Processing error: {str(e)}"
         }]
 
-# Function to rate a single relationship dimension (simplified to avoid nested concurrency)
+# Function to rate a single relationship group with all three dimensions
 async def rate_single_relationship_group_simple(relationship_annotation, contact_object, substrate_objects, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, substrate_utilization_results, group_index=1):
     try:
         virtual_contact_name = relationship_annotation.get("contactObject", "Unknown Contact Object")
         virtual_substrate_name = relationship_annotation.get("substrateObject", "Unknown Substrate Object")
         
-        log(f"Rating relationship group {group_index}: {virtual_contact_name} -> {virtual_substrate_name} with simplified single dimension")
+        log(f"Rating relationship group {group_index}: {virtual_contact_name} -> {virtual_substrate_name} with all three dimensions")
         
-        # Use only one dimension (harmony) to simplify the structure like working processes
-        dimension = "harmony"
+        # Evaluate all three dimensions: harmony, expressivity, realism
+        dimensions = ["harmony", "expressivity", "realism"]
         
-        log(f"Creating single {dimension} rating for group {group_index}")
+        log(f"Creating ratings for {len(dimensions)} dimensions for group {group_index}")
         
-        # Call the dimension rating function directly (no nested async)
-        dimension_result = await rate_single_relationship_dimension(
-            relationship_annotation,
-            contact_object,
-            substrate_objects,
-            environment_images,
-            physical_object_database,
-            object_snapshot_map,
-            enhanced_virtual_objects,
-            proxy_matching_results,
-            substrate_utilization_results,
-            dimension,
-            group_index
-        )
+        # Call the dimension rating function for each dimension sequentially
+        all_dimension_results = []
         
-        # Process the single dimension result (simplified)
-        if isinstance(dimension_result, Exception):
-            log(f"Failed {dimension} rating for group {group_index}: {dimension_result}")
-            return [{
-                "group_index": group_index,
-                "error": f"Dimension rating error: {str(dimension_result)}"
-            }]
-        elif isinstance(dimension_result, list):
-            log(f"Completed {dimension} rating for group {group_index} with {len(dimension_result)} results")
-            return dimension_result
+        for dimension in dimensions:
+            log(f"Processing {dimension} rating for group {group_index}")
+            
+            dimension_result = await rate_single_relationship_dimension(
+                relationship_annotation,
+                contact_object,
+                substrate_objects,
+                environment_images,
+                physical_object_database,
+                object_snapshot_map,
+                enhanced_virtual_objects,
+                proxy_matching_results,
+                substrate_utilization_results,
+                dimension,
+                group_index
+            )
+            
+            # Process the dimension result
+            if isinstance(dimension_result, Exception):
+                log(f"Failed {dimension} rating for group {group_index}: {dimension_result}")
+                # Continue with other dimensions even if one fails
+                continue
+            elif isinstance(dimension_result, list):
+                log(f"Completed {dimension} rating for group {group_index} with {len(dimension_result)} results")
+                all_dimension_results.extend(dimension_result)
+            else:
+                log(f"Invalid result type for {dimension} in group {group_index}: {type(dimension_result)}")
+                continue
+        
+        # Combine results from all dimensions
+        if all_dimension_results:
+            # Group results by contact-substrate pair to combine dimension ratings
+            combined_results = {}
+            
+            for result in all_dimension_results:
+                # Create a key for this contact-substrate pair
+                contact_id = result.get("contactObject_id", "unknown")
+                contact_img_id = result.get("contactImage_id", "unknown")
+                substrate_id = result.get("substrateObject_id", "unknown")
+                substrate_img_id = result.get("substrateImage_id", "unknown")
+                
+                pair_key = f"{contact_id}_{contact_img_id}_{substrate_id}_{substrate_img_id}"
+                
+                # Initialize the combined entry if it doesn't exist
+                if pair_key not in combined_results:
+                    combined_results[pair_key] = {
+                        "virtualContactObject": result.get("virtualContactObject", ""),
+                        "virtualSubstrateObject": result.get("virtualSubstrateObject", ""),
+                        "physicalContactObject": result.get("physicalContactObject", ""),
+                        "physicalSubstrateObject": result.get("physicalSubstrateObject", ""),
+                        "contactObject_id": result.get("contactObject_id", ""),
+                        "contactImage_id": result.get("contactImage_id", ""),
+                        "substrateObject_id": result.get("substrateObject_id", ""),
+                        "substrateImage_id": result.get("substrateImage_id", ""),
+                        "contactUtilizationMethod": result.get("contactUtilizationMethod", ""),
+                        "substrateUtilizationMethod": result.get("substrateUtilizationMethod", ""),
+                        "group_index": result.get("group_index", group_index),
+                        "expectedHapticFeedback": result.get("expectedHapticFeedback", "")
+                    }
+                
+                # Add the dimension-specific rating and explanation
+                dimension = result.get("dimension", "unknown")
+                rating_key = f"{dimension}_rating"
+                explanation_key = f"{dimension}_explanation"
+                
+                if rating_key in result:
+                    combined_results[pair_key][rating_key] = result[rating_key]
+                if explanation_key in result:
+                    combined_results[pair_key][explanation_key] = result[explanation_key]
+            
+            # Convert back to list
+            final_results = list(combined_results.values())
+            log(f"Combined all dimensions for group {group_index}: {len(final_results)} final results")
+            return final_results
         else:
-            log(f"Invalid result type for {dimension} in group {group_index}: {type(dimension_result)}")
+            log(f"No valid dimension results for group {group_index}")
             return [{
                 "group_index": group_index,
-                "error": f"Invalid result type: {type(dimension_result)}"
+                "error": "No valid dimension results"
             }]
         
     except Exception as e:
@@ -2166,9 +2309,10 @@ async def rate_single_relationship_group_simple(relationship_annotation, contact
         return [{
             "group_index": group_index,
             "error": f"Processing error: {str(e)}"
-        }], {}
+        }]
 
 # Function to run relationship ratings for all relationships in parallel
+@traceable(run_type="chain", metadata={"process": "relationship_rating_batch"})
 async def run_relationship_ratings(haptic_annotation_json, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results, substrate_utilization_results):
     if not haptic_annotation_json:
         log("No haptic annotation data provided for relationship ratings")
@@ -2245,20 +2389,47 @@ async def run_relationship_ratings(haptic_annotation_json, environment_images, p
                 else:
                     log(f"Warning: No substrate candidates found for contact object: {contact_obj.get('object')}")
         
-        # Run all tasks concurrently
-        log(f"Running {len(all_tasks)} relationship rating tasks concurrently")
-        task_results = await asyncio.gather(*all_tasks, return_exceptions=True)
+        # Run tasks with overlapping batches for maximum throughput (same approach as substrate utilization)
+        log(f"Running {len(all_tasks)} relationship rating tasks with overlapping batches (size: {RELATIONSHIP_RATING_BATCH_SIZE}, interval: {RELATIONSHIP_RATING_BATCH_INTERVAL}s)")
         
-        # Process results with simplified structure
+        # Create all batch tasks without waiting for them to complete
+        batch_tasks = []
+        for i in range(0, len(all_tasks), RELATIONSHIP_RATING_BATCH_SIZE):
+            batch = all_tasks[i:i + RELATIONSHIP_RATING_BATCH_SIZE]
+            batch_num = i // RELATIONSHIP_RATING_BATCH_SIZE + 1
+            total_batches = (len(all_tasks) + RELATIONSHIP_RATING_BATCH_SIZE - 1) // RELATIONSHIP_RATING_BATCH_SIZE
+            
+            log(f"Starting relationship batch {batch_num}/{total_batches}: {len(batch)} tasks")
+            
+            # Create a task for this batch
+            batch_task = asyncio.create_task(
+                _run_single_relationship_batch(batch, batch_num)
+            )
+            batch_tasks.append(batch_task)
+            
+            # Wait before starting the next batch (except for the last one)
+            if i + RELATIONSHIP_RATING_BATCH_SIZE < len(all_tasks):
+                await asyncio.sleep(RELATIONSHIP_RATING_BATCH_INTERVAL)
+        
+        # Now wait for all batches to complete
+        log(f"All {len(batch_tasks)} relationship batches started. Waiting for completion...")
+        batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+        
+        # Process all batch results
         all_relationship_results = []
+        successful_batches = 0
         
-        for i, result in enumerate(task_results):
-            if isinstance(result, Exception):
-                log(f"Error in relationship rating task {i}: {result}")
+        for batch_num, batch_result in enumerate(batch_results, 1):
+            if isinstance(batch_result, Exception):
+                log(f"Error in relationship batch {batch_num}: {batch_result}")
                 continue
-            elif isinstance(result, list):
-                # Each result is a list of rating results for a single relationship group
-                all_relationship_results.extend(result)
+            elif isinstance(batch_result, list):
+                all_relationship_results.extend(batch_result)
+                successful_batches += 1
+            else:
+                log(f"Relationship batch {batch_num} returned unexpected result type: {type(batch_result)}")
+        
+        log(f"Overlapping relationship batch execution completed: {successful_batches}/{len(batch_tasks)} batches successful")
         
         # Log summary of results
         log(f"Completed relationship ratings with {len(all_relationship_results)} total ratings")
@@ -2272,6 +2443,7 @@ async def run_relationship_ratings(haptic_annotation_json, environment_images, p
         return []
 
 # Modify the run_concurrent_tasks function to include proxy matching
+@traceable(run_type="chain", metadata={"process": "main_orchestration"})
 async def run_concurrent_tasks():
     tasks = []
     results = {}
@@ -2365,50 +2537,135 @@ async def run_concurrent_tasks():
             log(f"Step 1 error: Substrate utilization failed: {e}")
             substrate_utilization_results = []
         
-        # Step 2: Run property rating and greeting test concurrently after substrate utilization completes
-        log("Step 2: Starting property rating and greeting test concurrently (after substrate utilization completion)")
-        
-        # Create tasks for concurrent execution
-        property_task = run_property_ratings(
-            enhanced_virtual_objects,
-            environment_image_base64_list,
-            physical_object_database,
-            object_snapshot_map,
-            proxy_matching_results
-        )
-        
-        greeting_task = run_simple_greeting_test()
-        
-        # Run both tasks concurrently using asyncio.gather()
-        try:
-            concurrent_results = await asyncio.gather(property_task, greeting_task, return_exceptions=True)
+        # Step 2: Run property rating and either relationship rating or greeting test concurrently after substrate utilization completes
+        if ENABLE_RELATIONSHIP_RATING:
+            log("Step 2: Starting property rating and relationship rating concurrently (after substrate utilization completion)")
             
-            # Process property rating result (first result)
-            if isinstance(concurrent_results[0], Exception):
-                log(f"Step 2 error: Property rating failed: {concurrent_results[0]}")
-                property_rating_results = []
-            else:
-                property_rating_results = concurrent_results[0]
-                log(f"Step 2 complete: Property rating finished with {len(property_rating_results) if isinstance(property_rating_results, (list, tuple)) else 0} results")
+            # Create tasks for concurrent execution
+            property_task = run_property_ratings(
+                enhanced_virtual_objects,
+                environment_image_base64_list,
+                physical_object_database,
+                object_snapshot_map,
+                proxy_matching_results
+            )
             
-            # Process greeting test result (second result)
-            if isinstance(concurrent_results[1], Exception):
-                log(f"Step 2 error: Greeting test failed: {concurrent_results[1]}")
-                greeting_test_results = []
-            else:
-                greeting_test_results = concurrent_results[1]
-                log(f"Step 2 complete: Greeting test finished with {len(greeting_test_results) if isinstance(greeting_test_results, (list, tuple)) else 0} results")
+            relationship_task = run_relationship_ratings(
+                haptic_annotation_json,
+                environment_image_base64_list,
+                physical_object_database,
+                object_snapshot_map,
+                enhanced_virtual_objects,
+                proxy_matching_results,
+                substrate_utilization_results
+            )
+            
+            # Run both tasks concurrently using asyncio.gather()
+            try:
+                concurrent_results = await asyncio.gather(property_task, relationship_task, return_exceptions=True)
                 
-        except Exception as e:
-            log(f"Step 2 error: Concurrent execution failed: {e}")
-            property_rating_results = []
-            greeting_test_results = []
-        
-        log("Sequential execution complete: substrate utilization first, then property rating + greeting test concurrent")
+                # Process property rating result (first result)
+                if isinstance(concurrent_results[0], Exception):
+                    log(f"Step 2 error: Property rating failed: {concurrent_results[0]}")
+                    property_rating_results = []
+                else:
+                    property_rating_results = concurrent_results[0]
+                    log(f"Step 2 complete: Property rating finished with {len(property_rating_results) if isinstance(property_rating_results, (list, tuple)) else 0} results")
+                
+                # Process relationship rating result (second result)
+                if isinstance(concurrent_results[1], Exception):
+                    log(f"Step 2 error: Relationship rating failed: {concurrent_results[1]}")
+                    relationship_rating_results = []
+                else:
+                    relationship_rating_results = concurrent_results[1]
+                    log(f"Step 2 complete: Relationship rating finished with {len(relationship_rating_results) if isinstance(relationship_rating_results, (list, tuple)) else 0} results")
+                
+                # Set greeting test results as empty since relationship rating is enabled
+                greeting_test_results = []
+                    
+            except Exception as e:
+                log(f"Step 2 error: Concurrent execution failed: {e}")
+                property_rating_results = []
+                relationship_rating_results = []
+                greeting_test_results = []
+            
+            log("Sequential execution complete: substrate utilization first, then property rating + relationship rating concurrent")
+            
+        elif ENABLE_GREETING_TEST:
+            log("Step 2: Starting property rating and greeting test concurrently (after substrate utilization completion)")
+            
+            # Create tasks for concurrent execution
+            property_task = run_property_ratings(
+                enhanced_virtual_objects,
+                environment_image_base64_list,
+                physical_object_database,
+                object_snapshot_map,
+                proxy_matching_results
+            )
+            
+            greeting_task = run_simple_greeting_test()
+            
+            # Run both tasks concurrently using asyncio.gather()
+            try:
+                concurrent_results = await asyncio.gather(property_task, greeting_task, return_exceptions=True)
+                
+                # Process property rating result (first result)
+                if isinstance(concurrent_results[0], Exception):
+                    log(f"Step 2 error: Property rating failed: {concurrent_results[0]}")
+                    property_rating_results = []
+                else:
+                    property_rating_results = concurrent_results[0]
+                    log(f"Step 2 complete: Property rating finished with {len(property_rating_results) if isinstance(property_rating_results, (list, tuple)) else 0} results")
+                
+                # Process greeting test result (second result)
+                if isinstance(concurrent_results[1], Exception):
+                    log(f"Step 2 error: Greeting test failed: {concurrent_results[1]}")
+                    greeting_test_results = []
+                else:
+                    greeting_test_results = concurrent_results[1]
+                    log(f"Step 2 complete: Greeting test finished with {len(greeting_test_results) if isinstance(greeting_test_results, (list, tuple)) else 0} results")
+                
+                # Set relationship rating results as empty since greeting test is enabled
+                relationship_rating_results = []
+                    
+            except Exception as e:
+                log(f"Step 2 error: Concurrent execution failed: {e}")
+                property_rating_results = []
+                greeting_test_results = []
+                relationship_rating_results = []
+            
+            log("Sequential execution complete: substrate utilization first, then property rating + greeting test concurrent")
+            
+        else:
+            log("Step 2: Only running property rating (both relationship rating and greeting test disabled)")
+            
+            # Run only property rating
+            try:
+                property_rating_results = await run_property_ratings(
+                    enhanced_virtual_objects,
+                    environment_image_base64_list,
+                    physical_object_database,
+                    object_snapshot_map,
+                    proxy_matching_results
+                )
+                log(f"Step 2 complete: Property rating finished with {len(property_rating_results) if isinstance(property_rating_results, (list, tuple)) else 0} results")
+                
+                # Set other results as empty
+                greeting_test_results = []
+                relationship_rating_results = []
+                
+            except Exception as e:
+                log(f"Step 2 error: Property rating failed: {e}")
+                property_rating_results = []
+                greeting_test_results = []
+                relationship_rating_results = []
+            
+            log("Sequential execution complete: substrate utilization first, then property rating only")
         
         # Add to results
         results["property_rating_result"] = property_rating_results
         results["greeting_test_result"] = greeting_test_results
+        results["relationship_rating_result"] = relationship_rating_results
         results["substrate_utilization_result"] = substrate_utilization_results
     
     return results
@@ -2511,6 +2768,7 @@ def calculate_final_scores(property_rating_results, proxy_matching_results):
     return proxy_matching_results
 
 # Function to generate substrate utilization methods for a single contact-substrate relationship
+@traceable(run_type="llm", metadata={"process": "substrate_utilization"})
 async def generate_substrate_utilization_for_contact(relationship_annotation, contact_object, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results):
     try:
         virtual_contact_name = relationship_annotation.get("contactObject", "Unknown Contact Object")
@@ -2916,6 +3174,7 @@ FORMAT YOUR RESPONSE as specified in the system prompt, using the EXACT object I
         
         # Get response from the model
         log(f"Sending substrate utilization request for {virtual_contact_name} -> {virtual_substrate_name}")
+        # LangChain ChatOpenAI has built-in LangSmith tracing - no extra config needed
         response = await substrate_utilization_llm.ainvoke(messages)
         log(f"Received substrate utilization methods for {virtual_contact_name} -> {virtual_substrate_name}")
         
@@ -3034,7 +3293,37 @@ async def _run_single_property_batch(batch_tasks, batch_num):
         log(f"Error processing property batch {batch_num}: {e}")
         return []
 
+# Helper function to run a single batch of relationship rating tasks
+async def _run_single_relationship_batch(batch_tasks, batch_num):
+    """Run a single batch of relationship rating tasks and return results"""
+    try:
+        log(f"Executing relationship batch {batch_num}: {len(batch_tasks)} tasks")
+        batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+        
+        # Process batch results
+        batch_relationship_results = []
+        batch_success_count = 0
+        
+        for j, result in enumerate(batch_results):
+            if isinstance(result, Exception):
+                log(f"Error in relationship batch {batch_num}, task {j+1}: {result}")
+                continue
+            elif isinstance(result, list):
+                # Each result is an array of relationship rating results for a single relationship group
+                batch_relationship_results.extend(result)
+                batch_success_count += 1
+            else:
+                log(f"Relationship batch {batch_num}, task {j+1} returned unexpected result type: {type(result)}")
+        
+        log(f"Relationship batch {batch_num} completed: {batch_success_count}/{len(batch_tasks)} tasks successful")
+        return batch_relationship_results
+        
+    except Exception as e:
+        log(f"Error processing relationship batch {batch_num}: {e}")
+        return []
+
 # Function to run substrate utilization methods generation for all relationships
+@traceable(run_type="chain", metadata={"process": "substrate_utilization_batch"})
 async def run_substrate_utilization_methods(haptic_annotation_json, environment_images, physical_object_database, object_snapshot_map, enhanced_virtual_objects, proxy_matching_results):
     if not haptic_annotation_json:
         log("No haptic annotation data provided for substrate utilization methods")
@@ -3151,11 +3440,13 @@ async def run_substrate_utilization_methods(haptic_annotation_json, environment_
         return []
 
 # Simple test function to replace relationship rating for debugging LangSmith tracing
+@traceable(run_type="chain", metadata={"process": "greeting_test"})
 async def run_simple_greeting_test():
     """Send a few simple concurrent greeting queries to test LangSmith tracing"""
     log("Starting simple greeting test with few concurrent queries")
     
     # Create simple greeting tasks
+    @traceable(run_type="llm", metadata={"process": "greeting_individual"})
     async def send_greeting(greeting_id):
         try:
             log(f"Sending greeting {greeting_id}")
@@ -3164,6 +3455,7 @@ async def run_simple_greeting_test():
                 HumanMessage(content=f"Hello! This is test greeting number {greeting_id}.")
             ]
             
+            # LangChain ChatOpenAI has built-in LangSmith tracing - no extra config needed
             response = await greeting_test_llm.ainvoke(messages)
             response_text = extract_response_text(response.content)
             
@@ -3334,7 +3626,7 @@ try:
         }
     
     # Process greeting test results if available
-    if environment_image_base64_list and haptic_annotation_json:
+    if environment_image_base64_list and haptic_annotation_json and ENABLE_GREETING_TEST:
         log("Processing completed greeting test results")
         greeting_test_results = concurrent_results.get("greeting_test_result", [])
         
@@ -3358,12 +3650,124 @@ try:
             "test_results": greeting_test_results
         }
     else:
-        log("No data available for greeting test")
+        if not ENABLE_GREETING_TEST:
+            log("Greeting test disabled via configuration")
+        else:
+            log("No data available for greeting test")
         result["greeting_test"] = {
-            "status": "no_data", 
-            "message": "No environment images or haptic annotation data provided",
+            "status": "disabled" if not ENABLE_GREETING_TEST else "no_data", 
+            "message": "Greeting test disabled via configuration" if not ENABLE_GREETING_TEST else "No environment images or haptic annotation data provided",
             "count": 0,
             "test_results": []
+        }
+    
+    # Process relationship rating results if available
+    if environment_image_base64_list and haptic_annotation_json and ENABLE_RELATIONSHIP_RATING:
+        log("Processing completed relationship rating results")
+        relationship_rating_results = concurrent_results.get("relationship_rating_result", [])
+        
+        # Save relationship rating results
+        output_dir = os.path.join(script_dir, "output")
+        relationship_rating_output_path = os.path.join(output_dir, "relationship_rating_results.json")
+        
+        # Ensure output directory exists
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Save relationship rating results
+        with open(relationship_rating_output_path, 'w') as f:
+            json.dump(relationship_rating_results, f, indent=2)
+        
+        # Create dimension-by-dimension breakdown
+        relationship_by_dimension = {
+            "harmony": [],
+            "expressivity": [],
+            "realism": []
+        }
+        
+        # Organize results by dimension
+        for result in relationship_rating_results:
+            # Create separate entries for each dimension
+            base_entry = {
+                "virtualContactObject": result.get("virtualContactObject", ""),
+                "virtualSubstrateObject": result.get("virtualSubstrateObject", ""),
+                "physicalContactObject": result.get("physicalContactObject", ""),
+                "physicalSubstrateObject": result.get("physicalSubstrateObject", ""),
+                "contactObject_id": result.get("contactObject_id", ""),
+                "contactImage_id": result.get("contactImage_id", ""),
+                "substrateObject_id": result.get("substrateObject_id", ""),
+                "substrateImage_id": result.get("substrateImage_id", ""),
+                "contactUtilizationMethod": result.get("contactUtilizationMethod", ""),
+                "substrateUtilizationMethod": result.get("substrateUtilizationMethod", ""),
+                "group_index": result.get("group_index", ""),
+                "expectedHapticFeedback": result.get("expectedHapticFeedback", "")
+            }
+            
+            # Add harmony dimension entry
+            if "harmony_rating" in result:
+                harmony_entry = base_entry.copy()
+                harmony_entry.update({
+                    "dimension": "harmony",
+                    "rating": result.get("harmony_rating", ""),
+                    "explanation": result.get("harmony_explanation", "")
+                })
+                relationship_by_dimension["harmony"].append(harmony_entry)
+            
+            # Add expressivity dimension entry
+            if "expressivity_rating" in result:
+                expressivity_entry = base_entry.copy()
+                expressivity_entry.update({
+                    "dimension": "expressivity",
+                    "rating": result.get("expressivity_rating", ""),
+                    "explanation": result.get("expressivity_explanation", "")
+                })
+                relationship_by_dimension["expressivity"].append(expressivity_entry)
+            
+            # Add realism dimension entry
+            if "realism_rating" in result:
+                realism_entry = base_entry.copy()
+                realism_entry.update({
+                    "dimension": "realism",
+                    "rating": result.get("realism_rating", ""),
+                    "explanation": result.get("realism_explanation", "")
+                })
+                relationship_by_dimension["realism"].append(realism_entry)
+        
+        # Save dimension-by-dimension results
+        relationship_by_dimension_path = os.path.join(output_dir, "relationship_rating_by_dimension.json")
+        with open(relationship_by_dimension_path, 'w') as f:
+            json.dump(relationship_by_dimension, f, indent=2)
+        
+        # Log summary
+        harmony_count = len(relationship_by_dimension["harmony"])
+        expressivity_count = len(relationship_by_dimension["expressivity"])
+        realism_count = len(relationship_by_dimension["realism"])
+        
+        log(f"Relationship rating complete. Generated ratings for {len(relationship_rating_results)} contact-substrate pairs.")
+        log(f"Dimension breakdown: Harmony ({harmony_count}), Expressivity ({expressivity_count}), Realism ({realism_count})")
+        log(f"Saved dimension-by-dimension results to: {relationship_by_dimension_path}")
+        
+        # Add to result
+        result["relationship_rating"] = {
+            "count": len(relationship_rating_results),
+            "database_path": relationship_rating_output_path,
+            "by_dimension_path": relationship_by_dimension_path,
+            "rating_results": relationship_rating_results,
+            "dimension_breakdown": {
+                "harmony": harmony_count,
+                "expressivity": expressivity_count,
+                "realism": realism_count
+            }
+        }
+    else:
+        if not ENABLE_RELATIONSHIP_RATING:
+            log("Relationship rating disabled via configuration")
+        else:
+            log("No data available for relationship rating")
+        result["relationship_rating"] = {
+            "status": "disabled" if not ENABLE_RELATIONSHIP_RATING else "no_data", 
+            "message": "Relationship rating disabled via configuration" if not ENABLE_RELATIONSHIP_RATING else "No environment images or haptic annotation data provided",
+            "count": 0,
+            "rating_results": []
         }
     
     # Process substrate utilization results if available

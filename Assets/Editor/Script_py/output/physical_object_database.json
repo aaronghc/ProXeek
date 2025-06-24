@@ -14,19 +14,19 @@
     },
     {
       "object_id": 3,
-      "object": "green plastic bottle cap",
-      "position": "top right of the image",
-      "image_id": 0
-    },
-    {
-      "object_id": 4,
-      "object": "black speaker",
+      "object": "black speaker or subwoofer",
       "position": "bottom left corner of the image",
       "image_id": 0
     },
     {
+      "object_id": 4,
+      "object": "green plastic bottle cap",
+      "position": "top right of the laptop",
+      "image_id": 0
+    },
+    {
       "object_id": 5,
-      "object": "metallic ruler",
+      "object": "metal rail or bar",
       "position": "top right of the laptop",
       "image_id": 0
     },
@@ -64,14 +64,14 @@
     },
     {
       "object_id": 5,
-      "object": "notebook with a grid pattern",
-      "position": "bottom left of the image, above the keyboard",
+      "object": "notebook with visible writing",
+      "position": "bottom left of the image, next to the keyboard",
       "image_id": 1
     },
     {
       "object_id": 6,
       "object": "green object (possibly a stress ball)",
-      "position": "bottom left of the image, next to the keyboard",
+      "position": "bottom left of the image, near the keyboard",
       "image_id": 1
     },
     {
@@ -88,8 +88,14 @@
     },
     {
       "object_id": 9,
-      "object": "papers with handwritten notes",
-      "position": "bottom right of the image, under the right monitor",
+      "object": "paper with visible text",
+      "position": "bottom right of the image, under the monitors",
+      "image_id": 1
+    },
+    {
+      "object_id": 10,
+      "object": "pen",
+      "position": "bottom right of the image, next to the notebook",
       "image_id": 1
     }
   ]

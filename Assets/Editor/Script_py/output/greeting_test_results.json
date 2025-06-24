@@ -1,27 +1,27 @@
 [
   {
     "greeting_id": 1,
-    "error": "list.remove(x): x not in list",
-    "status": "error"
+    "response": "Hello! It's great to hear from you! How can I assist you today?",
+    "status": "success"
   },
   {
     "greeting_id": 2,
-    "error": "list.remove(x): x not in list",
-    "status": "error"
+    "response": "Hello! It's great to hear from you! How can I assist you today?",
+    "status": "success"
   },
   {
     "greeting_id": 3,
-    "error": "list.remove(x): x not in list",
-    "status": "error"
+    "response": "Hello! It's great to hear from you! How can I assist you today?",
+    "status": "success"
   },
   {
     "greeting_id": 4,
-    "error": "list.remove(x): x not in list",
-    "status": "error"
+    "response": "Hello! It's great to hear from you! How can I assist you today?",
+    "status": "success"
   },
   {
     "greeting_id": 5,
-    "error": "list.remove(x): x not in list",
-    "status": "error"
+    "response": "Hello! It's great to hear from you! How can I assist you today?",
+    "status": "success"
   }
 ]
