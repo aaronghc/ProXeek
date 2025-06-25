@@ -202,8 +202,10 @@ class ProXeekOptimizer:
         # Build virtual object name to index mapping
         virtual_name_to_index = {obj.name: obj.index for obj in self.virtual_objects}
         
-        # Mark which virtual objects have interactions
+        # Mark which virtual objects have interactions and create relationship mapping
         relationship_annotations = haptic_data.get("relationshipAnnotations", [])
+        virtual_relationship_pairs = []  # Store (contact_idx, substrate_idx) tuples
+        
         for rel in relationship_annotations:
             contact_name = rel.get("contactObject", "")
             substrate_name = rel.get("substrateObject", "")
@@ -213,28 +215,50 @@ class ProXeekOptimizer:
                 contact_idx = virtual_name_to_index[contact_name]
                 substrate_idx = virtual_name_to_index[substrate_name]
                 self.interaction_exists[contact_idx, substrate_idx] = 1.0
+                virtual_relationship_pairs.append((contact_idx, substrate_idx))
                 # Note: This is directional (contact -> substrate)
         
-        # Initialize interaction rating matrix for physical objects
-        self.interaction_matrix = np.zeros((n_physical, n_physical))
+        n_relationships = len(virtual_relationship_pairs)
+        print(f"Found {n_relationships} virtual object relationships")
+        
+        # Initialize 3D interaction rating matrix: [relationship_idx, contact_phys, substrate_phys]
+        self.interaction_matrix_3d = np.zeros((n_relationships, n_physical, n_physical))
+        self.virtual_relationship_pairs = virtual_relationship_pairs  # Store for later use
         
         # Build physical object (object_id, image_id) to index mapping
         physical_id_to_index = {(obj.object_id, obj.image_id): obj.index 
                                for obj in self.physical_objects}
         
-        # Process relationship rating data to build interaction matrix
+        # Build virtual relationship name pair to index mapping
+        virtual_relationship_name_to_index = {}
+        for rel_idx, (contact_idx, substrate_idx) in enumerate(virtual_relationship_pairs):
+            contact_name = self.virtual_objects[contact_idx].name
+            substrate_name = self.virtual_objects[substrate_idx].name
+            virtual_relationship_name_to_index[(contact_name, substrate_name)] = rel_idx
+        
+        # Process relationship rating data to build 3D interaction matrix
+        ratings_processed = 0
         for rel_result in relationship_data:
+            virtual_contact = rel_result.get("virtualContactObject", "")
+            virtual_substrate = rel_result.get("virtualSubstrateObject", "")
             contact_obj_id = rel_result.get("contactObject_id", -1)
             contact_img_id = rel_result.get("contactImage_id", -1)
             substrate_obj_id = rel_result.get("substrateObject_id", -1)
             substrate_img_id = rel_result.get("substrateImage_id", -1)
             
-            # Calculate mean rating across the three dimensions
+            # Find the relationship index
+            virtual_pair_key = (virtual_contact, virtual_substrate)
+            if virtual_pair_key not in virtual_relationship_name_to_index:
+                continue
+                
+            rel_idx = virtual_relationship_name_to_index[virtual_pair_key]
+            
+            # Calculate combined rating across the three dimensions
             harmony_rating = rel_result.get("harmony_rating", 0)
             expressivity_rating = rel_result.get("expressivity_rating", 0)
             realism_rating = rel_result.get("realism_rating", 0)
             
-            mean_rating = (harmony_rating + expressivity_rating + realism_rating) / 3.0
+            combined_rating = (harmony_rating + expressivity_rating + realism_rating)
             
             # Map to physical object indices
             contact_key = (contact_obj_id, contact_img_id)
@@ -244,7 +268,10 @@ class ProXeekOptimizer:
                 substrate_key in physical_id_to_index):
                 contact_phys_idx = physical_id_to_index[contact_key]
                 substrate_phys_idx = physical_id_to_index[substrate_key]
-                self.interaction_matrix[contact_phys_idx, substrate_phys_idx] = mean_rating
+                self.interaction_matrix_3d[rel_idx, contact_phys_idx, substrate_phys_idx] = combined_rating
+                ratings_processed += 1
+        
+        print(f"Processed {ratings_processed} interaction ratings into 3D matrix")
     
     def calculate_realism_loss(self, assignment_matrix: np.ndarray) -> float:
         """Calculate L_realism = -∑ᵢ∑ⱼ (realism_rating[i,j] × X[i,j])"""
@@ -278,22 +305,35 @@ class ProXeekOptimizer:
     
     def calculate_interaction_loss(self, assignment_matrix: np.ndarray) -> float:
         """Calculate L_interaction = -∑ᵢ∑ₖ (interaction_exists[i,k] × interaction_rating[proxy_assigned[i], proxy_assigned[k]])"""
-        if self.interaction_exists is None or self.interaction_matrix is None:
+        if self.interaction_exists is None:
+            return 0.0
+            
+        # Use 3D matrix for accurate interaction calculation
+        if hasattr(self, 'interaction_matrix_3d') and hasattr(self, 'virtual_relationship_pairs'):
+            return self._calculate_interaction_loss_3d(assignment_matrix)
+        else:
+            return 0.0
+    
+    def _calculate_interaction_loss_3d(self, assignment_matrix: np.ndarray) -> float:
+        """Calculate interaction loss using 3D interaction matrix"""
+        if not hasattr(self, 'interaction_matrix_3d') or not hasattr(self, 'virtual_relationship_pairs'):
+            return 0.0
+        if self.interaction_matrix_3d is None or self.virtual_relationship_pairs is None or self.interaction_exists is None:
             return 0.0
             
         loss = 0.0
         n_virtual = len(self.virtual_objects)
         
-        for i in range(n_virtual):
-            for k in range(n_virtual):
-                if self.interaction_exists[i, k] > 0:
-                    # Find assigned physical objects for virtual objects i and k
-                    proxy_i = np.argmax(assignment_matrix[i, :])  # Physical object assigned to virtual object i
-                    proxy_k = np.argmax(assignment_matrix[k, :])  # Physical object assigned to virtual object k
-                    
-                    # Get interaction rating between these physical objects
-                    interaction_rating = self.interaction_matrix[proxy_i, proxy_k]
-                    loss -= interaction_rating
+        # Iterate through each virtual relationship
+        for rel_idx, (contact_virtual_idx, substrate_virtual_idx) in enumerate(self.virtual_relationship_pairs):
+            if self.interaction_exists[contact_virtual_idx, substrate_virtual_idx] > 0:
+                # Find assigned physical objects for this virtual relationship
+                proxy_contact = np.argmax(assignment_matrix[contact_virtual_idx, :])
+                proxy_substrate = np.argmax(assignment_matrix[substrate_virtual_idx, :])
+                
+                # Get interaction rating from 3D matrix for this specific relationship
+                interaction_rating = self.interaction_matrix_3d[rel_idx, proxy_contact, proxy_substrate]
+                loss -= interaction_rating
         
         return loss
     
@@ -360,9 +400,136 @@ class ProXeekOptimizer:
         print(f"Generated {len(valid_assignments)} valid assignments")
         return valid_assignments
     
+    def print_debug_matrices(self) -> None:
+        """Print all matrices for debugging purposes"""
+        print("\n" + "="*60)
+        print("DEBUG: MATRICES INFORMATION")
+        print("="*60)
+        
+        # Print virtual objects info
+        print(f"\nVirtual Objects ({len(self.virtual_objects)}):")
+        print("-" * 40)
+        for i, obj in enumerate(self.virtual_objects):
+            print(f"[{i}] {obj.name} - Type: {obj.involvement_type}, Engagement: {obj.engagement_level}")
+        
+        # Print physical objects info
+        print(f"\nPhysical Objects ({len(self.physical_objects)}):")
+        print("-" * 40)
+        for i, obj in enumerate(self.physical_objects):
+            print(f"[{i}] {obj.name} - ID: {obj.object_id}, Image: {obj.image_id}")
+        
+        # Print realism matrix
+        if self.realism_matrix is not None:
+            print(f"\nRealism Matrix ({self.realism_matrix.shape[0]}x{self.realism_matrix.shape[1]}):")
+            print("-" * 40)
+            print("Rows = Virtual Objects, Columns = Physical Objects")
+            print("Matrix values (showing first 10x10 if larger):")
+            display_rows = min(10, self.realism_matrix.shape[0])
+            display_cols = min(10, self.realism_matrix.shape[1])
+            
+            # Print column headers
+            print("       ", end="")
+            for j in range(display_cols):
+                print(f"P{j:2d}   ", end="")
+            print()
+            
+            # Print matrix with row headers
+            for i in range(display_rows):
+                print(f"V{i:2d}  ", end="")
+                for j in range(display_cols):
+                    print(f"{self.realism_matrix[i,j]:5.2f}", end=" ")
+                print()
+            
+            if self.realism_matrix.shape[0] > 10 or self.realism_matrix.shape[1] > 10:
+                print("... (truncated for display)")
+        
+        # Print interaction_exists matrix
+        if self.interaction_exists is not None:
+            print(f"\nInteraction Exists Matrix ({self.interaction_exists.shape[0]}x{self.interaction_exists.shape[1]}):")
+            print("-" * 40)
+            print("1.0 = interaction exists, 0.0 = no interaction")
+            print("Rows = Contact Virtual Objects, Columns = Substrate Virtual Objects")
+            
+            # Show which interactions exist
+            interactions_found = []
+            for i in range(self.interaction_exists.shape[0]):
+                for j in range(self.interaction_exists.shape[1]):
+                    if self.interaction_exists[i, j] > 0:
+                        contact_name = self.virtual_objects[i].name
+                        substrate_name = self.virtual_objects[j].name
+                        interactions_found.append(f"{contact_name} -> {substrate_name}")
+            
+            if interactions_found:
+                print("Interactions found:")
+                for interaction in interactions_found:
+                    print(f"  {interaction}")
+            else:
+                print("No interactions found")
+        
+        # Print interaction_matrix matrix
+        if self.interaction_matrix is not None:
+            print(f"\nInteraction Rating Matrix ({self.interaction_matrix.shape[0]}x{self.interaction_matrix.shape[1]}):")
+            print("-" * 40)
+            print("Rows = Contact Physical Objects, Columns = Substrate Physical Objects")
+            
+            # Count non-zero entries
+            non_zero_count = np.count_nonzero(self.interaction_matrix)
+            print(f"Non-zero entries: {non_zero_count}/{self.interaction_matrix.size}")
+            
+            if non_zero_count > 0:
+                print("Sample non-zero interaction ratings:")
+                count = 0
+                for i in range(self.interaction_matrix.shape[0]):
+                    for j in range(self.interaction_matrix.shape[1]):
+                        if self.interaction_matrix[i, j] > 0 and count < 10:
+                            contact_name = self.physical_objects[i].name
+                            substrate_name = self.physical_objects[j].name
+                            rating = self.interaction_matrix[i, j]
+                            print(f"  {contact_name} -> {substrate_name}: {rating:.3f}")
+                            count += 1
+                if non_zero_count > 10:
+                    print(f"  ... and {non_zero_count - 10} more")
+        
+        # Print 3D interaction matrix information
+        if hasattr(self, 'interaction_matrix_3d') and self.interaction_matrix_3d is not None:
+            print(f"\n3D Interaction Rating Matrix ({self.interaction_matrix_3d.shape}):")
+            print("-" * 40)
+            print("Dimensions: [relationship_idx, contact_physical, substrate_physical]")
+            
+            if hasattr(self, 'virtual_relationship_pairs') and self.virtual_relationship_pairs:
+                print("Virtual Relationships:")
+                for rel_idx, (contact_idx, substrate_idx) in enumerate(self.virtual_relationship_pairs):
+                    contact_name = self.virtual_objects[contact_idx].name
+                    substrate_name = self.virtual_objects[substrate_idx].name
+                    
+                    # Count non-zero entries for this relationship
+                    rel_matrix = self.interaction_matrix_3d[rel_idx, :, :]
+                    non_zero_count = np.count_nonzero(rel_matrix)
+                    
+                    print(f"  [{rel_idx}] {contact_name} -> {substrate_name}: {non_zero_count} ratings")
+                    
+                    # Show a few sample ratings
+                    if non_zero_count > 0:
+                        sample_count = 0
+                        for i in range(rel_matrix.shape[0]):
+                            for j in range(rel_matrix.shape[1]):
+                                if rel_matrix[i, j] > 0 and sample_count < 3:
+                                    contact_phys_name = self.physical_objects[i].name
+                                    substrate_phys_name = self.physical_objects[j].name
+                                    rating = rel_matrix[i, j]
+                                    print(f"    {contact_phys_name} -> {substrate_phys_name}: {rating:.3f}")
+                                    sample_count += 1
+                        if non_zero_count > 3:
+                            print(f"    ... and {non_zero_count - 3} more")
+        
+        print("="*60)
+
     def optimize(self) -> Optional[Assignment]:
         """Find the optimal assignment with minimum loss"""
         print("Starting global optimization...")
+        
+        # Print debug information about matrices
+        self.print_debug_matrices()
         
         # Generate all possible assignments
         all_assignments = self.generate_all_assignments()
@@ -516,8 +683,8 @@ def main():
     
     # Set loss function weights (can be adjusted)
     optimizer.w_realism = 1.0
-    optimizer.w_priority = 0.5
-    optimizer.w_interaction = 0.3
+    optimizer.w_priority = 0.05
+    optimizer.w_interaction = 1.0
     
     # Enable/disable exclusivity constraint
     optimizer.enable_exclusivity = True

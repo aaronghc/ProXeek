@@ -13,6 +13,7 @@ from pydantic import SecretStr
 from langsmith import traceable
 from langsmith.wrappers import wrap_openai
 import uuid
+import difflib
 
 # =============================================================================
 # CONFIGURATION PARAMETERS - Easy to find and modify
@@ -3502,6 +3503,106 @@ async def run_simple_greeting_test():
     log(f"Completed simple greeting test with {len(greeting_results)} results")
     return greeting_results
 
+def correct_object_ids_in_relationship_results(relationship_results, physical_object_database):
+    """
+    Corrects the object IDs in relationship rating results by looking up the correct IDs
+    based on object names and image IDs from the physical object database.
+    Uses fuzzy matching to handle slight variations in object names.
+    
+    Args:
+        relationship_results: List of relationship rating result dictionaries
+        physical_object_database: The physical object database containing correct ID mappings
+    
+    Returns:
+        List of corrected relationship rating results
+    """
+    corrected_results = []
+    
+    # Create a lookup dictionary for quick ID resolution
+    # Format: {image_id: {object_name: object_id}}
+    object_lookup = {}
+    
+    for image_id_str, objects in physical_object_database.items():
+        image_id = int(image_id_str)
+        object_lookup[image_id] = {}
+        
+        for obj in objects:
+            object_name = obj.get("object", "").strip().lower()
+            object_id = obj.get("object_id")
+            if object_name and object_id is not None:
+                object_lookup[image_id][object_name] = object_id
+    
+    def find_best_match_object_id(target_name, image_id, threshold=0.8):
+        """
+        Find the best matching object ID using fuzzy string matching.
+        
+        Args:
+            target_name: The object name to match
+            image_id: The image ID to search within
+            threshold: Minimum similarity threshold (0.0 to 1.0)
+        
+        Returns:
+            Tuple of (object_id, similarity_score) or (None, 0) if no good match
+        """
+        if image_id not in object_lookup:
+            return None, 0
+        
+        target_name_clean = target_name.strip().lower()
+        
+        # First try exact match
+        if target_name_clean in object_lookup[image_id]:
+            return object_lookup[image_id][target_name_clean], 1.0
+        
+        # Try fuzzy matching
+        best_match = None
+        best_score = 0
+        
+        for db_name, db_id in object_lookup[image_id].items():
+            similarity = difflib.SequenceMatcher(None, target_name_clean, db_name).ratio()
+            if similarity > best_score and similarity >= threshold:
+                best_match = db_id
+                best_score = similarity
+        
+        return best_match, best_score
+    
+    # Process each relationship result
+    for result in relationship_results:
+        corrected_result = result.copy()  # Create a copy to avoid modifying the original
+        
+        # Correct contact object ID
+        contact_object_name = result.get("physicalContactObject", "")
+        contact_image_id = result.get("contactImage_id")
+        
+        if contact_object_name and contact_image_id is not None:
+            correct_contact_id, similarity = find_best_match_object_id(contact_object_name, contact_image_id)
+            if correct_contact_id is not None:
+                corrected_result["contactObject_id"] = correct_contact_id
+                if similarity < 1.0:
+                    log(f"Corrected contact object ID with fuzzy match (similarity: {similarity:.2f}): '{contact_object_name}' in image {contact_image_id} from {result.get('contactObject_id')} to {correct_contact_id}")
+                else:
+                    log(f"Corrected contact object ID: '{contact_object_name}' in image {contact_image_id} from {result.get('contactObject_id')} to {correct_contact_id}")
+            else:
+                log(f"Warning: Could not find correct ID for contact object '{contact_object_name}' in image {contact_image_id}")
+        
+        # Correct substrate object ID
+        substrate_object_name = result.get("physicalSubstrateObject", "")
+        substrate_image_id = result.get("substrateImage_id")
+        
+        if substrate_object_name and substrate_image_id is not None:
+            correct_substrate_id, similarity = find_best_match_object_id(substrate_object_name, substrate_image_id)
+            if correct_substrate_id is not None:
+                corrected_result["substrateObject_id"] = correct_substrate_id
+                if similarity < 1.0:
+                    log(f"Corrected substrate object ID with fuzzy match (similarity: {similarity:.2f}): '{substrate_object_name}' in image {substrate_image_id} from {result.get('substrateObject_id')} to {correct_substrate_id}")
+                else:
+                    log(f"Corrected substrate object ID: '{substrate_object_name}' in image {substrate_image_id} from {result.get('substrateObject_id')} to {correct_substrate_id}")
+            else:
+                log(f"Warning: Could not find correct ID for substrate object '{substrate_object_name}' in image {substrate_image_id}")
+        
+        corrected_results.append(corrected_result)
+    
+    return corrected_results
+
 try:
     # Create a variable to store the processing results
     result: Dict[str, Any] = {"status": "success", "message": "Processing complete"}
@@ -3666,6 +3767,15 @@ try:
         log("Processing completed relationship rating results")
         relationship_rating_results = concurrent_results.get("relationship_rating_result", [])
         
+        # Correct object IDs before saving
+        if relationship_rating_results and physical_object_database:
+            log("Correcting object IDs in relationship rating results...")
+            relationship_rating_results = correct_object_ids_in_relationship_results(
+                relationship_rating_results, 
+                physical_object_database
+            )
+            log("Object ID correction completed")
+        
         # Save relationship rating results
         output_dir = os.path.join(script_dir, "output")
         relationship_rating_output_path = os.path.join(output_dir, "relationship_rating_results.json")
@@ -3774,6 +3884,15 @@ try:
     if environment_image_base64_list and haptic_annotation_json:
         log("Processing completed substrate utilization results")
         substrate_utilization_results = concurrent_results.get("substrate_utilization_result", [])
+        
+        # Correct object IDs before saving
+        if substrate_utilization_results and physical_object_database:
+            log("Correcting object IDs in substrate utilization results...")
+            substrate_utilization_results = correct_object_ids_in_relationship_results(
+                substrate_utilization_results, 
+                physical_object_database
+            )
+            log("Object ID correction completed for substrate utilization")
         
         # Save substrate utilization results
         output_dir = os.path.join(script_dir, "output")

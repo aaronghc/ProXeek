@@ -1,19 +1,19 @@
 {
   "optimization_summary": {
-    "total_loss": -330.7355518770218,
+    "total_loss": -94.54355499100686,
     "loss_components": {
       "L_realism": -28.666666448116302,
       "L_priority": -597.537770857811,
-      "L_interaction": -11.0,
-      "total": -330.7355518770218
+      "L_interaction": -36.0,
+      "total": -94.54355499100686
     },
     "num_virtual_objects": 5,
     "num_physical_objects": 16,
     "exclusivity_enabled": true,
     "loss_weights": {
       "w_realism": 1.0,
-      "w_priority": 0.5,
-      "w_interaction": 0.3
+      "w_priority": 0.05,
+      "w_interaction": 1.0
     }
   },
   "assignments": [
