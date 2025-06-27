@@ -2,101 +2,27 @@
   "0": [
     {
       "object_id": 1,
-      "object": "black laptop with Apple logo",
+      "object": "poster titled 'WEIGHTED WALKING' with illustrations and text",
       "position": "center of the image",
       "image_id": 0
     },
     {
       "object_id": 2,
-      "object": "black VR headset with straps",
-      "position": "bottom left of the image",
+      "object": "ceiling light fixture emitting light",
+      "position": "top right of the image",
       "image_id": 0
     },
     {
       "object_id": 3,
-      "object": "black speaker or subwoofer",
-      "position": "bottom left corner of the image",
-      "image_id": 0
-    },
-    {
-      "object_id": 4,
-      "object": "green plastic bottle cap",
-      "position": "top right of the laptop",
-      "image_id": 0
-    },
-    {
-      "object_id": 5,
-      "object": "metal rail or bar",
-      "position": "top right of the laptop",
-      "image_id": 0
-    },
-    {
-      "object_id": 6,
-      "object": "various cables",
-      "position": "scattered around the bottom of the image",
-      "image_id": 0
-    }
-  ],
-  "1": [
-    {
-      "object_id": 1,
-      "object": "black keyboard",
-      "position": "bottom left of the image",
-      "image_id": 1
-    },
-    {
-      "object_id": 2,
-      "object": "white cuboid airpods case",
-      "position": "bottom center of the image",
-      "image_id": 1
-    },
-    {
-      "object_id": 3,
-      "object": "white gaming mouse",
-      "position": "bottom center of the image, next to the airpods case",
-      "image_id": 1
-    },
-    {
-      "object_id": 4,
-      "object": "silver insulated water bottle",
+      "object": "white rectangular object, possibly a board or canvas",
       "position": "bottom right of the image",
-      "image_id": 1
+      "image_id": 0
     },
     {
-      "object_id": 5,
-      "object": "notebook with visible writing",
-      "position": "bottom left of the image, next to the keyboard",
-      "image_id": 1
-    },
-    {
-      "object_id": 6,
-      "object": "green object (possibly a stress ball)",
-      "position": "bottom left of the image, near the keyboard",
-      "image_id": 1
-    },
-    {
-      "object_id": 7,
-      "object": "two computer monitors",
-      "position": "top of the image",
-      "image_id": 1
-    },
-    {
-      "object_id": 8,
-      "object": "computer screen displaying code",
-      "position": "right monitor, top right of the image",
-      "image_id": 1
-    },
-    {
-      "object_id": 9,
-      "object": "paper with visible text",
-      "position": "bottom right of the image, under the monitors",
-      "image_id": 1
-    },
-    {
-      "object_id": 10,
-      "object": "pen",
-      "position": "bottom right of the image, next to the notebook",
-      "image_id": 1
+      "object_id": 4,
+      "object": "black electronic device, possibly a monitor or screen",
+      "position": "bottom left of the image",
+      "image_id": 0
     }
   ]
 }
